@@ -1,9 +1,16 @@
 import React from 'react';
 import LoginForm from '../LoginForm/LoginForm';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 function LoginPage() {
   const history = useHistory();
+
+  const handleGoogle = () => {
+    axios.get('/api/oauth/login');
+  }
+
+
 
   return (
     <div>
@@ -20,6 +27,7 @@ function LoginPage() {
           Register
         </button>
       </center>
+      <button type="button" className='google-btn' onClick={handleGoogle}>Log In Using Google Account</button>
     </div>
   );
 }
