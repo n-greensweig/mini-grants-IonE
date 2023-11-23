@@ -14,7 +14,33 @@ CREATE TABLE "grant_data" (
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"dept_id" VARCHAR[],
 	"reviewed" BOOLEAN DEFAULT 0,
-	"google_sheet" VARCHAR(1000)
+	"applicant_name" VARCHAR(60),
+	"applicant_email" VARCHAR(60),
+	"abstract" VARCHAR(10000),
+	"proposal_narrative" TEXT,
+	"project_title" VARCHAR(500),
+	"principal_investigator" VARCHAR(100),
+	--letter of support will contain a URL
+	"letter_of_support" VARCHAR(120), 
+	"PI_email" VARCHAR(60),
+	--Below data should be salted
+	"PI_employee_id" INT,
+	"PI_primary_college" VARCHAR(100),
+	"PI_primary_campus" VARCHAR(100),
+	"PI_dept_accountant_name" VARCHAR(60),
+	"PI_dept_accountant_email" VARCHAR(60),
+	--Column O place holder(name)
+	--Column P place holder(email)
+	--Column Q place holder
+	--Column R place holder
+	"additional_team_members" JSONB,
+	"funding_type" VARCHAR(120),
+	"UMN_campus_or_center" VARCHAR(120),
+	"period_of_performance" VARCHAR(120),
+	"budget_items" VARCHAR[],
+	"new_endeavor" BOOLEAN,
+	"heard_from_referece" VARCHAR(100),
+	"total_requested_budget" INT
 )
 
 CREATE TABLE "grant_cycle" (
