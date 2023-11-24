@@ -1,13 +1,6 @@
 const express = require('express');
-// const pool = require('../modules/pool');
-const passport = require('passport');
-// const auth = require('../strategies/auth');
 const router = express.Router();
-const cookieSession = require('cookie-session')
-// auth.use(passport);
-// router.use(passport.initialize());
-
-require('../strategies/auth.js');
+const passport = require('passport');
 
 router.get('/', (req, res) => {
     console.log('/api/oauth route called');
@@ -23,23 +16,23 @@ router.get('/', (req, res) => {
         });
     }});
 
-// router.get('/login', passport.authenticate('google'));
 
-router.get('/login', (req, res, next) => {
-    console.log('Riley');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-});
+router.get('/google', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+  }, passport.authenticate('google', { scope: ['profile'] }));
 
-router.get('/google/callback', passport.authenticate('google', {
-    failureRedirect: '/login'
-}),
+router.get('/callback', 
+    passport.authenticate('google', { failureRedirect: '/login' }),
     (req, res) => {
-        console.log('Line 30')
-        req.session.token = req.user.token;
-        res.send(201);
+        //Successful authentication
+        res.redirect('/');
     }
-);
+)
+
 
 router.get('/logout', (req, res) => {
     req.logout();

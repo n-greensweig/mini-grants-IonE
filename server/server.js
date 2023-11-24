@@ -1,28 +1,33 @@
+require('dotenv').config();
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const cookieSession = require('cookie-session');
 const cors = require('cors');
 const passport = require('./strategies/user.strategy');
-
-
-require('dotenv').config();
-
-const app = express();
-app.use(
-  cors({
-    origin: 'http://localhost:5001',
-  })
-);
-
+const GoogleStrategy = require('passport-google-oauth20');
 const sessionMiddleware = require('./modules/session-middleware');
 
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env.googleKeys]
-}));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Credentials', 'true');
 
-const auth = require('./strategies/auth');
+  next();
+})
+
+if (process.env.googleClientID && process.env.googleClientSecret) {
+  passport.use(new GoogleStrategy({
+    clientID: process.env.googleClientID,
+    clientSecret: process.env.googleClientSecret,
+    callbackURL: process.env.callbackURL
+  },
+  async (accessToken, refreshToken, profile, cb) => {
+    console.log('Google Login Complete', profile);
+    //Find or create user in app database here
+    return cb(err, user);
+  }))
+}
 
 // Route includes
 const userRouter = require('./routes/user.router');
@@ -41,7 +46,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-app.use('/api/oauth', oauthRouter);
+app.use('/oauth', oauthRouter);
 
 // Serve static files
 app.use(express.static('build'));

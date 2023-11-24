@@ -6,7 +6,7 @@
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "email" VARCHAR (120) UNIQUE NOT NULL,
-    "admin" BOOLEAN DEFAULT 0
+    "admin" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "grant_data" (
