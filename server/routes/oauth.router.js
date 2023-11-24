@@ -1,11 +1,13 @@
 const express = require('express');
-const pool = require('../modules/pool');
+// const pool = require('../modules/pool');
 const passport = require('passport');
-const auth = require('../strategies/auth');
+// const auth = require('../strategies/auth');
 const router = express.Router();
-
-// auth(passport);
+const cookieSession = require('cookie-session')
+// auth.use(passport);
 // router.use(passport.initialize());
+
+require('../strategies/auth.js');
 
 router.get('/', (req, res) => {
     console.log('/api/oauth route called');
@@ -27,7 +29,7 @@ router.get('/login', (req, res, next) => {
     console.log('Riley');
     res.setHeader('Access-Control-Allow-Origin', '*');
     passport.authenticate('google', { scope: ['profile', 'email'] })
-  });
+});
 
 router.get('/google/callback', passport.authenticate('google', {
     failureRedirect: '/login'

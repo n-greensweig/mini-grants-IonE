@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const cors = require('cors');
+const passport = require('./strategies/user.strategy');
 
 
 require('dotenv').config();
@@ -10,7 +11,7 @@ require('dotenv').config();
 const app = express();
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:5001',
   })
 );
 
@@ -21,7 +22,6 @@ app.use(cookieSession({
   keys: [process.env.googleKeys]
 }));
 
-const passport = require('./strategies/user.strategy');
 const auth = require('./strategies/auth');
 
 // Route includes
