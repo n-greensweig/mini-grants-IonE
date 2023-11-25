@@ -1,11 +1,10 @@
+CREATE DATABASE "IonE_Grants"
 
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "email" VARCHAR (120) UNIQUE NOT NULL,
+	"first_name" VARCHAR(120),
+	"last_name" VARCHAR(120),
     "admin" BOOLEAN DEFAULT 0
 );
 
@@ -16,14 +15,14 @@ CREATE TABLE "grant_data" (
 	"reviewed" BOOLEAN DEFAULT 0,
 	"applicant_name" VARCHAR(60),
 	"applicant_email" VARCHAR(60),
-	"abstract" VARCHAR(10000),
-	"proposal_narrative" TEXT,
+	"abstract" VARCHAR(2000),
+	"proposal_narrative" VARCHAR(15000),
 	"project_title" VARCHAR(500),
 	"principal_investigator" VARCHAR(100),
 	--letter of support will contain a URL
 	"letter_of_support" VARCHAR(120), 
 	"PI_email" VARCHAR(60),
-	--Below data should be salted
+	--Below line should be salted
 	"PI_employee_id" INT,
 	"PI_primary_college" VARCHAR(100),
 	"PI_primary_campus" VARCHAR(100),
@@ -36,8 +35,8 @@ CREATE TABLE "grant_data" (
 	"additional_team_members" JSONB,
 	"funding_type" VARCHAR(120),
 	"UMN_campus_or_center" VARCHAR(120),
-	"period_of_performance" VARCHAR(120),
-	"budget_items" VARCHAR[],
+	"period_of_performance" INT,
+	"budget_items" VARCHAR(7500),
 	"new_endeavor" BOOLEAN,
 	"heard_from_referece" VARCHAR(100),
 	"total_requested_budget" INT
@@ -57,9 +56,11 @@ CREATE TABLE "scores" (
 	"grant_id" INT REFERENCES "grant_data",
 	"reviewer_id" INT REFERENCES "user",
 	"assigned_by" INT REFERENCES "user",
-	new_field integer
-	score_2 integer
-	score_3 integer
+	"interdisciplinary" INT,
+	"goals" INT,
+	"method_and_design" INT,
+	"budget" INT,
+	"impact" INT
 )
 
 CREATE TABLE "departments" (
