@@ -19,6 +19,13 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+// Page imports
+import AdminAllGrantsData from '../AdminAllGrantsData/AdminAllGrantsData';
+import AdminHomeView from '../AdminHomeView/AdminHomeView';
+import AdminReviewersTable from '../AdminReviewersTable/AdminReviewersTable';
+import GrantReviewForm from '../GrantReviewForm/GrantReviewFrom';
+import ReviewerForm from '../ReviewerForm/ReviewerFrom';
+import ReviewerHomePage from '../ReviewerHomePage/ReviewerHomePage';
 
 import './App.css';
 
@@ -66,6 +73,31 @@ function App() {
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+
+          {/* Routes for our pages are here */}
+          <ProtectedRoute exact path="/adminallgrantsdata">
+            <AdminAllGrantsData />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/adminhomeview">
+            <AdminHomeView />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/adminreviewerstable">
+            <AdminReviewersTable />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/grantreviewform">
+            <GrantReviewForm />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/reviewerfrom">
+            <ReviewerForm />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/reviewerhomepage">
+            <ReviewerHomePage />
           </ProtectedRoute>
 
           <Route
