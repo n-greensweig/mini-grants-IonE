@@ -20,7 +20,7 @@ if (process.env.googleClientID && process.env.googleClientSecret) {
   passport.use(new GoogleStrategy({
     clientID: process.env.googleClientID,
     clientSecret: process.env.googleClientSecret,
-    callbackURL: process.env.callbackURL
+    callbackURL: 'http://localhost:5001/auth/google/callback'
   },
   async (accessToken, refreshToken, profile, cb) => {
     console.log('Google Login Complete', profile);

@@ -8,7 +8,7 @@ function LoginPage() {
 
   const handleGoogle = () => {
     axios.get('/auth/google').then((response) => {
-      console.log(response);
+      console.log(response); //This code doesn't run, goes to error
     }).catch((error) => {
       console.log(error);
     })
