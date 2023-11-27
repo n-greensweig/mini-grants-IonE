@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 }); //end GET
 
 
-//GET unreviewed grants --HALEIGH, need to test with data
+//GET unreviewed grants --HALEIGH, need to test all my routes with data
 router.get('/unreviewed', (req, res) => {
     console.log('Fetching all unreviewed grants')
     if(req.isAuthenticated()) {
@@ -42,23 +42,38 @@ router.get('/unreviewed', (req, res) => {
   }
 }); //end GET
 
-//GET grants for given reviewer (don't send userID as param, incorrect) --HALEIGH
+//GET grants for a given reviewer --HALEIGH
 router.get('/reviewer-grants', (req, res) => {
-    console.log(`Fetching grants for user id= ${req.user.id}`)
+    console.log(`Fetching grants for user id: ${req.user.id}`)
     if(req.isAuthenticated()) {
+        let queryText1 = `SELECT c.id
+                        FROM grant_cycle c
+                        WHERE "cycle_complete" = FALSE
+                        ORDER by c.start_date;`;
+        let cycleID = 0;
+        pool.query(queryText1, [userID])
+        .then(result => {
+        cycleID = result.rows[0]
+        })
+        .catch(error => {
+        console.log(`Error fetching current cycle ID for reviewer`, error);
+        res.sendStatus(500);
+        });
         const userID = req.user.id;
-        let queryText = `SELECT observations.*, s.scientific_name, s.common_name, s.growth_type
-                        FROM "observations" 
-                        JOIN species s
-                        ON s.id = species_id
-                        WHERE "user_id" = $1
-                        ORDER by observations.date_observed;`;
-        pool.query(queryText, [userID])
+        let queryText2 = `SELECT d.*, s.* 
+                        FROM grant_assignments a
+                        JOIN grant_data d
+                        ON a.grant_id = d.id
+                        FULL JOIN scores s
+                        ON a.grant_id = s.grant_id
+                        WHERE a.reviewer_id = $1
+                        AND a.cycle_id = $2`;
+        pool.query(queryText2, [userID, cycleID])
         .then(result => {
         res.send(result.rows);
         })
         .catch(error => {
-        console.log(`Error fetching users observations`, error);
+        console.log(`Error fetching grants for user id: ${req.user.id}`, error);
         res.sendStatus(500);
         });
     } else {
@@ -137,22 +152,19 @@ router.put('/edit/:id', (req, res) => {
 })// end PUT
 
 // PUT to set review as complete --HALEIGH
-router.put('/edit/:id', (req, res) => {
+router.put('/complete/:id', (req, res) => {
     let id = req.params.id;
-    let updatedObservation = req.body;
-    console.log('updating observation for id', id);
+    console.log('Setting review complete, review id:', id);
     if (req.isAuthenticated()) {
-      let queryText = `UPDATE "observations" 
-                    SET "species_id" = $1, "location" = $2, "photo" = $3,
-                    "notes" = $4, "date_observed" = $5, "time_stamp" = $6
-                    WHERE "id" = $7;`;
-      pool.query(queryText, [updatedObservation.species_id, updatedObservation.location, updatedObservation.photo, 
-                            updatedObservation.notes, updatedObservation.date_observed, updatedObservation.time_stamp, id])
+      let queryText = `UPDATE "scores" 
+                    SET "review_complete" = TRUE
+                    WHERE "id" = $1;`;
+      pool.query(queryText, [id])
       .then((result) =>{
           res.sendStatus(200);
       })
       .catch((err) => {
-          console.log(`Error making query ${queryText}`, err);
+          console.log(`Error setting review complete`, err);
           res.sendStatus(500)
       })
     } else {
