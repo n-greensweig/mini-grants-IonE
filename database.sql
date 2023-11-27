@@ -1,11 +1,11 @@
 CREATE DATABASE "IonE_Grants"
 
 CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "email" VARCHAR (120) UNIQUE NOT NULL,
-	"first_name" VARCHAR(120),
-	"last_name" VARCHAR(120),
-    "admin" BOOLEAN DEFAULT 0
+  "id" SERIAL PRIMARY KEY,
+  "email" VARCHAR (120) UNIQUE NOT NULL,
+  "full_name" VARCHAR(240),
+  "google_id" VARCHAR(120),
+  "admin" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "grant_data" (
