@@ -7,7 +7,11 @@ function LoginPage() {
   const history = useHistory();
 
   const handleGoogle = () => {
-    axios.get('/oauth/google');
+    axios.get('/auth/google').then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+    })
   }
 
 

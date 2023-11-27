@@ -46,7 +46,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-app.use('/oauth', oauthRouter);
+app.use('/auth', oauthRouter);
 
 // Serve static files
 app.use(express.static('build'));
