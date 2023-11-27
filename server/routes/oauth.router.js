@@ -1,7 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const passport = require('passport');
-const auth = require('../strategies/auth');
+require('../strategies/auth');
 const router = express.Router();
 
 // auth(passport);
@@ -26,8 +26,8 @@ router.get('/', (req, res) => {
 router.get('/login', (req, res, next) => {
     console.log('Riley');
     res.setHeader('Access-Control-Allow-Origin', '*');
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-  });
+    passport.authenticate('google', { scope: ['email', 'profile'] })
+});
 
 router.get('/google/callback', passport.authenticate('google', {
     failureRedirect: '/login'
