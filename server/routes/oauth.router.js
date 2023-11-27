@@ -17,14 +17,6 @@ router.get('/', (req, res) => {
     }});
 
 
-router.get('/google', (req, res, next) => {
-    // res.header('Access-Control-Allow-Origin', '*');
-    // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    // res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    // res.header('Access-Control-Allow-Credentials', 'true');
-    next();
-  }, passport.authenticate('google', { scope: ['profile'] }));
-
 router.get('/google/callback', 
     passport.authenticate('google', { failureRedirect: '/login' }),
     (req, res) => {
@@ -33,7 +25,6 @@ router.get('/google/callback',
         res.redirect('/');
     }
 )
-
 
 router.get('/logout', (req, res) => {
     req.logout();

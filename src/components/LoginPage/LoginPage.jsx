@@ -31,7 +31,6 @@ function LoginPage() {
           Register
         </button>
       </center>
-      <button type="button" className='google-btn' onClick={handleGoogle}>Log In Using Google Account</button>
     </div>
   );
 }
