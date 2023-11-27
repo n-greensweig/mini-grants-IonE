@@ -21,6 +21,12 @@ if (process.env.DATABASE_URL) {
         }
     });
 }
+// allows for Windows OS for local host
+else if (process.env.DATABASE_URL_LOCAL) {
+    pool = new pg.Pool({
+        connectionString: process.env.DATABASE_URL_LOCAL
+    });
+}
 // When we're running this app on our own computer
 // we'll connect to the postgres database that is 
 // also running on our computer (localhost)
