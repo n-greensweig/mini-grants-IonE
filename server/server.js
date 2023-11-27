@@ -10,6 +10,7 @@ const pool = require('./modules/pool');
 // Route includes
 const userRouter = require('./routes/user.router');
 const oauthRouter = require('./routes/oauth.router');
+const grantsRouter = require('./routes/grants.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -109,6 +110,7 @@ app.use(cookieSession({
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/auth', oauthRouter);
+app.use('/grants', grantsRouter);
 
 // Serve static files
 app.use(express.static('build'));
