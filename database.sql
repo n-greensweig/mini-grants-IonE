@@ -12,7 +12,6 @@ CREATE TABLE "grant_data" (
 	"id" SERIAL PRIMARY KEY,
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"dept_id" VARCHAR[],
-	"reviewed" BOOLEAN DEFAULT 0,
 	"applicant_name" VARCHAR(60),
 	"applicant_email" VARCHAR(60),
 	"abstract" VARCHAR(2000),
@@ -40,15 +39,15 @@ CREATE TABLE "grant_data" (
 	"new_endeavor" BOOLEAN,
 	"heard_from_referece" VARCHAR(100),
 	"total_requested_budget" INT
-)
+);
 
 CREATE TABLE "grant_cycle" (
 	"id" SERIAL PRIMARY KEY,
 	"start_date" DATE,
 	"end_date" DATE,
 	"grant_type" VARCHAR(60),
-	"cycle_complete" BOOLEAN DEFAULT 0
-)
+	"cycle_complete" BOOLEAN DEFAULT FALSE
+);
 
 CREATE TABLE "scores" (
     "id" SERIAL PRIMARY KEY,
@@ -62,12 +61,12 @@ CREATE TABLE "scores" (
 	"budget" INT,
 	"impact" INT,
 	"review_complete" BOOLEAN DEFAULT 0
-)
+);
 
 CREATE TABLE "departments" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR(200)
-)
+);
 
 CREATE TABLE "grant_assignments" (
     "id" SERIAL PRIMARY KEY,
@@ -75,13 +74,13 @@ CREATE TABLE "grant_assignments" (
 	"assigned_by" INT REFERENCES "user",
 	"grant_id" INT REFERENCES "grant_data",
 	"reviewer_id" INT REFERENCES "user",
-	"cycle_id" INT REFERENCES "grant_cycle",
-)
+	"cycle_id" INT REFERENCES "grant_cycle"
+);
 
 CREATE TABLE "reviewers" (
     "id" SERIAL PRIMARY KEY,
 	"reviewer_id" INT REFERENCES "user",
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"available_reviews" INT,
-	"dept_id" VARCHAR[],
-)
+	"dept_id" VARCHAR[]
+);
