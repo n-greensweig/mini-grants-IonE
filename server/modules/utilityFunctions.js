@@ -1,5 +1,5 @@
 //Returns a first and last name object given a single string containing the full name
-export function parseName(fullName) {
+function parseName(fullName) {
     let names = fullName.split(/, | /); // Splitting based on comma or space
 
     if (names.length === 2) {
@@ -17,7 +17,7 @@ export function parseName(fullName) {
 }
 
 //Spring grant cycle opens third monday of March
-export function thirdMondayOfMarch(year) {
+function thirdMondayOfMarch(year) {
     const march = new Date(year, 2, 1); // Month in JavaScript is 0-based (0: January, 1: February, ...)
     let count = 0;
   
@@ -40,7 +40,7 @@ export function thirdMondayOfMarch(year) {
   }
   
 //Spring grant cycle closes last Sunday of April
-  export function lastSundayOfApril(year) {
+ function lastSundayOfApril(year) {
     const april = new Date(year, 3, 30); // Start at the last day of April
   
     while (april.getDay() !== 0) {
@@ -52,7 +52,7 @@ export function thirdMondayOfMarch(year) {
   }
 
   //Fall grant cycle opens second Monday of September
-  export function secondMondayOfSeptember(year) {
+  function secondMondayOfSeptember(year) {
     const september = new Date(year, 8, 1); // Month in JavaScript is 0-based (8: September)
     let count = 0;
   
@@ -72,7 +72,7 @@ export function thirdMondayOfMarch(year) {
     }
 }
 
-export function penultimateSundayOfOctober(year) {
+function penultimateSundayOfOctober(year) {
     const october = new Date(year, 9, 31); // Start at the last day of October
   
     // Move back one week to ensure it's within October
@@ -85,3 +85,5 @@ export function penultimateSundayOfOctober(year) {
   
     return october;
   }
+
+  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober};

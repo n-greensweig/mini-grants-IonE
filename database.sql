@@ -46,6 +46,7 @@ CREATE TABLE "grant_cycle" (
 	"start_date" DATE,
 	"end_date" DATE,
 	"grant_type" VARCHAR(60),
+	"cycle_name" VARCHAR(30),
 	"cycle_complete" BOOLEAN DEFAULT FALSE
 );
 
@@ -60,7 +61,7 @@ CREATE TABLE "scores" (
 	"method_and_design" INT,
 	"budget" INT,
 	"impact" INT,
-	"review_complete" BOOLEAN DEFAULT 0
+	"review_complete" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "departments" (
