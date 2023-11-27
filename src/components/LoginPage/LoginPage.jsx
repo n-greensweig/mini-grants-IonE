@@ -7,7 +7,11 @@ function LoginPage() {
   const history = useHistory();
 
   const handleGoogle = () => {
-    axios.get('/api/oauth/login');
+    axios.get('/auth/google').then((response) => {
+      console.log(response); //This code doesn't run, goes to error
+    }).catch((error) => {
+      console.log(error);
+    })
   }
 
 
@@ -27,7 +31,6 @@ function LoginPage() {
           Register
         </button>
       </center>
-      <button type="button" className='google-btn' onClick={handleGoogle}>Log In Using Google Account</button>
     </div>
   );
 }
