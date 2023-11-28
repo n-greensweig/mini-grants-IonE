@@ -24,8 +24,8 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import AdminAllGrantsData from '../AdminAllGrantsData/AdminAllGrantsData';
 import AdminHomeView from '../AdminHomeView/AdminHomeView';
 import AdminReviewersTable from '../AdminReviewersTable/AdminReviewersTable';
-import GrantReviewForm from '../GrantReviewForm/GrantReviewFrom';
-import ReviewerForm from '../ReviewerForm/ReviewerFrom';
+import GrantReviewForm from '../GrantReviewForm/GrantReviewForm';
+import ReviewerForm from '../ReviewerForm/ReviewerForm';
 import ReviewerHomePage from '../ReviewerHomePage/ReviewerHomePage';
 
 import './App.css';
@@ -93,7 +93,7 @@ function App() {
             <GrantReviewForm />
           </Route>
 
-          <Route exact path="/reviewerfrom">
+          <Route exact path="/reviewerform">
             <ReviewerForm />
           </Route>
 
