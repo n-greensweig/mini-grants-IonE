@@ -10,6 +10,7 @@ CREATE TABLE "user" (
 
 CREATE TABLE "grant_data" (
 	"id" SERIAL PRIMARY KEY,
+	"time_stamp" DATE,
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"dept_id" VARCHAR[],
 	"applicant_name" VARCHAR(60),

@@ -69,17 +69,15 @@ router.get('/reviewer-grants', (req, res) => {
 
 //POST to save grant data (interacts with google sheet) --RILEY
 router.post('/',  (req, res) => {
-    let newObservation = req.body;
-    console.log(`Adding observation`, newObservation);
+   
     if(req.isAuthenticated()) {
-        let queryText = `INSERT INTO "observations" ("user_id", "species_id", "location", "photo", "notes", "date_observed", "time_stamp")
-        VALUES ($1, $2, $3, $4, $5, $6, $7);`;
-        pool.query(queryText, [newObservation.user_id, newObservation.species, newObservation.location, newObservation.photo, newObservation.notes, newObservation.date_observed, newObservation.time_stamp])
+        let queryText = ``;
+        pool.query(queryText, [])
         .then(result => {
         res.sendStatus(201);
         })
         .catch(error => {
-        console.log(`Error adding new observation`, error);
+        console.log(`Error running query ${queryText}`, error);
         res.sendStatus(500);
         });
     } else {
