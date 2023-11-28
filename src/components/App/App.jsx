@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// Temporaily removed Protected Routes
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
@@ -59,46 +60,46 @@ function App() {
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <ProtectedRoute
+          <Route
             // logged in shows UserPage else shows LoginPage
             exact
             path="/user"
           >
             <UserPage />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute
+          <Route
             // logged in shows InfoPage else shows LoginPage
             exact
             path="/info"
           >
             <InfoPage />
-          </ProtectedRoute>
+          </Route>
 
           {/* Routes for our pages are here */}
-          <ProtectedRoute exact path="/adminallgrantsdata">
+          <Route exact path="/adminallgrantsdata">
             <AdminAllGrantsData />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/adminhomeview">
+          <Route exact path="/adminhomeview">
             <AdminHomeView />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/adminreviewerstable">
+          <Route exact path="/adminreviewerstable">
             <AdminReviewersTable />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/grantreviewform">
+          <Route exact path="/grantreviewform">
             <GrantReviewForm />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/reviewerfrom">
+          <Route exact path="/reviewerfrom">
             <ReviewerForm />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/reviewerhomepage">
+          <Route exact path="/reviewerhomepage">
             <ReviewerHomePage />
-          </ProtectedRoute>
+          </Route>
 
           <Route
             exact
