@@ -1,7 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 //GET all grant data
 router.get('/', (req, res) => {
