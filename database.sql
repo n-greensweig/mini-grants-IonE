@@ -12,6 +12,7 @@ CREATE TABLE "grant_data" (
 	"id" SERIAL PRIMARY KEY,
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"dept_id" VARCHAR[],
+	"reviewed" BOOLEAN DEFAULT FALSE,
 	"applicant_name" VARCHAR(60),
 	"applicant_email" VARCHAR(60),
 	"abstract" VARCHAR(2000),
@@ -84,4 +85,4 @@ CREATE TABLE "reviewers" (
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"available_reviews" INT,
 	"dept_id" VARCHAR[]
-);
+)
