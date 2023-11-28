@@ -2,20 +2,38 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-import { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober } from '../../src/utilityFunctions';
+const { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober } = require('../modules/utilityFunctions')
 
 
-router.post('/generateGrantCycles', (req, res) => {
-    let queryText = `INSERT INTO "grant_cycle" ("start_date", "end_date", "grant_type", "cycle_complete")
-                    VALUES ($1, $2, $3, $4);`;
+router.get('/generateGrantCycles', (req, res) => {
+    let queryText = `INSERT INTO "grant_cycle" ("start_date", "end_date", "grant_type", "cycle_complete", "cycle_name")
+                    VALUES ($1, $2, $3, $4, $5);`;
+    
     let year = 2024;
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
         let start_date_spring = thirdMondayOfMarch(year);
-        let end_date_spring = secondMondayOfSeptember(year);
+        let end_date_spring = lastSundayOfApril(year);
         let fall_start_date = secondMondayOfSeptember(year);
         let fall_end_date = penultimateSundayOfOctober(year);
+        let springName = 'Spring-' + year;
+        let FallName = 'Fall-' + year;
+        console.log(start_date_spring, i);
+        pool.query(queryText, [start_date_spring, end_date_spring, "mini", "false", springName])
+        .then((response) => {
+            res.send(201);
+        }).catch((error) => {
+            console.log(error);
+        });
         
-        pool.queryText(queryText, [])
-    }
-})
+        pool.query(queryText, [fall_start_date, fall_end_date, "mini", "false", FallName])
+        .then((response) => {
+            res.send(201);
+        }).catch((error) => {
+            console.log(error);
+        });
+        year++;
+        }
+    })
+
+    module.exports = router;
