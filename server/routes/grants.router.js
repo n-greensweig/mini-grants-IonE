@@ -20,6 +20,23 @@ router.get('/', (req, res) => {
 }); //end GET
 
 
+// GET all reviewers --HALEIGH
+router.get('/reviewers', (req, res) => {
+    if(req.isAuthenticated()) {
+        let queryText = 'SELECT * from "reviewers";';
+        console.log('Fetching all reviewers')
+        pool.query(queryText)
+        .then(result => {
+            res.send(result.rows);
+        })
+        .catch(error => {
+            console.log(`Error fetching all reviewers`, error);
+            res.sendStatus(500);
+        });
+    }
+}); //end GET
+
+
 //GET unreviewed grants --HALEIGH, need to test all my routes with data
 router.get('/unreviewed', (req, res) => {
     console.log('Fetching all unreviewed grants')
