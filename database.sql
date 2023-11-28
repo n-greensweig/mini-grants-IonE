@@ -8,8 +8,10 @@ CREATE TABLE "user" (
   "admin" BOOLEAN DEFAULT FALSE
 );
 
+
 CREATE TABLE "grant_data" (
 	"id" SERIAL PRIMARY KEY,
+	"time_stamp" DATE,
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"dept_id" VARCHAR[],
 	"applicant_name" VARCHAR(60),
@@ -41,6 +43,7 @@ CREATE TABLE "grant_data" (
 	"total_requested_budget" INT
 );
 
+
 CREATE TABLE "grant_cycle" (
 	"id" SERIAL PRIMARY KEY,
 	"start_date" DATE,
@@ -49,6 +52,7 @@ CREATE TABLE "grant_cycle" (
 	"cycle_name" VARCHAR(30),
 	"cycle_complete" BOOLEAN DEFAULT FALSE
 );
+
 
 CREATE TABLE "scores" (
     "id" SERIAL PRIMARY KEY,
@@ -64,10 +68,12 @@ CREATE TABLE "scores" (
 	"review_complete" BOOLEAN DEFAULT FALSE
 );
 
+
 CREATE TABLE "departments" (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR(200)
 );
+
 
 CREATE TABLE "grant_assignments" (
     "id" SERIAL PRIMARY KEY,
@@ -77,6 +83,7 @@ CREATE TABLE "grant_assignments" (
 	"reviewer_id" INT REFERENCES "user",
 	"cycle_id" INT REFERENCES "grant_cycle"
 );
+
 
 CREATE TABLE "reviewers" (
     "id" SERIAL PRIMARY KEY,
