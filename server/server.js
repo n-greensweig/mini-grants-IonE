@@ -11,6 +11,7 @@ const pool = require('./modules/pool');
 const userRouter = require('./routes/user.router');
 const oauthRouter = require('./routes/oauth.router');
 const grantsRouter = require('./routes/grants.router')
+const dataGenRoute = require('./routes/dataGen.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -111,6 +112,7 @@ app.use(cookieSession({
 app.use('/api/user', userRouter);
 app.use('/auth', oauthRouter);
 app.use('/grants', grantsRouter);
+app.use('/dataGen', dataGenRoute);
 
 // Serve static files
 app.use(express.static('build'));
