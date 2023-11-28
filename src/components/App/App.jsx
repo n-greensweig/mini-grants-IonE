@@ -13,6 +13,8 @@ import Footer from '../Footer/Footer';
 
 // Temporaily removed Protected Routes
 // import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// Temporaily removed Protected Routes
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 
@@ -67,6 +69,28 @@ function App() {
 
           <Route exact path="/grantreviewform">
             <GrantReviewForm />
+          </Route>
+
+          <ProtectedRoute exact path="/reviewerfrom">
+            <ReviewerForm />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/reviewerhomepage">
+            <ReviewerHomePage />
+          </ProtectedRoute>
+
+          <Route
+            exact
+            path="/login"
+          >
+            {user.id ?
+              // If the user is already logged in, 
+              // redirect to the /user page
+              <Redirect to="/user" />
+              :
+              // Otherwise, show the login page
+              <LoginPage />
+            }
           </Route>
 
           <Route exact path="/reviewerfrom">
