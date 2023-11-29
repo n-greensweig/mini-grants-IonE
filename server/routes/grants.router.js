@@ -279,13 +279,14 @@ router.put('/complete/:id', (req, res) => {
 })// end PUT
 
 
-//POST to assign grant reviews to reviewer
+//POST to assign grant reviews to reviewer after they sign up
 router.post('/assign', (req, res) => {
 
     if (req.isAuthenticated()) {
         console.log(req.body);
-        let reviewerID = req.body.reviewerID;
-        let reviews = req.body.reviews; // number of available reviews
+        let reviewerID = req.user.id
+        let reviewerDept = req.body.reviewerDept
+        let reviewerNumber = req.body.reviews; // number of reviewer's available reviews
         let cycleID = req.body.cycleID;
         let available = []
         //	first generate randomized list of grants from server that have less than 3 reviewers assigned
@@ -308,14 +309,14 @@ router.post('/assign', (req, res) => {
         })
         //then assign reviewer to grants in list based on # of available reviews and conflicts
         let i = 0
-        while (i < reviews) {
-            //if department id of reviewer !== any IDs in array associated with grant
+        while (i < reviewerNumber && available.length > 0) {
+            if ( !(available[i].departments.includes(reviewerDept)) ) {
             //then POST to assign reviewer to grant
             //& decrement #reviews in DB
-            // i++
+            }
             //else skip
+            i++;
         }
-
     } else {
       res.sendStatus(401);
     }
