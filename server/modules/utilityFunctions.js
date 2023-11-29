@@ -16,6 +16,11 @@ function parseName(fullName) {
     }
 }
 
+
+function isDateBetween(startDate, endDate, checkDate) {
+  return startDate <= checkDate && checkDate <= endDate;
+}
+
 //Spring grant cycle opens third monday of March
 function thirdMondayOfMarch(year) {
     const march = new Date(year, 2, 1); // Month in JavaScript is 0-based (0: January, 1: February, ...)
@@ -86,4 +91,4 @@ function penultimateSundayOfOctober(year) {
     return october;
   }
 
-  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober};
+  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober, isDateBetween};

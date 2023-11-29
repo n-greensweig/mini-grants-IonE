@@ -20,24 +20,18 @@ CREATE TABLE "grant_data" (
 	"proposal_narrative" VARCHAR(15000),
 	"project_title" VARCHAR(500),
 	"principal_investigator" VARCHAR(100),
-	--letter of support will contain a URL
-	"letter_of_support" VARCHAR(120), 
+	"letter_of_support" VARCHAR(120), --letter of support will contain a URL
 	"PI_email" VARCHAR(60),
-	--Below line should be salted
-	"PI_employee_id" INT,
+	"PI_employee_id" INT, -- This line should be salted
 	"PI_primary_college" VARCHAR(100),
 	"PI_primary_campus" VARCHAR(100),
 	"PI_dept_accountant_name" VARCHAR(60),
 	"PI_dept_accountant_email" VARCHAR(60),
-	--Column O place holder(name)
-	--Column P place holder(email)
-	--Column Q place holder
-	--Column R place holder
 	"additional_team_members" JSONB,
 	"funding_type" VARCHAR(120),
 	"UMN_campus_or_center" VARCHAR(120),
 	"period_of_performance" INT,
-	"budget_items" VARCHAR(7500),
+	"budget_items" VARCHAR(120), --contains URL
 	"new_endeavor" BOOLEAN,
 	"heard_from_referece" VARCHAR(100),
 	"total_requested_budget" INT
