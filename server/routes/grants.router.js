@@ -280,13 +280,16 @@ router.put('/complete/:id', (req, res) => {
 
 
 //POST to assign grant reviews to reviewer after they sign up
+    //figure out how to access all vars required in req
+    //function to set date for assigned by
+    // figure out userID for alorigthm in "assigned_by" lol
 router.post('/assign', (req, res) => {
 
     if (req.isAuthenticated()) {
         console.log(req.body);
         let reviewerID = req.user.id
         let reviewerDept = req.body.reviewerDept
-        let reviewerNumber = req.body.reviews; // number of reviewer's available reviews
+        let reviewerNumber = req.body.reviews; // number of reviews that can be assigned to reviewer
         let cycleID = req.body.cycleID;
         let available = []
         //	first generate randomized list of grants from server that have less than 3 reviewers assigned
@@ -312,8 +315,8 @@ router.post('/assign', (req, res) => {
         while (i < available.length && reviewerNumber > 0) { //check that reviewer has more grants to be assigned and that there are grant apps that need reviews
             if ( !(available[i].departments.includes(reviewerDept)) ) { //check for department conflicts
                 let queryText = `INSERT INTO "grant_assignments" ("assigned_at", "assigned_by", "grant_id", "reviewer_id", "cycle_id")
-                VALUES ();`;
-                pool.query(queryText, [id])
+                VALUES ();`; //fill out
+                pool.query(queryText, [id]) // modify
                 .then((result) =>{
                     reviewerNumber--;
                     i++ //go to next grant that needs assigning
@@ -322,7 +325,7 @@ router.post('/assign', (req, res) => {
                     console.log(`Error assigning reviewer ${req.user.id} to grant ${available[i].id} `, err);
                     res.sendStatus(500)
                 })
-            } else { //conflict of department between review and app
+            } else { // indicates conflict of department between review and app
                 i++; //go to next grant that needs assigning
             }
         }
