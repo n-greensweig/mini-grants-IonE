@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const { google } = require('googleapis');
 const pool = require('../modules/pool');
 const { isDateBetween}  = require('../modules/utilityFunctions');
@@ -64,36 +65,36 @@ const getDataFromGoogleSheet = async () => {
     });
     // return response.data.values;
 
-    // console.log(response.data.values[0].length);
+    // console.log(response.data.values[0]);
     // console.log(response.data.values[1].length);
     let grantData = parseArray(response.data.values);
-    console.log(grantData);
+    console.log(Object.keys(grantData[0]));
+    
+    const salt = bcrypt.genSaltSync(10);
 
-
-  //   const dataObj = {
-  //     cycle_id: req.body.cycle_id,
-  //     time_stamp: Date.now(),
-  //     dept_id: req.body.dept_id, //Array
-  //     applicant_name: req.body.applicant_name,
-  //     applicant_email: req.body.applicant_email,
-  //     abstract: req.body.abstract,
-  //     proposal_narrative: req.body.proposal_narrative,
-  //     project_title: req.body.project_title,
-  //     principal_investigator: req.body.principal_investigator,
-  //     letter_of_support: req.body.letter_of_support, //URL link
-  //     PI_email: req.body.PI_email,
-  //     PI_employee_id: bcrypt.hashSync(req.body.PI_employee_id, salt), //employee ID will be salted
-  //     PI_primary_college: req.body.PI_primary_college,
-  //     PI_primary_campus: req.body.PI_primary_campus,
-  //     PI_dept_accountant_name: req.body.PI_dept_accountant_name,
-  //     PI_dept_accountant_email: req.body.PI_dept_accountant_email,
-  //     additional_team_members: req.body.additional_team_members,
-  //     funding_type: req.body.funding_type,
-  //     budget_items: req.body.budget_items,
-  //     new_endeavor: req.body.new_endeavor,
-  //     heard_from_reference: req.body.heard_from_reference,
-  //     total_requested_budget: req.body.total_requested_budget
-  // }
+    const dataObj = {
+      cycle_id: req.body.cycle_id,
+      time_stamp: grantData[i].time_stamp,
+      applicant_name: grantData[i].applicant_name,
+      applicant_email: grantData[i].applicant_email,
+      abstract: grantData[i].abstract,
+      proposal_narrative: grantData[i].proposal_narrative,
+      project_title: grantData[i].project_title,
+      principal_investigator: grantData[i].principal_investigator,
+      letter_of_support: grantData[i].letter_of_support, //URL link
+      PI_email: grantData[i].PI_email,
+      PI_employee_id: bcrypt.hashSync(grantData[i].PI_employee_id, salt), //employee ID will be salted
+      PI_primary_college: grantData[i].PI_primary_college,
+      PI_primary_campus: grantData[i].PI_primary_college,
+      PI_dept_accountant_name: grantData[i].PI_dept_accountant_name,
+      PI_dept_accountant_email: grantData[i].PI_dept_accountant_email,
+      additional_team_members: '', //To Do - must be parsed into JSON data
+      funding_type: grantData[i].funding_type,
+      budget_items: grantData[i].budget_items,
+      new_endeavor: grantData[i].new_endeavor,
+      heard_from_reference: grantData[i].heard_from_reference,
+      total_requested_budget: grantData[i].total_requested_budget
+  }
 
     
 
