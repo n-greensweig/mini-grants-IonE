@@ -278,47 +278,18 @@ router.put('/complete/:id', (req, res) => {
     }
 })// end PUT
 
-//GET to generate list of available grants to review
-router.get('/availableReviews', (req, res) => {
 
-    if(req.isAuthenticated()) {
-        console.log(req.body);
-        console.log('Fetching available grants')
-        let reviewerID = req.body.reviewerID;
-        let reviews = req.body.reviews;
-        let cycleID = req.body.cycleID;
-        let available = []
-        let queryText = `SELECT d.id, COUNT(*)
-                      FROM "grant_data" d
-                      FULL JOIN "grant_assignments" a
-                      ON d.id = a.grant_id
-                      WHERE "cycle_id" = $1
-                      GROUP BY d.id
-                      ORDER BY RANDOM()
-                      HAVING COUNT(*) < 3;`;
-                      //	Randomize list of grants from server that have less than 3 reviewers assigned
-        pool.query(queryText, [cycleID])
-        .then(result => {
-            res.send(result.rows);
-        })
-        .catch(error => {
-            console.log(`Error fetching grants available to review`, error);
-            res.sendStatus(500);
-        });
-    }
-}); //end GET
-
-
-//POST to assign grant reviews to reviewer (put in for loop)
+//POST to assign grant reviews to reviewer
 router.post('/assign', (req, res) => {
 
     if (req.isAuthenticated()) {
-      console.log(req.body);
-      let reviewerID = req.body.reviewerID;
-      let reviews = req.body.reviews;
-      let cycleID = req.body.cycleID;
-      let available = req.body.available
-      let queryText = `SELECT d.id, COUNT(*)
+        console.log(req.body);
+        let reviewerID = req.body.reviewerID;
+        let reviews = req.body.reviews; // number of available reviews
+        let cycleID = req.body.cycleID;
+        let available = []
+        //	first generate randomized list of grants from server that have less than 3 reviewers assigned
+        let queryText = `SELECT d.id, COUNT(*)
                     FROM "grant_data" d
                     FULL JOIN "grant_assignments" a
                     ON d.id = a.grant_id
@@ -326,16 +297,25 @@ router.post('/assign', (req, res) => {
                     GROUP BY d.id
                     ORDER BY RANDOM()
                     HAVING COUNT(*) < 3;`;
-                    //	Randomize list of grants from server that have less than 3 reviewers assigned
-      pool.query(queryText, [cycleID])
-      .then((result) =>{
-          console.log('Success', cycle_name);
-          res.sendStatus(200);
-      })
-      .catch((err) => {
-          console.log(`Error making query ${queryText}`, err);
-          res.sendStatus(500)
-      })
+        pool.query(queryText, [cycleID])
+        .then((result) =>{
+            console.log('generated list of available grants to review', result.rows);
+            available = result.rows
+        })
+        .catch((err) => {
+            console.log(`Error making query ${queryText}`, err);
+            res.sendStatus(500)
+        })
+        //then assign reviewer to grants in list based on # of available reviews and conflicts
+        let i = 0
+        while (i < reviews) {
+            //if department id of reviewer !== any IDs in array associated with grant
+            //then POST to assign reviewer to grant
+            //& decrement #reviews in DB
+            // i++
+            //else skip
+        }
+
     } else {
       res.sendStatus(401);
     }
