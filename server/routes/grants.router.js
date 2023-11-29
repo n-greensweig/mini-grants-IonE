@@ -309,13 +309,22 @@ router.post('/assign', (req, res) => {
         })
         //then assign reviewer to grants in list based on # of available reviews and conflicts
         let i = 0
-        while (i < reviewerNumber && available.length > 0) {
-            if ( !(available[i].departments.includes(reviewerDept)) ) {
-            //then POST to assign reviewer to grant
-            //& decrement #reviews in DB
+        while (i < available.length && reviewerNumber > 0) { //check that reviewer has more grants to be assigned and that there are grant apps that need reviews
+            if ( !(available[i].departments.includes(reviewerDept)) ) { //check for department conflicts
+                let queryText = `INSERT INTO "grant_assignments" ("assigned_at", "assigned_by", "grant_id", "reviewer_id", "cycle_id")
+                VALUES ();`;
+                pool.query(queryText, [id])
+                .then((result) =>{
+                    reviewerNumber--;
+                    i++ //go to next grant that needs assigning
+                })
+                .catch((err) => {
+                    console.log(`Error assigning reviewer ${req.user.id} to grant ${available[i].id} `, err);
+                    res.sendStatus(500)
+                })
+            } else { //conflict of department between review and app
+                i++; //go to next grant that needs assigning
             }
-            //else skip
-            i++;
         }
     } else {
       res.sendStatus(401);
