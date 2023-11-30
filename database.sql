@@ -23,6 +23,7 @@ CREATE TABLE "grant_data" (
 	"letter_of_support" VARCHAR(120), --letter of support will contain a URL
 	"PI_email" VARCHAR(60),
 	"PI_employee_id" INT, -- This line should be salted
+	"PI_dept_id" VARCHAR(60),
 	"PI_primary_college" VARCHAR(100),
 	"PI_primary_campus" VARCHAR(100),
 	"PI_dept_accountant_name" VARCHAR(60),

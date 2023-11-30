@@ -29,30 +29,51 @@ const authorize = async () => {
   return client;
 };
 
+const getCycleData = () => {
+  queryString = `
+  SELECT "cycle_name", 
+  TO_CHAR(start_date, 'YYYY-MM-DD"T"HH24:MI:SS.MSSTZ') AS formatted_start_date,
+  TO_CHAR(end_date, 'YYYY-MM-DD"T"HH24:MI:SS.MSSTZ') AS formatted_end_date
+  FROM "grant_cycle;"`
+
+pool.query(queryString).then((response) => {
+  return response.data;
+}).catch((error) => {
+  console.log(error);
+})
+
+}
+
+
+
+
 const checkDate = (date) => {
-    if (isDateBetween(grantCycle.rows[i].start_date, grantCycle.rows[i].end_date, date)) {
-      return grantCycle.rows[i].cycle_name;
+  console.log('getCycleData', getCycleData());
+  //   if (isDateBetween(parseDateString(grantCycle.rows[i].start_date), parseDateString(grantCycle.rows[i].end_date), date)) {
+  //     return grantCycle.rows[i].cycle_name;
     
-  }
+  // }
 }
 
 function parseArray(nestedArray) {
   const keys = nestedArray[0].map(key =>
-    key.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s/g, '_')
+    key.toLowerCase().replace(/[^\w\s]|_/g, '').replace(/\s/g, '_')
   );
   const result = [];
-
   for (let i = 1; i < nestedArray.length; i++) {
     const obj = {};
-
     for (let j = 0; j < keys.length; j++) {
       obj[keys[j]] = nestedArray[i][j]; // Assign values to sanitized keys
     }
-
     result.push(obj);
   }
-
   return result;
+}
+
+function parseDateString(dateString) {
+  const [month, day, year, hours, minutes, seconds] = dateString.split(/[/ :]/);
+  // Months are 0-based in JavaScript Date, so subtract 1 from the month
+  return new Date(year, month - 1, day, hours, minutes, seconds);
 }
 
 // Read data from Google Sheets
@@ -70,42 +91,52 @@ const getDataFromGoogleSheet = async () => {
     // console.log(response.data.values[0]);
     // console.log(response.data.values[1].length);
     let grantData = parseArray(response.data.values);
-    console.log(response.data.values[2][19]);
-    console.log(response.data.values[2][24]);
+    // console.log(response.data.values[2][19]);
+    // console.log(response.data.values[2][24]);
 
-    console.log(Object.keys(grantData[0]));
-    console.log(grantData[1]);
+    const headers = Object.keys(grantData[0]);
+    console.log(grantData[0][headers[0]]);
+    console.log(parseDateString(grantData[0][headers[0]]));
+
     const salt = bcrypt.genSaltSync(10);
 
     let i = 0;
     const dataObj = {
-      cycle_id: '', //Todo
-      time_stamp: grantData[i].time_stamp,
-      applicant_name: grantData[i].applicant_name,
-      applicant_email: grantData[i].applicant_email,
-      abstract: grantData[i].abstract,
-      proposal_narrative: grantData[i].proposal_narrative,
-      project_title: grantData[i].project_title,
-      principal_investigator: grantData[i].principal_investigator,
-      letter_of_support: grantData[i].letter_of_support, //URL link
-      PI_email: grantData[i].PI_email,
-      PI_employee_id: bcrypt.hashSync(grantData[i].pi_7digit_umn_employee_id_number, salt), //employee ID will be salted
-      PI_primary_college: grantData[i].PI_primary_college,
-      PI_primary_campus: grantData[i].PI_primary_college,
-      PI_dept_accountant_name: grantData[i].PI_dept_accountant_name,
-      PI_dept_accountant_email: grantData[i].PI_dept_accountant_email,
+      cycle_id: checkDate(grantData[i][headers[0]]), //Todo
+      time_stamp: parseDateString(grantData[i][headers[0]]),
+      applicant_name: grantData[i][headers[1]],
+      applicant_email: grantData[i][headers[15]],
+      abstract: grantData[i][headers[2]],
+      proposal_narrative: grantData[i][headers[3]],
+      project_title: grantData[i][headers[4]],
+      principal_investigator: grantData[i][headers[5]],
+      letter_of_support: grantData[i][headers[6]], //URL link
+      PI_email: grantData[i][headers[7]],
+      PI_employee_id: bcrypt.hashSync(grantData[i][headers[8]], salt), //employee ID will be salted
+      PI_dept_id: grantData[i][headers[9]],
+      PI_primary_college: grantData[i][headers[10]],
+      PI_primary_campus: grantData[i][headers[29]],
+      PI_dept_accountant_name: grantData[i][headers[12]],
+      PI_dept_accountant_email:grantData[i][headers[13]],
       additional_team_members: '', //To Do - must be parsed into JSON data
-      funding_type: grantData[i].funding_type,
-      period_of_performance: grantData[i].period_of_performance,
-      budget_items: grantData[i].budget_items,
-      new_endeavor: grantData[i].new_endeavor,
-      heard_from_reference: grantData[i].heard_from_reference,
-      total_requested_budget: grantData[i].total_requested_budget
+      funding_type: grantData[i][headers[20]],
+      UMN_campus_or_center: grantData[i][headers[21]],
+      period_of_performance: grantData[i][headers[22]],
+      budget_items: grantData[i][headers[23]],
+      new_endeavor: grantData[i][headers[26]],
+      heard_from_reference: grantData[i][headers[27]],
+      total_requested_budget: grantData[i][headers[28]]
   }
 
+  // 14'please_provide_this_individuals_first_and_last_name',
+  // 15'email_address',
+  // 16'role_external_adviser_undergraduate_student_graduate_student_etc',
+  // 17'department__unit__organization',
+  // 18'do_you_have_other_team_members_left_to_add',
+  // 19'please_send_the_name_email_address_project_role_and_department_or_organization_of_any_additional_project_team_members_to_at_ionemgumnedu_if_you_have_additional_team_members_to_add_to_your_proposal_no_response_needed_below',
+
+  console.log(dataObj);
     
-
-
 
   } catch (err) {
     console.error('The API returned an error:', err);

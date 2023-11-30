@@ -16,7 +16,6 @@ function parseName(fullName) {
     }
 }
 
-
 function isDateBetween(startDate, endDate, checkDate) {
   return startDate <= checkDate && checkDate <= endDate;
 }
