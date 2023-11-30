@@ -21,6 +21,16 @@ function Nav() {
           </Link>
         )}
 
+        <Link className="navLink" to="/adminhomeview">
+          Admin-Home
+        </Link>
+
+        <Link className="navLink" to="/grantreviewform">
+          Grant-ReviewForm
+        </Link>
+
+
+
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
