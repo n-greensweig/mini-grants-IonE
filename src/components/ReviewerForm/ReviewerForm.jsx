@@ -21,9 +21,26 @@ function ReviewerForm(){
       };
 
 
-    function handleSubmit () {
+    function handleSubmit (event) {
+        event.preventDefault();
 
+        console.log('Form Data', formData);
     }
+
+    //multi select drop down
+    const options = ["Option 1", "Option 2", "Option 3", "Option 4"]; // Add your options here
+    const [selectedItems, setSelectedItems] = useState([]);
+
+    const handleSelectionChange = (event) => {
+    const selectedValue = event.target.value;
+
+    if (!selectedItems.includes(selectedValue)) {
+      setSelectedItems([...selectedItems, selectedValue]);
+    } else {
+      // If the item is already selected, remove it from the list
+      setSelectedItems(selectedItems.filter(item => item !== selectedValue));
+    }
+  };
 
     return (
         <>
@@ -33,7 +50,7 @@ function ReviewerForm(){
 
             <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="name">Name:</label>
+                <label>Name:</label>
                 <input
                 type="text"
                 id="name"
@@ -46,7 +63,7 @@ function ReviewerForm(){
             </div>
         
             <div>
-                <label htmlFor="email">Email Address:</label>
+                <label>Email Address:</label>
                 <input
                 type="email"
                 id="email"
@@ -57,24 +74,28 @@ function ReviewerForm(){
                 required
                 />
             </div>
-        
-            <div>
-                <label htmlFor="department">Department Affiliations:</label>
+        {/* Department Affiliations */}
+        <div>
+                <label htmlFor="multiSelect">Select multiple options:</label>
                 <select
-                id="department"
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                required
+                    id="multiSelect"
+                    multiple
+                    onChange={handleSelectionChange}
+                    value={selectedItems}
                 >
-                {/* list of department options goes here */}
-                <option value="department1">Department 1</option>
-                <option value="department2">Department 2</option>
+                    {options.map(option => (
+                    <option key={option} value={option}>
+                        {option}
+                    </option>
+                    ))}
                 </select>
+            <div>
+                <p>Selected items: {selectedItems.join(', ')}</p>
             </div>
+        </div>
         
             <div>
-                <label htmlFor="grantsToReview">Grants to Review:</label>
+                <label>Grants to Review:</label>
                 <input
                 type="number"
                 id="grantsToReview"
