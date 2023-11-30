@@ -76,7 +76,7 @@ function GrantReviewForm() {
     const saveScores = () => {
         axios.post(`/grants/setScores`, savedScores)
             .then((response) => {
-                console.log(scores);
+                console.log(savedScores);
             }).catch((error) => {
                 console.log(error);
                 alert('Something went wrong.');
@@ -85,9 +85,10 @@ function GrantReviewForm() {
     };
 
     const submitScores = () => {
+        console.log(submittedScores);
         axios.post(`/grants/setScores`, submittedScores)
             .then((response) => {
-                console.log(scores);
+                console.log(submittedScores);
             }).catch((error) => {
                 console.log(error);
                 alert('Something went wrong.');
