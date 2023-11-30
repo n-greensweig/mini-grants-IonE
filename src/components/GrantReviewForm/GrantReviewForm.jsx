@@ -47,7 +47,7 @@ function GrantReviewForm() {
     };
     console.log(recommendation);
 
-    let scores = {
+    let submittedScores = {
         created_at: "1",
         grant_id: "1",
         reviewer_id: "1",
@@ -56,15 +56,42 @@ function GrantReviewForm() {
         goals: goals,
         method_and_design: method_and_design,
         budget: budget,
-        impact: impact
-    }
+        impact: impact,
+        review_complete: true,
+    };
+
+    let savedScores = {
+        created_at: "1",
+        grant_id: "1",
+        reviewer_id: "1",
+        assigned_by: "1",
+        interdisciplinary: interdisciplinary,
+        goals: goals,
+        method_and_design: method_and_design,
+        budget: budget,
+        impact: impact,
+        review_complete: true,
+    };
 
     const saveScores = () => {
-
+        axios.post(`/grants/setScores`, savedScores)
+            .then((response) => {
+                console.log(scores);
+            }).catch((error) => {
+                console.log(error);
+                alert('Something went wrong.');
+            });
+        history.push(`/reviewerhomepage`);
     };
 
     const submitScores = () => {
-
+        axios.post(`/grants/setScores`, submittedScores)
+            .then((response) => {
+                console.log(scores);
+            }).catch((error) => {
+                console.log(error);
+                alert('Something went wrong.');
+            });
         history.push(`/reviewerhomepage`);
     };
 
