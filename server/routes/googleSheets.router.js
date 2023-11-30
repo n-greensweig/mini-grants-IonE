@@ -12,7 +12,7 @@ const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI';
 let start_col = 'A';
 let start_row = '1';
 let end_col = 'CA';
-let end_row = '5';
+let end_row = '25';
 
 const range = `Application Sheet Example!${start_col}${start_row}:${end_col}${end_row}`; // Change this to your desired range
 
@@ -29,7 +29,8 @@ const authorize = async () => {
   return client;
 };
 
-
+//Searches the database for the correct cycle ID and applies it to imported grant data
+//Based on the time of the submitted grant application
 async function getCycleName(date) {
   const client = await pool.connect();
 try {
@@ -52,6 +53,8 @@ try {
 }
 }
 
+//Parses the header data by removing spaces and special characters so they can be placed into a
+//javascript object
 function parseArray(nestedArray) {
   const keys = nestedArray[0].map(key =>
     key.toLowerCase().replace(/[^\w\s]|_/g, '').replace(/\s/g, '_')
@@ -73,6 +76,21 @@ function parseDateString(dateString) {
   return new Date(year, month - 1, day, hours, minutes, seconds);
 }
 
+function parseNewProject(string) {
+  if (string === 'This is a new project.') return true
+  else return false;
+}
+
+function convertCurrencyStringToInt(currencyString) {
+  // Remove commas and dollar sign, then parse the float value
+  const value = parseFloat(currencyString.replace(/[$,]/g, ''));
+
+  // Convert the float value to an integer
+  const intValue = Math.round(value * 100); // Multiplying by 100 to convert dollars to cents
+
+  return value;
+}
+
 // Read data from Google Sheets
 const getDataFromGoogleSheet = async () => {
   const auth = await authorize();
@@ -84,53 +102,46 @@ const getDataFromGoogleSheet = async () => {
       range,
     });
   
-    let grantData = parseArray(response.data.values);
-    const headers = Object.keys(grantData[0]);
+    let grantData = response.data.values;
+    // const headers = Object.keys(grantData[0]);
     const salt = bcrypt.genSaltSync(10);
+    // console.log(grantData[1]);
+    let dataObj = [];
 
-    let i = 0;
+    for (let i = 1; i < grantData.length; i++) {
+      const cycleName = await getCycleName(parseDateString(grantData[i][0]));
+      
+    const singleLineData = [
+      cycleName, //cycle_id
+      parseDateString(grantData[i][0]), //time_stamp
+      grantData[i][1], //applicant_name
+      grantData[i][15], //applicant_email
+      grantData[i][2], //abstract
+      grantData[i][3], //proposal_narrative
+      grantData[i][4], //project_title
+      grantData[i][5], //principal_investigator
+      grantData[i][6], //letter_of_support
+      grantData[i][7], //PI_email
+      bcrypt.hashSync(grantData[i][8], salt), //PI_employee_id - salted
+      grantData[i][9], //PI_dept_id
+      grantData[i][10], //PI_primary_college
+      grantData[i][29], //PI_primary_campus
+      grantData[i][12], //PI_dept_accountant_name
+      grantData[i][13], //PI_dept_accountant_email
+      {}, //additional_team_members - To Do - must be parsed into JSON data
+      grantData[i][69], //funding_type
+      grantData[i][70], //UMN_campus_or_center
+      grantData[i][71], //period_of_performance
+      grantData[i][72], //budget_items
+      parseNewProject(grantData[i][75]), //new_endeavor
+      grantData[i][76], //heard_from_reference
+      convertCurrencyStringToInt(grantData[i][77]) //total_requested_budget
+    ]
+
+    dataObj.push(singleLineData);
     
-    const cycleName = await getCycleName(parseDateString(grantData[i][headers[0]]));
-    
-
-    const dataObj = {
-      cycle_id: cycleName,
-      time_stamp: parseDateString(grantData[i][headers[0]]),
-      applicant_name: grantData[i][headers[1]],
-      applicant_email: grantData[i][headers[15]],
-      abstract: grantData[i][headers[2]],
-      proposal_narrative: grantData[i][headers[3]],
-      project_title: grantData[i][headers[4]],
-      principal_investigator: grantData[i][headers[5]],
-      letter_of_support: grantData[i][headers[6]], //URL link
-      PI_email: grantData[i][headers[7]],
-      PI_employee_id: bcrypt.hashSync(grantData[i][headers[8]], salt), //employee ID will be salted
-      PI_dept_id: grantData[i][headers[9]],
-      PI_primary_college: grantData[i][headers[10]],
-      PI_primary_campus: grantData[i][headers[29]],
-      PI_dept_accountant_name: grantData[i][headers[12]],
-      PI_dept_accountant_email:grantData[i][headers[13]],
-      additional_team_members: '', //To Do - must be parsed into JSON data
-      funding_type: grantData[i][headers[20]],
-      UMN_campus_or_center: grantData[i][headers[21]],
-      period_of_performance: grantData[i][headers[22]],
-      budget_items: grantData[i][headers[23]],
-      new_endeavor: grantData[i][headers[26]],
-      heard_from_reference: grantData[i][headers[27]],
-      total_requested_budget: grantData[i][headers[28]]
-  }
-  console.log(dataObj);
-
-  // 14'please_provide_this_individuals_first_and_last_name',
-  // 15'email_address',
-  // 16'role_external_adviser_undergraduate_student_graduate_student_etc',
-  // 17'department__unit__organization',
-  // 18'do_you_have_other_team_members_left_to_add',
-  // 19'please_send_the_name_email_address_project_role_and_department_or_organization_of_any_additional_project_team_members_to_at_ionemgumnedu_if_you_have_additional_team_members_to_add_to_your_proposal_no_response_needed_below',
-
-  // console.log(dataObj);
-    
-
+    } //End for loop
+    return dataObj;
   } catch (err) {
     console.error('The API returned an error:', err);
     return null;
@@ -138,27 +149,58 @@ const getDataFromGoogleSheet = async () => {
 };
 
 // Save data to PostgreSQL
-const saveDataToPostgres = async (pgClient) => {
+const saveDataToPostgres = async () => {
   const data = await getDataFromGoogleSheet();
+  // console.log(typeof data, data.length, data[0].length);
   if (!data) return;
 
-  const query = 'INSERT INTO your_table_name (column1, column2, column3, column4) VALUES ($1, $2, $3, $4)';
-
-  data.forEach(async row => {
+  for (let i = 0; i < data.length; i++) {
     try {
-      await pgClient.query(query, row);
-      console.log('Data inserted:', row);
-    } catch (err) {
-      console.error('Error inserting data:', err);
+    
+      const isDuplicateQuery = {
+        text: `SELECT checkDuplicateEntry($1, $2, $3, $4) AS is_duplicate`,
+          values: [data[i].project_title, data[i].applicant_name, data[i].applicant_email, data[i].cycle_id]
+      };
+      const { rows } = await pool.query(isDuplicateQuery.text, isDuplicateQuery.values);
+      
+      const isDuplicate = rows[0].is_duplicate;
+      // console.log('IsDuplicate', isDuplicate);
+
+      if (!isDuplicate) {
+
+        const insertQuery = `
+        INSERT INTO "grant_data" (
+          "cycle_id", "time_stamp", "applicant_name", "applicant_email", "abstract", 
+         "proposal_narrative", "project_title", "principal_investigator", "letter_of_support", 
+          "PI_email", "PI_employee_id", "PI_dept_id", "PI_primary_college", "PI_primary_campus", 
+          "PI_dept_accountant_name", "PI_dept_accountant_email", "additional_team_members", 
+         "funding_type", "UMN_campus_or_center", "period_of_performance", "budget_items", 
+         "new_endeavor", "heard_from_reference", "total_requested_budget")
+
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 
+              $16, $17, $18, $19, $20, $21, $22, $23, $24);`;
+          
+        console.log('******************Data***********************', data[i]);
+        
+        await pool.query(insertQuery, data[i]);
+        console.log('Data inserted:');
+      } else {
+        console.log('Skipping duplicate entry');
+      } //end if isDuplicate()
+    } //end try
+    catch(error) {
+      console.error('Error inserting data:', error);
     }
-  });
+  } //end for loop
+
+
+
 };
 
 // Route to trigger the data saving process
 router.get('/save-to-postgres', async (req, res) => {
   // if(req.isAuthenticated()) {
-  const pgClient = req.app.get('pgClient');
-  await saveDataToPostgres(pgClient);
+  await saveDataToPostgres();
   res.send('Data saved to PostgreSQL!');
   // } else {
   //   res.sendStatus(401);

@@ -22,7 +22,7 @@ CREATE TABLE "grant_data" (
 	"principal_investigator" VARCHAR(100),
 	"letter_of_support" VARCHAR(120), --letter of support will contain a URL
 	"PI_email" VARCHAR(60),
-	"PI_employee_id" INT, -- This line should be salted
+	"PI_employee_id" VARCHAR(200), -- This line should be salted
 	"PI_dept_id" VARCHAR(60),
 	"PI_primary_college" VARCHAR(100),
 	"PI_primary_campus" VARCHAR(100),
@@ -31,10 +31,10 @@ CREATE TABLE "grant_data" (
 	"additional_team_members" JSONB,
 	"funding_type" VARCHAR(120),
 	"UMN_campus_or_center" VARCHAR(120),
-	"period_of_performance" INT,
+	"period_of_performance" VARCHAR(60),
 	"budget_items" VARCHAR(120), --contains URL
 	"new_endeavor" BOOLEAN,
-	"heard_from_referece" VARCHAR(100),
+	"heard_from_reference" VARCHAR(100),
 	"total_requested_budget" INT
 );
 
@@ -87,3 +87,35 @@ CREATE TABLE "reviewers" (
 	"available_reviews" INT,
 	"dept_id" VARCHAR[]
 );
+
+
+--Function must be inserted into database in order for google sheet import
+CREATE OR REPLACE FUNCTION checkDuplicateEntry(
+    IN p_project_title VARCHAR(500),
+    IN p_applicant_name VARCHAR(60),
+    IN p_applicant_email VARCHAR(60),
+	IN p_cycle_id INTEGER
+)
+RETURNS BOOLEAN AS
+$$
+DECLARE
+    v_count INTEGER;
+BEGIN
+    SELECT COUNT(*)
+    INTO v_count
+    FROM grant_data
+    WHERE project_title = p_project_title
+      AND applicant_name = p_applicant_name
+      AND applicant_email = p_applicant_email
+	  AND cycle_id = p_cycle_id;
+
+    IF v_count > 0 THEN
+        -- Entry with the same project_title, applicant_name, and applicant_email exists
+        RETURN TRUE;
+    ELSE
+        -- No matching entry found, proceed with insertion
+        RETURN FALSE;
+    END IF;
+END;
+$$
+LANGUAGE 'plpgsql';
