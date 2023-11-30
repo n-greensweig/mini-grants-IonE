@@ -1,0 +1,34 @@
+.reviewerTable{
+    margin-top: 20px;
+    margin: 5%;
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 50px;
+    background-color: #d5d6d2;
+}
+
+.reviewerTable th, .reviewerTable td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    width: 20%;
+}
+
+.reviewerTable th {
+    padding: 20px;
+}
+
+.reviewerTable button {
+    background-color: #ffcc33;
+    border-radius: 10%;
+    color: #7a0019;
+    padding: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.reviewerTable button:hover {
+    background-color: #ffb71e;
+}
