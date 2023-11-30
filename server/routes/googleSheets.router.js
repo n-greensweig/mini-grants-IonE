@@ -34,9 +34,10 @@ const getCycleData = () => {
   SELECT "cycle_name", 
   TO_CHAR(start_date, 'YYYY-MM-DD"T"HH24:MI:SS.MSSTZ') AS formatted_start_date,
   TO_CHAR(end_date, 'YYYY-MM-DD"T"HH24:MI:SS.MSSTZ') AS formatted_end_date
-  FROM "grant_cycle;"`
+  FROM "grant_cycle;"`;
 
 pool.query(queryString).then((response) => {
+  console.log(response.rows);
   return response.data;
 }).catch((error) => {
   console.log(error);
