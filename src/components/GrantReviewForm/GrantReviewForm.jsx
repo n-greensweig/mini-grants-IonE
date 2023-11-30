@@ -96,7 +96,6 @@ function GrantReviewForm() {
         history.push(`/reviewerhomepage`);
     };
 
-
     return (
         <div id="review-form">
             {/* To add tooltips to all titles */}
@@ -181,6 +180,7 @@ function GrantReviewForm() {
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                 />
+
             <br />
             <br />
 

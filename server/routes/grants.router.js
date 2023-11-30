@@ -1,7 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 //GET all grant data
 router.get('/', (req, res) => {
@@ -14,6 +14,23 @@ router.get('/', (req, res) => {
         })
         .catch(error => {
             console.log(`Error fetching all grant data`, error);
+            res.sendStatus(500);
+        });
+    }
+}); //end GET
+
+
+// GET all reviewers --HALEIGH
+router.get('/reviewers', (req, res) => {
+    if(req.isAuthenticated()) {
+        let queryText = 'SELECT * from "reviewers";';
+        console.log('Fetching all reviewers')
+        pool.query(queryText)
+        .then(result => {
+            res.send(result.rows);
+        })
+        .catch(error => {
+            console.log(`Error fetching all reviewers`, error);
             res.sendStatus(500);
         });
     }
