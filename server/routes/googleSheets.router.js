@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { google } = require('googleapis');
 const pool = require('../modules/pool');
 const { isDateBetween}  = require('../modules/utilityFunctions');
@@ -37,7 +37,9 @@ const checkDate = (date) => {
 }
 
 function parseArray(nestedArray) {
-  const keys = nestedArray[0].map(key => key.toLowerCase().replace(/\s/g, '_')); // Convert to lowercase and replace spaces with underscores in keys
+  const keys = nestedArray[0].map(key =>
+    key.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s/g, '_')
+  );
   const result = [];
 
   for (let i = 1; i < nestedArray.length; i++) {
@@ -68,12 +70,16 @@ const getDataFromGoogleSheet = async () => {
     // console.log(response.data.values[0]);
     // console.log(response.data.values[1].length);
     let grantData = parseArray(response.data.values);
+    console.log(response.data.values[2][19]);
+    console.log(response.data.values[2][24]);
+
     console.log(Object.keys(grantData[0]));
-    
+    console.log(grantData[1]);
     const salt = bcrypt.genSaltSync(10);
 
+    let i = 0;
     const dataObj = {
-      cycle_id: req.body.cycle_id,
+      cycle_id: '', //Todo
       time_stamp: grantData[i].time_stamp,
       applicant_name: grantData[i].applicant_name,
       applicant_email: grantData[i].applicant_email,
@@ -83,13 +89,14 @@ const getDataFromGoogleSheet = async () => {
       principal_investigator: grantData[i].principal_investigator,
       letter_of_support: grantData[i].letter_of_support, //URL link
       PI_email: grantData[i].PI_email,
-      PI_employee_id: bcrypt.hashSync(grantData[i].PI_employee_id, salt), //employee ID will be salted
+      PI_employee_id: bcrypt.hashSync(grantData[i].pi_7digit_umn_employee_id_number, salt), //employee ID will be salted
       PI_primary_college: grantData[i].PI_primary_college,
       PI_primary_campus: grantData[i].PI_primary_college,
       PI_dept_accountant_name: grantData[i].PI_dept_accountant_name,
       PI_dept_accountant_email: grantData[i].PI_dept_accountant_email,
       additional_team_members: '', //To Do - must be parsed into JSON data
       funding_type: grantData[i].funding_type,
+      period_of_performance: grantData[i].period_of_performance,
       budget_items: grantData[i].budget_items,
       new_endeavor: grantData[i].new_endeavor,
       heard_from_reference: grantData[i].heard_from_reference,
