@@ -129,6 +129,10 @@ function GrantReviewForm(){
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                 />
+            <br />
+            <br />
+
+            <button>Save</button> <button>Submit</button>
 
         </div>
     )
