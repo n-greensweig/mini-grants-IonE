@@ -159,7 +159,7 @@ const saveDataToPostgres = async () => {
     
       const isDuplicateQuery = {
         text: `SELECT checkDuplicateEntry($1, $2, $3, $4) AS is_duplicate`,
-          values: [data[i].project_title, data[i].applicant_name, data[i].applicant_email, data[i].cycle_id]
+          values: [data[i][6], data[i][2], data[i][3], data[i][0]]
       };
       const { rows } = await pool.query(isDuplicateQuery.text, isDuplicateQuery.values);
       

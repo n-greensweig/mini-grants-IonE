@@ -14,7 +14,7 @@ CREATE TABLE "grant_data" (
 	"time_stamp" DATE,
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"dept_id" VARCHAR[],
-	"applicant_name" VARCHAR(60),
+	"applicant_name" VARCHAR(120),
 	"applicant_email" VARCHAR(60),
 	"abstract" VARCHAR(2000),
 	"proposal_narrative" VARCHAR(15000),
