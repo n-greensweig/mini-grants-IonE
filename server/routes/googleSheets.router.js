@@ -29,31 +29,27 @@ const authorize = async () => {
   return client;
 };
 
-const getCycleData = () => {
-  queryString = `
-  SELECT "cycle_name", 
-  TO_CHAR(start_date, 'YYYY-MM-DD"T"HH24:MI:SS.MSSTZ') AS formatted_start_date,
-  TO_CHAR(end_date, 'YYYY-MM-DD"T"HH24:MI:SS.MSSTZ') AS formatted_end_date
-  FROM "grant_cycle;"`;
 
-pool.query(queryString).then((response) => {
-  console.log(response.rows);
-  return response.data;
-}).catch((error) => {
-  console.log(error);
-})
+async function getCycleName(date) {
+  const client = await pool.connect();
+try {
 
+  const queryString = {
+    query: `SELECT "id" FROM "grant_cycle" WHERE $1 BETWEEN "start_date" AND "end_date";`,
+    values: [date]
+  };
+
+  const result = await client.query(queryString.query, queryString.values)
+  if (result.rows.length > 0) {
+    return result.rows[0].id;
+  } else {
+    return 'N/A';
+  } 
+} catch (error) {
+  console.error(`Error running query`, error);
+} finally {
+  client.release();
 }
-
-
-
-
-const checkDate = (date) => {
-  console.log('getCycleData', getCycleData());
-  //   if (isDateBetween(parseDateString(grantCycle.rows[i].start_date), parseDateString(grantCycle.rows[i].end_date), date)) {
-  //     return grantCycle.rows[i].cycle_name;
-    
-  // }
 }
 
 function parseArray(nestedArray) {
@@ -87,23 +83,18 @@ const getDataFromGoogleSheet = async () => {
       spreadsheetId,
       range,
     });
-    // return response.data.values;
-
-    // console.log(response.data.values[0]);
-    // console.log(response.data.values[1].length);
+  
     let grantData = parseArray(response.data.values);
-    // console.log(response.data.values[2][19]);
-    // console.log(response.data.values[2][24]);
-
     const headers = Object.keys(grantData[0]);
-    console.log(grantData[0][headers[0]]);
-    console.log(parseDateString(grantData[0][headers[0]]));
-
     const salt = bcrypt.genSaltSync(10);
 
     let i = 0;
+    
+    const cycleName = await getCycleName(parseDateString(grantData[i][headers[0]]));
+    
+
     const dataObj = {
-      cycle_id: checkDate(grantData[i][headers[0]]), //Todo
+      cycle_id: cycleName,
       time_stamp: parseDateString(grantData[i][headers[0]]),
       applicant_name: grantData[i][headers[1]],
       applicant_email: grantData[i][headers[15]],
@@ -128,6 +119,7 @@ const getDataFromGoogleSheet = async () => {
       heard_from_reference: grantData[i][headers[27]],
       total_requested_budget: grantData[i][headers[28]]
   }
+  console.log(dataObj);
 
   // 14'please_provide_this_individuals_first_and_last_name',
   // 15'email_address',
@@ -136,7 +128,7 @@ const getDataFromGoogleSheet = async () => {
   // 18'do_you_have_other_team_members_left_to_add',
   // 19'please_send_the_name_email_address_project_role_and_department_or_organization_of_any_additional_project_team_members_to_at_ionemgumnedu_if_you_have_additional_team_members_to_add_to_your_proposal_no_response_needed_below',
 
-  console.log(dataObj);
+  // console.log(dataObj);
     
 
   } catch (err) {
