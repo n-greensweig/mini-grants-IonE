@@ -10,30 +10,32 @@ import axios from 'axios';
 // Styles
 import './GrantReviewForm.css'
 
-function GrantReviewForm(){
+function GrantReviewForm() {
 
-    const [collaboration, setCollaboration] = useState('');
+    const history = useHistory();
+
+    const [interdisciplinary, setInterdisciplinary] = useState('');
     const [goals, setGoals] = useState('');
-    const [design, setDesign] = useState('');
+    const [method_and_design, setMethod_and_design] = useState('');
     const [budget, setBudget] = useState('');
     const [impact, setImpact] = useState('');
     const [recommendation, setRecommendation] = useState('');
     const [comments, setComments] = useState('');
 
-    const collaborationRadioChange = (event) => {
-        setCollaboration(event.target.id);
+    const interdisciplinaryRadioChange = (event) => {
+        setInterdisciplinary(event.target.id);
     };
-    console.log(collaboration);
+    console.log(interdisciplinary);
 
     const goalsRadioChange = (event) => {
         setGoals(event.target.id);
     };
     console.log(goals);
     
-    const designRadioChange = (event) => {
-        setDesign(event.target.id);
+    const method_and_designRadioChange = (event) => {
+        setMethod_and_design(event.target.id);
     };
-    console.log(design);
+    console.log(method_and_design);
 
     const budgetRadioChange = (event) => {
         setBudget(event.target.id);
@@ -45,21 +47,43 @@ function GrantReviewForm(){
     };
     console.log(recommendation);
 
+    let scores = {
+        created_at: "1",
+        grant_id: "1",
+        reviewer_id: "1",
+        assigned_by: "1",
+        interdisciplinary: interdisciplinary,
+        goals: goals,
+        method_and_design: method_and_design,
+        budget: budget,
+        impact: impact
+    }
+
+    const saveScores = () => {
+
+    };
+
+    const submitScores = () => {
+
+        history.push(`/reviewerhomepage`);
+    };
+
+
     return (
         <div id="review-form">
             {/* To add tooltips to all titles */}
             <p className='review-form-title'>Interdisciplinary Collaboration</p>
             <form>
-                <input type="radio" id="1" name="collaboration" value={collaboration} onChange={collaborationRadioChange}/>
-                <label for="collaboration">1</label>
-                <input type="radio" id="2" name="collaboration" value={collaboration} onChange={collaborationRadioChange}/>
-                <label for="collaboration">2</label>
-                <input type="radio" id="3" name="collaboration" value={collaboration} onChange={collaborationRadioChange}/>
-                <label for="collaboration">3</label>
-                <input type="radio" id="4" name="collaboration" value={collaboration} onChange={collaborationRadioChange}/>
-                <label for="collaboration">4</label>
-                <input type="radio" id="5" name="collaboration" value={collaboration} onChange={collaborationRadioChange}/>
-                <label for="collaboration">5</label>
+                <input type="radio" id="1" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
+                <label for="interdisciplinary">1</label>
+                <input type="radio" id="2" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
+                <label for="interdisciplinary">2</label>
+                <input type="radio" id="3" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
+                <label for="interdisciplinary">3</label>
+                <input type="radio" id="4" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
+                <label for="interdisciplinary">4</label>
+                <input type="radio" id="5" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
+                <label for="interdisciplinary">5</label>
             </form>
 
             <p className='review-form-title'>Project Goals</p>
@@ -76,38 +100,38 @@ function GrantReviewForm(){
                 <label for="goals">5</label>
             </form>
 
-            <p className='review-form-title'>Method Design</p>
+            <p className='review-form-title'>Method/Design</p>
             <form>
-                <input type="radio" id="0" name="design" value="design" onChange={designRadioChange}/>
-                <label for="design">0</label>
-                <input type="radio" id="2" name="design" value="design" onChange={designRadioChange}/>
-                <label for="design">2</label>
-                <input type="radio" id="3" name="design" value="design" onChange={designRadioChange}/>
-                <label for="design">3</label>
-                <input type="radio" id="5" name="design" value="design" onChange={designRadioChange}/>
-                <label for="design">5</label>
+                <input type="radio" id="0" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
+                <label for="method_and_design">0</label>
+                <input type="radio" id="2" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
+                <label for="method_and_design">2</label>
+                <input type="radio" id="3" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
+                <label for="method_and_design">3</label>
+                <input type="radio" id="5" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
+                <label for="method_and_design">5</label>
             </form>
 
             <p className='review-form-title'>Budget</p>
             <form>
-                <input type="radio" id="0" name="design" value="budget" onChange={budgetRadioChange}/>
+                <input type="radio" id="0" name="budget" value="budget" onChange={budgetRadioChange}/>
                 <label for="budget">0</label>
-                <input type="radio" id="0.5" name="design" value="budget" onChange={budgetRadioChange}/>
+                <input type="radio" id="0.5" name="budget" value="budget" onChange={budgetRadioChange}/>
                 <label for="budget">0.5</label>
-                <input type="radio" id="1" name="design" value="budget" onChange={budgetRadioChange}/>
+                <input type="radio" id="1" name="budget" value="budget" onChange={budgetRadioChange}/>
                 <label for="budget">1</label>
-                <input type="radio" id="2" name="design" value="budget" onChange={budgetRadioChange}/>
+                <input type="radio" id="2" name="budget" value="budget" onChange={budgetRadioChange}/>
                 <label for="budget">2</label>
             </form>
 
             {/* Have to figure out how to add these up */}
             <p className='review-form-title'>Impact</p>
             <form>
-                <input type="checkbox" id="2" name="design" value="impact" />
+                <input type="checkbox" id="2" name="impact" value="impact" />
                 <label for="impact">2</label>
-                <input type="checkbox" id="2" name="design" value="impact" />
+                <input type="checkbox" id="2" name="impact" value="impact" />
                 <label for="impact">2</label>
-                <input type="checkbox" id="2" name="design" value="impact" />
+                <input type="checkbox" id="2" name="impact" value="impact" />
                 <label for="impact">2</label>
             </form>
 
@@ -132,10 +156,12 @@ function GrantReviewForm(){
             <br />
             <br />
 
-            <button>Save</button> <button>Submit</button>
+            <button onClick={saveScores}>Save</button> <button onClick={submitScores}>Submit</button>
 
         </div>
     )
 }
 
 export default GrantReviewForm;
+
+// Will go back to Reviewer Home Page 3.2
