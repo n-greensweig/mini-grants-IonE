@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, Button } from '@mui/material';
+import axios from 'axios';
 
 const AdminHomeView = () => {
   // Sample test data for grants
@@ -29,12 +30,33 @@ const AdminHomeView = () => {
 
   // Replace the following with actual data fetching logic
   // useEffect(() => { ... }, []);
+//   useEffect(() => {
+//     axios.get('/api/grants')
+//         .then(response => {
+//             setGrants(response.data);
+//         })
+//         .catch(error => {
+//             console.error('Error fetching data', error);
+//         });
+// }, []);
+
+  const rowStyle = {
+    borderBottom: '1.5px solid black', 
+  };
+
+  const viewButtonStyle = {
+    backgroundColor: '#ffcc33', 
+    color: '#7a0019', 
+    '&:hover': {
+      backgroundColor: '#e6b800', 
+    },
+  };
 
   return (
     <TableContainer component={Paper} style={{ backgroundColor: '#D5D6D2' }}>
       <Table aria-label="grants table">
         <TableHead>
-          <TableRow>
+          <TableRow style={rowStyle}>
             <TableCell>Grant ID</TableCell>
             <TableCell>Applicant Name</TableCell>
             <TableCell>Applicant Email</TableCell>
@@ -48,7 +70,7 @@ const AdminHomeView = () => {
         </TableHead>
         <TableBody>
           {grants.map((grant) => (
-            <TableRow key={grant.id}>
+            <TableRow key={grant.id} style={rowStyle}>
               <TableCell>{grant.id}</TableCell>
               <TableCell>{grant.applicant_name}</TableCell>
               <TableCell>{grant.applicant_email}</TableCell>
@@ -80,7 +102,7 @@ const AdminHomeView = () => {
                 </Select>
               </TableCell>
               <TableCell>
-                <Button variant="contained" color="primary" onClick={() => {/* handle view click */}}>
+                <Button variant="contained" style={viewButtonStyle}  onClick={() => {/* handle view click */}}>
                   View
                 </Button>
               </TableCell>
