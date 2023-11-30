@@ -115,7 +115,7 @@ const getDataFromGoogleSheet = async () => {
       cycleName, //cycle_id
       parseDateString(grantData[i][0]), //time_stamp
       grantData[i][1], //applicant_name
-      grantData[i][15], //applicant_email
+      grantData[i][74], //applicant_email
       grantData[i][2], //abstract
       grantData[i][3], //proposal_narrative
       grantData[i][4], //project_title
@@ -158,8 +158,8 @@ const saveDataToPostgres = async () => {
     try {
     
       const isDuplicateQuery = {
-        text: `SELECT checkDuplicateEntry($1, $2, $3, $4) AS is_duplicate`,
-          values: [data[i][6], data[i][2], data[i][3], data[i][0]]
+        text: `SELECT checkDuplicateEntry($1, $2) AS is_duplicate`,
+          values: [data[i][6], data[i][0]]
       };
       const { rows } = await pool.query(isDuplicateQuery.text, isDuplicateQuery.values);
       

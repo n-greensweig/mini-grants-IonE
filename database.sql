@@ -92,8 +92,6 @@ CREATE TABLE "reviewers" (
 --Function must be inserted into database in order for google sheet import
 CREATE OR REPLACE FUNCTION checkDuplicateEntry(
     IN p_project_title VARCHAR(500),
-    IN p_applicant_name VARCHAR(60),
-    IN p_applicant_email VARCHAR(60),
 	IN p_cycle_id INTEGER
 )
 RETURNS BOOLEAN AS
@@ -105,8 +103,6 @@ BEGIN
     INTO v_count
     FROM grant_data
     WHERE project_title = p_project_title
-      AND applicant_name = p_applicant_name
-      AND applicant_email = p_applicant_email
 	  AND cycle_id = p_cycle_id;
 
     IF v_count > 0 THEN
@@ -119,3 +115,10 @@ BEGIN
 END;
 $$
 LANGUAGE 'plpgsql';
+
+--If the function needs to be updated this query will list the current functions and provide a 
+--psql line to drop them as needed
+SELECT 'DROP FUNCTION IF EXISTS ' || ns.nspname || '.' || proname || '(' || oidvectortypes(proargtypes) || ');'
+FROM pg_proc
+JOIN pg_namespace ns ON (pg_proc.pronamespace = ns.oid)
+WHERE ns.nspname NOT LIKE 'pg_%' AND ns.nspname != 'information_schema';
