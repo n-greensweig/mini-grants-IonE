@@ -34,10 +34,15 @@ passport.deserializeUser(function(user, done) {
         done(null, user);
 });
 
+let callbackURL = `${process.env.BASE_URL}/auth/google/callback`;
+if (process.env.NODE_ENV !== 'production') {
+  callbackURL = `http://localhost:5001/auth/google/callback`;
+}
+
 passport.use(new GoogleStrategy({
     clientID: process.env.googleClientID,
     clientSecret: process.env.googleClientSecret,
-    callbackURL: 'http://localhost:5001/auth/google/callback',
+    callbackURL,
     passReqToCallback   : true
     },
     async function(request, accessToken, refreshToken, profile, done) {
@@ -100,6 +105,17 @@ app.get('/google',
                 ['email', 'profile']
         }
     ));
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: `${process.env.BASE_URL}/#/login` }),
+  (req, res) => {
+    if (process.env.NODE_ENV !== 'production') {
+      res.redirect(`${process.env.BASE_URL}/#/home`);
+    } else {
+      res.redirect(`${process.env.BASE_URL}/#/home`); // TODO: After login page.
+    }
+  }
+);
 
 app.use(cookieSession({
   name: 'google-auth-session',
