@@ -6,7 +6,7 @@ const pool = require('../modules/pool');
 const { isDateBetween }  = require('../modules/utilityFunctions');
 
 // Google Sheets API credentials and spreadsheet ID
-const credentials = require('../../planar-granite-405621-bc999e6010f6.json'); // Path to your Google Cloud credentials file
+const credentials = require('../../sheets_api.json'); // Path to your Google Cloud credentials file
 
 //Below lines are for example purposes
 const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI'; //Default example sheet

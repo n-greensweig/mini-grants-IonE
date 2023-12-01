@@ -19,7 +19,7 @@
   2) On the Google Cloud Console click on "Credentials" then click "Create Credentails" and select "Service Account" in the drop down menu. 
   3) Create a service name, enter a service count ID and email and create the credentials.
   4) Once the credentials have been created click on "Keys" -> "Add Keys" -> "Create New Key". Select "JSON" and create the key. 
-  5) Creating the key will download a .JSON file. This file contains the authorizations for the Google Sheets API and must be copied into the main application folder. 
+  5) Creating the key will download a .JSON file. This file contains the authorizations for the Google Sheets API and must be copied into the main application folder and renamedd to "sheets_api.json". If the file is not renamed the import will not function. 
 
   #### Sharing the spreadsheet to the application
 
@@ -33,5 +33,5 @@
   On the Admin page of the IonE Mini-Grants application select "Import Data From Google Spreadsheet". Provide the spreadsheet ID and the start and end rows and columns. **Note: Do not include the header row (Row 1)**. 
   **Example: A2 to K20.**. Then provide the name of the tab that contains the data you wish to import. 
 
-  **Important** The order of columns in the google sheet cannot be changed and must match the format set by the current Google form submission. Any modification of the column order will result in data being placed erroneously in the database and will need to be fixed manually. 
+  **Important:** The order of columns in the google sheet cannot be changed and must match the format set by the current Google form submission. Any modification of the column order will result in data being placed erroneously in the database and will need to be fixed manually. 
 
