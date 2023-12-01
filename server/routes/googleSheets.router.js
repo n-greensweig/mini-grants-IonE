@@ -3,17 +3,17 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { google } = require('googleapis');
 const pool = require('../modules/pool');
-const { isDateBetween}  = require('../modules/utilityFunctions');
+const { isDateBetween }  = require('../modules/utilityFunctions');
 
 // Google Sheets API credentials and spreadsheet ID
 const credentials = require('../../planar-granite-405621-bc999e6010f6.json'); // Path to your Google Cloud credentials file
-const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI';
 
+//Below lines are for example purposes
+const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI'; //Default example sheet
 let start_col = 'A';
 let start_row = '2';
 let end_col = 'CA';
 let end_row = '30';
-
 const globalRange = `Application Sheet Example!${start_col}${start_row}:${end_col}${end_row}`; // Change this to your desired range
 
 // Google Sheets API authorization
@@ -110,21 +110,23 @@ function parseTeamMembers(dataArr) {
 
 // Read data from Google Sheets
 const getDataFromGoogleSheet = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
-
-const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
+  
+  //To import default data comment out two below lines and remove comment from line 117
+  const spreadsheetId = sheetid;
+  const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
+  
+  // range = globalRange;
   const auth = await authorize();
   const sheets = google.sheets({ version: 'v4', auth });
 
   try {
     const response = await sheets.spreadsheets.values.get({
-      sheetId,
+      spreadsheetId,
       range,
     });
   
     let grantData = response.data.values;
-    // const headers = Object.keys(grantData[0]);
     const salt = bcrypt.genSaltSync(10);
-    // console.log(grantData[1]);
     let dataObj = [];
 
     for (let i = 1; i < grantData.length; i++) {
