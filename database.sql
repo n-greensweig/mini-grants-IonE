@@ -8,7 +8,7 @@ CREATE TABLE "user" (
   "admin" BOOLEAN DEFAULT FALSE
 );
 
-
+--use function below to populate grant data
 CREATE TABLE "grant_data" (
 	"id" SERIAL PRIMARY KEY,
 	"time_stamp" DATE,
