@@ -19,13 +19,25 @@ function* fetchUser() {
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
     yield put({ type: 'SET_USER', payload: response.data });
+    yield put({type:'FETCH_CURRENT_CYCLE'})
   } catch (error) {
     console.log('User get request failed', error);
   }
 }
 
+function* fetchCurrentCycle() {
+  try {
+    const response = yield axios.get('/api/user/currentCycle');
+    yield put({ type: 'SET_CURRENT_CYCLE', payload:response.data });
+  } catch (error) {
+    console.log('Error with fetching current cycle:', error);
+  }
+}
+
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('FETCH_CURRENT_CYCLE', fetchCurrentCycle)
 }
 
 export default userSaga;
