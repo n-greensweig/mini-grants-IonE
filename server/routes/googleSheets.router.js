@@ -6,7 +6,7 @@ const pool = require('../modules/pool');
 const { isDateBetween }  = require('../modules/utilityFunctions');
 
 // Google Sheets API credentials and spreadsheet ID
-const credentials = require('../../planar-granite-405621-bc999e6010f6.json'); // Path to your Google Cloud credentials file
+const credentials = require('../../sheets_api.json'); // Path to your Google Cloud credentials file
 
 //Below lines are for example purposes
 const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI'; //Default example sheet
@@ -112,10 +112,10 @@ function parseTeamMembers(dataArr) {
 const getDataFromGoogleSheet = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
   
   //To import default data comment out two below lines and remove comment from line 117
-  const spreadsheetId = sheetid;
-  const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
+  // const spreadsheetId = sheetid;
+  // const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
   
-  // range = globalRange;
+  range = globalRange;
   const auth = await authorize();
   const sheets = google.sheets({ version: 'v4', auth });
 

@@ -101,6 +101,7 @@ router.get('/reviewer-grants', (req, res) => {
 
 
 //POST to save grant data (interacts with google sheet) --RILEY
+//Moved to googleSheets.router.js
 router.post('/',  (req, res) => {
     if(req.isAuthenticated()) {
 
