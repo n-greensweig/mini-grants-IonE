@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { google } = require('googleapis');
 const pool = require('../modules/pool');
-const { isDateBetween }  = require('../modules/utilityFunctions');
 
 // Google Sheets API credentials and spreadsheet ID
 const credentials = require('../../sheets_api.json'); // Path to your Google Cloud credentials file
@@ -208,18 +207,19 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
     } //end try
     catch(error) {
       console.error('Error inserting data:', error);
+      res.sent(500);
     }
   } //end for loop
 };
 
 // Route to trigger the data saving process
 router.get('/importFromGoogle', async (req, res) => {
-  // if(req.isAuthenticated()) {
+  if(req.isAuthenticated()) {
   await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
   res.send('Data saved to PostgreSQL!');
-  // } else {
-  //   res.sendStatus(401);
-  // }
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 module.exports = router;

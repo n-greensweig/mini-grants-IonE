@@ -16,9 +16,6 @@ function parseName(fullName) {
     }
 }
 
-function isDateBetween(startDate, endDate, checkDate) {
-  return startDate <= checkDate && checkDate <= endDate;
-}
 
 //Spring grant cycle opens third monday of March
 function thirdMondayOfMarch(year) {
@@ -90,4 +87,4 @@ function penultimateSundayOfOctober(year) {
     return october;
   }
 
-  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober, isDateBetween};
+  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober };
