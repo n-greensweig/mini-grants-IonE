@@ -14,12 +14,14 @@ h4 {
 
 table {
     border-collapse: collapse;
-    width: 80%;
+    width: 100%;
+    margin-right: 20px;
     font-size: 14px;
 }
 
 th {
     border: 3px solid #b6b6b6;
+    font-size: 16px;
 }
 
 td {
@@ -48,9 +50,15 @@ tr:nth-child(4) {
     background-color: rgb(226, 163, 163)
 }
 
+#white {
+    background-color: white;
+}
+
 form {
-    margin-top: 5px;
-    
+    margin-bottom: 25px;
+    margin-right: 20px;
+    background-color: #e3e2e2;
+
 }
 
 label {

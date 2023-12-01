@@ -108,8 +108,6 @@ function GrantReviewForm() {
                 <p>PI Name</p>
             <h4>Project Title:</h4>
                 <p>Project Title</p>
-            
-            <p className='review-form-title'></p>
 
             <table>
                 <tr>
@@ -171,8 +169,56 @@ function GrantReviewForm() {
                 <label for="interdisciplinary">5</label>
             </form>
 
-            <p className='review-form-title'>Project Goals</p>
+            <table>
+                <tr>
+                    <th>Project Goals</th>
+                </tr>
+                <tr>
+                    <td>
+                        5 pts - Illustrates a powerful approach or
+                        solution to a compelling problem or
+                        opportunity; goals are clear and attainable.
+                        Connection to the environment or sustainability
+                        is explicit and clear. Proposal is able to articulate
+                        the impact of successful outcomes.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3 pts - Provides an interesting or novel approach
+                        to a compelling problem or opportunity; goals
+                        are clear and attainable. Connection to the
+                        environment or sustainability is clear.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2 pts - Goals and/or outcomes are clear, but their
+                        relationship to the problem is vague. Proposal
+                        appears to have a relationship to environment or
+                        sustainability issues.
+                    </td>
+                </tr>
+                <tr id="second-to-last">
+                    <td>
+                        1 pt - Proposal appears to have a relationship to
+                        environment or sustainability issues, but the
+                        goals and/or outcomes are not clearly
+                        articulated.
+                    </td>
+                </tr>
+                <tr id="last">
+                    <td>
+                        0 pts - Communicated goals and/or outcomes do
+                        not relate to environmental or sustainability
+                        issues.
+                    </td>
+                </tr>
+            </table>
+
             <form>
+                <input type="radio" id="1" name="goals" value={goals} onChange={goalsRadioChange}/>
+                <label for="goals">0</label>
                 <input type="radio" id="1" name="goals" value={goals} onChange={goalsRadioChange}/>
                 <label for="goals">1</label>
                 <input type="radio" id="2" name="goals" value={goals} onChange={goalsRadioChange}/>
@@ -184,9 +230,54 @@ function GrantReviewForm() {
                 <input type="radio" id="5" name="goals" value={goals} onChange={goalsRadioChange}/>
                 <label for="goals">5</label>
             </form>
-
-            <p className='review-form-title'>Method/Design</p>
+            
             <form>
+                <table>
+                    <tr>
+                        <th colspan="2">Method/Design</th>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="5" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/></td>
+                        <td>
+                            5 pts - All aspects of this cohesive
+                            project are thoroughly articulated
+                            and logically connected. Purpose
+                            and impact are clear.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="3" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/></td>
+                        <td>
+                            3 pts - Most aspects of the project
+                            or proposal are thoroughly
+                            articulated and logically
+                            connected; purpose and/or
+                            impact is mostly clear.
+                        </td>
+                    </tr>
+                    <tr id="second-to-last">
+                        <td><input type="radio" id="2" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/></td>
+                        <td>
+                            2 pts - Some aspects of this project
+                            or proposal are well articulated
+                            and connected, but the proposal
+                            struggles to connect all the dots.
+                            Purpose and/or impact is not
+                            clearly defined.
+                        </td>
+                    </tr>
+                    <tr id="last">
+                        <td><input type="radio" id="0" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/></td>
+                        <td>
+                            0 pts - Almost all aspects of the
+                            project design are incoherent;
+                            purpose and/or impact is unclear.
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            {/* <form>
                 <input type="radio" id="0" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
                 <label for="method_and_design">0</label>
                 <input type="radio" id="2" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
@@ -195,9 +286,48 @@ function GrantReviewForm() {
                 <label for="method_and_design">3</label>
                 <input type="radio" id="5" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
                 <label for="method_and_design">5</label>
-            </form>
+            </form> */}
 
-            <p className='review-form-title'>Budget</p>
+            <table>
+                <tr>
+                    <th>Budget</th>
+                </tr>
+                <tr>
+                    <td>
+                        2 pts - Budget is accurate,
+                        detailed, cost-effective, and
+                        crafted to fully support the
+                        scope of work.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        1 pt - Budget is accurate and
+                        detailed, but it may
+                        inadequately support the scope
+                        of work. The project may need
+                        to scale up or down.
+                    </td>
+                </tr>
+                <tr id="second-to-last">
+                    <td>
+                        0.5 pt - Budget lacks sufficient detail.
+                    </td>
+                </tr>
+                <tr id="last">
+                    <td>
+                        0 pts - Budget is incomplete,
+                        over $3,000, or contains
+                        unallowable expenses including
+                        faculty / staff salary, alcohol, or
+                        other banned expenses per
+                        UMN policy.
+                    </td>
+                </tr>
+            </table>
+
+
+
             <form>
                 <input type="radio" id="0" name="budget" value="budget" onChange={budgetRadioChange}/>
                 <label for="budget">0</label>
@@ -209,8 +339,36 @@ function GrantReviewForm() {
                 <label for="budget">2</label>
             </form>
 
+            <table>
+                <tr>
+                    <th>Impact</th>
+                </tr>
+                <tr id="white">
+                    <td>
+                        2 pts - Meaningfully addresses diversity, equity, or inclusion.
+                    </td>
+                </tr>
+                <tr id="white">
+                    <td>
+                        2 pts - Clearly aligns with one or more IonE Impact Goals: (1)
+                        Building a Carbon-Neutral Minnesota, (2) Envisioning Future
+                        Sustainable Land Use in Minnesota, or (3) Ensuring Safe
+                        Drinking Water in Minnesota.
+                    </td>
+                </tr>
+                <tr id="white">
+                    <td>
+                        2 pts - Clearly aligns with UMN Systemwide Strategic Plan,
+                        specifically the MNtersections initiative: (1) Drives innovation
+                        for next-generation health, (2) Build a fully sustainable
+                        future, or (3) Advance natural resources and agro-food
+                        systems to elevate human security and potential.
+                    </td>
+                </tr>
+            </table>
+
             {/* Have to figure out how to add these up */}
-            <p className='review-form-title'>Impact</p>
+
             <form>
                 <input type="checkbox" id="2" name="impact" value="impact" />
                 <label for="impact">2</label>
