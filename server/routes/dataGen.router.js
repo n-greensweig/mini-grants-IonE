@@ -24,6 +24,7 @@ router.get('/generateGrantCycles', (req, res) => {
             res.send(201);
         }).catch((error) => {
             console.log(error);
+            res.send(500);
         });
         
         pool.query(queryText, [fall_start_date, fall_end_date, "mini", "false", FallName])
@@ -31,6 +32,7 @@ router.get('/generateGrantCycles', (req, res) => {
             res.send(201);
         }).catch((error) => {
             console.log(error);
+            res.send(500);
         });
         year++;
         }
