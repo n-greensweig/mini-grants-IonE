@@ -66,7 +66,7 @@ function ReviewerForm(){
     return (
         <>
         <div id='Reviewer-Card'>
-
+            
         <h2>Please submit some information about you! </h2>
 
             <form onSubmit={handleSubmit}>
