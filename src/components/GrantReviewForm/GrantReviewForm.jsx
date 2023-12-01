@@ -100,135 +100,119 @@ function GrantReviewForm() {
     return (
         <div id="review-form">
             <br />
-            <h4><span>Welcome </span><span>Reviewer</span></h4>
-            <p>This form is unique to each reviewer.</p>
-            <p>Please use the review guidance criteria in Columns F through L to review the proposals assigned for your review in Column E.</p>
+            <h4><span>Welcome </span><span><i>Reviewer</i></span></h4>
+            <p>This form is unique to each reviewer. Please use the review guidance criteria in Columns F through L to review the proposals assigned for your review in Column E.</p>
             
             <h4>Project PI: </h4>
                 <p>PI Name</p>
             <h4>Project Title:</h4>
                 <p>Project Title</p>
 
-            <table>
-                <tr>
-                    <th>Interdisciplinary Collaboration</th>
-                </tr>
-                <tr>
-                    <td>
-                        5 pts - This proposal includes both individuals from the university and
-                        external (non-university) collaborators that represent an exemplary
-                        variety of disciplines, expertise, and ways of knowing. Examples would
-                        include a combination of participants or perspectives including (but not
-                        limited to) STEM and/or social scientists, humanities scholars, artists,
-                        community experts, industry experts, and/or policy experts.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        3 pts - This proposal includes individuals from within the university as
-                        well as external (non-university) stakeholders or experts, each of whom
-                        add well-articulated value to the project. Partners represent different
-                        units/departments or fields of expertise, but those units, departments, or
-                        forms of expertise are closely related.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        2 pts - This proposal includes individuals from the university from
-                        different departments, units, organizations, and/or affiliations (faculty,
-                        staff, students), each of whom add value to the project. The project is
-                        interdisciplinary, but does not appear to have non-university partners.
-                    </td>
-                </tr>
-                <tr id="second-to-last">
-                    <td>
-                        1 pt - This proposal appears to be interdisciplinary based on team
-                        members' affiliation, but one or more of the partners' roles is poorly
-                        defined or does not appear to add value.
-                    </td>
-                </tr>
-                <tr id="last">
-                    <td>
-                        0 pts - This proposal does not appear to be interdisciplinary; only one unit
-                        or discipline is represented, and no external partners are present.
-                    </td>
-                </tr>
-            </table>
             <form>
-                <input type="radio" id="1" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
-                <label for="interdisciplinary">0</label>
-                <input type="radio" id="1" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
-                <label for="interdisciplinary">1</label>
-                <input type="radio" id="2" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
-                <label for="interdisciplinary">2</label>
-                <input type="radio" id="3" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
-                <label for="interdisciplinary">3</label>
-                <input type="radio" id="4" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
-                <label for="interdisciplinary">4</label>
-                <input type="radio" id="5" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
-                <label for="interdisciplinary">5</label>
+                <table>
+                    <tr>
+                        <th colspan="2">Interdisciplinary Collaboration</th>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="5" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
+                        <td>
+                            5 pts - This proposal includes both individuals from the university and
+                            external (non-university) collaborators that represent an exemplary
+                            variety of disciplines, expertise, and ways of knowing. Examples would
+                            include a combination of participants or perspectives including (but not
+                            limited to) STEM and/or social scientists, humanities scholars, artists,
+                            community experts, industry experts, and/or policy experts.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="3" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
+                        <td>
+                            3 pts - This proposal includes individuals from within the university as
+                            well as external (non-university) stakeholders or experts, each of whom
+                            add well-articulated value to the project. Partners represent different
+                            units/departments or fields of expertise, but those units, departments, or
+                            forms of expertise are closely related.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="2" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
+                        <td>
+                            2 pts - This proposal includes individuals from the university from
+                            different departments, units, organizations, and/or affiliations (faculty,
+                            staff, students), each of whom add value to the project. The project is
+                            interdisciplinary, but does not appear to have non-university partners.
+                        </td>
+                    </tr>
+                    <tr id="second-to-last">
+                        <td><input type="radio" id="1" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
+                        <td>
+                            1 pt - This proposal appears to be interdisciplinary based on team
+                            members' affiliation, but one or more of the partners' roles is poorly
+                            defined or does not appear to add value.
+                        </td>
+                    </tr>
+                    <tr id="last">
+                        <td><input type="radio" id="0" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
+                        <td>
+                            0 pts - This proposal does not appear to be interdisciplinary; only one unit
+                            or discipline is represented, and no external partners are present.
+                        </td>
+                    </tr>
+                </table>
             </form>
 
-            <table>
-                <tr>
-                    <th>Project Goals</th>
-                </tr>
-                <tr>
-                    <td>
-                        5 pts - Illustrates a powerful approach or
-                        solution to a compelling problem or
-                        opportunity; goals are clear and attainable.
-                        Connection to the environment or sustainability
-                        is explicit and clear. Proposal is able to articulate
-                        the impact of successful outcomes.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        3 pts - Provides an interesting or novel approach
-                        to a compelling problem or opportunity; goals
-                        are clear and attainable. Connection to the
-                        environment or sustainability is clear.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        2 pts - Goals and/or outcomes are clear, but their
-                        relationship to the problem is vague. Proposal
-                        appears to have a relationship to environment or
-                        sustainability issues.
-                    </td>
-                </tr>
-                <tr id="second-to-last">
-                    <td>
-                        1 pt - Proposal appears to have a relationship to
-                        environment or sustainability issues, but the
-                        goals and/or outcomes are not clearly
-                        articulated.
-                    </td>
-                </tr>
-                <tr id="last">
-                    <td>
-                        0 pts - Communicated goals and/or outcomes do
-                        not relate to environmental or sustainability
-                        issues.
-                    </td>
-                </tr>
-            </table>
-
             <form>
-                <input type="radio" id="1" name="goals" value={goals} onChange={goalsRadioChange}/>
-                <label for="goals">0</label>
-                <input type="radio" id="1" name="goals" value={goals} onChange={goalsRadioChange}/>
-                <label for="goals">1</label>
-                <input type="radio" id="2" name="goals" value={goals} onChange={goalsRadioChange}/>
-                <label for="goals">2</label>
-                <input type="radio" id="3" name="goals" value={goals} onChange={goalsRadioChange}/>
-                <label for="goals">3</label>
-                <input type="radio" id="4" name="goals" value={goals} onChange={goalsRadioChange}/>
-                <label for="goals">4</label>
-                <input type="radio" id="5" name="goals" value={goals} onChange={goalsRadioChange}/>
-                <label for="goals">5</label>
+                <table>
+                    <tr>
+                        <th colspan="2">Project Goals</th>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="5" name="goals" value={goals} onChange={goalsRadioChange}/></td>
+                        <td>
+                            <span id="points">5 pts</span> - Illustrates a powerful approach or
+                            solution to a compelling problem or
+                            opportunity; goals are clear and attainable.
+                            Connection to the environment or sustainability
+                            is explicit and clear. Proposal is able to articulate
+                            the impact of successful outcomes.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="3" name="goals" value={goals} onChange={goalsRadioChange}/></td>
+                        <td>
+                            <span id="points">3 pts</span> - Provides an interesting or novel approach
+                            to a compelling problem or opportunity; goals
+                            are clear and attainable. Connection to the
+                            environment or sustainability is clear.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="2" name="goals" value={goals} onChange={goalsRadioChange}/></td>
+                        <td>
+                            <span id="points">2 pts</span> - Goals and/or outcomes are clear, but their
+                            relationship to the problem is vague. Proposal
+                            appears to have a relationship to environment or
+                            sustainability issues.
+                        </td>
+                    </tr>
+                    <tr id="second-to-last">
+                        <td><input type="radio" id="1" name="goals" value={goals} onChange={goalsRadioChange}/></td>
+                        <td>
+                            <span id="points">1 pts</span> - Proposal appears to have a relationship to
+                            environment or sustainability issues, but the
+                            goals and/or outcomes are not clearly
+                            articulated.
+                        </td>
+                    </tr>
+                    <tr id="last">
+                        <td><input type="radio" id="0" name="goals" value={goals} onChange={goalsRadioChange}/></td>
+                        <td>
+                            <span id="points">0 pts</span> - Communicated goals and/or outcomes do
+                            not relate to environmental or sustainability
+                            issues.
+                        </td>
+                    </tr>
+                </table>
             </form>
             
             <form>
@@ -277,122 +261,109 @@ function GrantReviewForm() {
                 </table>
             </form>
 
-            {/* <form>
-                <input type="radio" id="0" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
-                <label for="method_and_design">0</label>
-                <input type="radio" id="2" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
-                <label for="method_and_design">2</label>
-                <input type="radio" id="3" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
-                <label for="method_and_design">3</label>
-                <input type="radio" id="5" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/>
-                <label for="method_and_design">5</label>
-            </form> */}
-
-            <table>
-                <tr>
-                    <th>Budget</th>
-                </tr>
-                <tr>
-                    <td>
-                        2 pts - Budget is accurate,
-                        detailed, cost-effective, and
-                        crafted to fully support the
-                        scope of work.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        1 pt - Budget is accurate and
-                        detailed, but it may
-                        inadequately support the scope
-                        of work. The project may need
-                        to scale up or down.
-                    </td>
-                </tr>
-                <tr id="second-to-last">
-                    <td>
-                        0.5 pt - Budget lacks sufficient detail.
-                    </td>
-                </tr>
-                <tr id="last">
-                    <td>
-                        0 pts - Budget is incomplete,
-                        over $3,000, or contains
-                        unallowable expenses including
-                        faculty / staff salary, alcohol, or
-                        other banned expenses per
-                        UMN policy.
-                    </td>
-                </tr>
-            </table>
-
-
-
             <form>
-                <input type="radio" id="0" name="budget" value="budget" onChange={budgetRadioChange}/>
-                <label for="budget">0</label>
-                <input type="radio" id="0.5" name="budget" value="budget" onChange={budgetRadioChange}/>
-                <label for="budget">0.5</label>
-                <input type="radio" id="1" name="budget" value="budget" onChange={budgetRadioChange}/>
-                <label for="budget">1</label>
-                <input type="radio" id="2" name="budget" value="budget" onChange={budgetRadioChange}/>
-                <label for="budget">2</label>
+                <table>
+                    <tr>
+                        <th colspan="2">Budget</th>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="2" name="budget" value="budget" onChange={budgetRadioChange}/></td>
+                        <td>
+                            2 pts - Budget is accurate,
+                            detailed, cost-effective, and
+                            crafted to fully support the
+                            scope of work.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="1" name="budget" value="budget" onChange={budgetRadioChange}/></td>
+                        <td>
+                            1 pt - Budget is accurate and
+                            detailed, but it may
+                            inadequately support the scope
+                            of work. The project may need
+                            to scale up or down.
+                        </td>
+                    </tr>
+                    <tr id="second-to-last">
+                        <td><input type="radio" id="0.5" name="budget" value="budget" onChange={budgetRadioChange}/></td>
+                        <td>
+                            0.5 pt - Budget lacks sufficient detail.
+                        </td>
+                    </tr>
+                    <tr id="last">
+                        <td><input type="radio" id="0" name="budget" value="budget" onChange={budgetRadioChange}/></td>
+                        <td>
+                            0 pts - Budget is incomplete,
+                            over $3,000, or contains
+                            unallowable expenses including
+                            faculty / staff salary, alcohol, or
+                            other banned expenses per
+                            UMN policy.
+                        </td>
+                    </tr>
+                </table>
             </form>
-
-            <table>
-                <tr>
-                    <th>Impact</th>
-                </tr>
-                <tr id="white">
-                    <td>
-                        2 pts - Meaningfully addresses diversity, equity, or inclusion.
-                    </td>
-                </tr>
-                <tr id="white">
-                    <td>
-                        2 pts - Clearly aligns with one or more IonE Impact Goals: (1)
-                        Building a Carbon-Neutral Minnesota, (2) Envisioning Future
-                        Sustainable Land Use in Minnesota, or (3) Ensuring Safe
-                        Drinking Water in Minnesota.
-                    </td>
-                </tr>
-                <tr id="white">
-                    <td>
-                        2 pts - Clearly aligns with UMN Systemwide Strategic Plan,
-                        specifically the MNtersections initiative: (1) Drives innovation
-                        for next-generation health, (2) Build a fully sustainable
-                        future, or (3) Advance natural resources and agro-food
-                        systems to elevate human security and potential.
-                    </td>
-                </tr>
-            </table>
+            
+            <form>
+                <table>
+                    <tr>
+                        <th colspan="2">Impact <span><i>(optional)</i></span></th>
+                    </tr>
+                    <tr id="white">
+                        <td><input type="checkbox" id="2" name="impact" value="impact" /></td>
+                        <td>
+                            2 pts - Meaningfully addresses diversity, equity, or inclusion.
+                        </td>
+                    </tr>
+                    <tr id="white">
+                        <td><input type="checkbox" id="2" name="impact" value="impact" /></td>
+                        <td>
+                            2 pts - Clearly aligns with one or more IonE Impact Goals: (1)
+                            Building a Carbon-Neutral Minnesota, (2) Envisioning Future
+                            Sustainable Land Use in Minnesota, or (3) Ensuring Safe
+                            Drinking Water in Minnesota.
+                        </td>
+                    </tr>
+                    <tr id="white">
+                        <td><input type="checkbox" id="2" name="impact" value="impact" /></td>
+                        <td>
+                            2 pts - Clearly aligns with UMN Systemwide Strategic Plan,
+                            specifically the MNtersections initiative: (1) Drives innovation
+                            for next-generation health, (2) Build a fully sustainable
+                            future, or (3) Advance natural resources and agro-food
+                            systems to elevate human security and potential.
+                        </td>
+                    </tr>
+                </table>
+            </form>
 
             {/* Have to figure out how to add these up */}
-
             <form>
-                <input type="checkbox" id="2" name="impact" value="impact" />
-                <label for="impact">2</label>
-                <input type="checkbox" id="2" name="impact" value="impact" />
-                <label for="impact">2</label>
-                <input type="checkbox" id="2" name="impact" value="impact" />
-                <label for="impact">2</label>
-            </form>
-
-            <p className='review-form-title'>Final Recommendation</p>
-            <form>
-                <input type="radio" id="0" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/>
-                <label for="recommendation">0</label>
-                <input type="radio" id="2" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/>
-                <label for="recommendation">2</label>
-                <input type="radio" id="3" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/>
-                <label for="recommendation">3</label>
+                <table>
+                    <tr>
+                        <th colspan="2">Final Recommendation</th>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="3" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/></td>
+                        <td>3 pts - Proposal recommended for full funding.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" id="2" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/></td>
+                        <td>2 pts - Proposal should be funded in accordance withavailable resources.</td>
+                    </tr>
+                    <tr id="last">
+                        <td><input type="radio" id="0" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/></td>
+                        <td>0 pts - Proposal not recommended for funding.</td>
+                    </tr>
+                </table>
             </form>
 
             <p className='review-form-title'>Comments</p>
                 <textarea
-                    rows="7"
-                    cols="38"
-                    placeholder='Enter review comments here'
+                    rows="10"
+                    cols="100"
+                    placeholder='Enter review comments here (REQUIRED)'
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                 />

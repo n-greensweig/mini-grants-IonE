@@ -27,11 +27,15 @@ th {
 td {
     border: 2px solid #b6b6b6;
     padding: 8px;
-    text-align: center;
+    text-align: left;
+}
+
+#points {
+    font-weight: bold;
 }
 
 tr:nth-child(2) {
-    background-color: green;
+    background-color: rgb(49, 160, 49);
 }
 
 tr:nth-child(3) {
