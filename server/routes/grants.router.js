@@ -63,12 +63,13 @@ router.get('/unreviewed', (req, res) => {
 router.get('/reviewer-grants', (req, res) => {
     console.log(`Fetching grants for user id: ${req.user.id}`)
     if(req.isAuthenticated()) {
+        //find current cycle_id
         let queryText1 = `SELECT c.id
                         FROM grant_cycle c
                         WHERE "cycle_complete" = FALSE
                         ORDER by c.start_date;`;
         let cycleID = 0;
-        pool.query(queryText1, [userID])
+        pool.query(queryText1)
         .then(result => {
         cycleID = result.rows[0]
         })
@@ -85,7 +86,7 @@ router.get('/reviewer-grants', (req, res) => {
                         ON a.grant_id = s.grant_id
                         WHERE a.reviewer_id = $1
                         AND a.cycle_id = $2`;
-        pool.query(queryText2, [userID, cycleID])
+        pool.query(queryText2, [userID, cycleID.cycle_id])
         .then(result => {
         res.send(result.rows);
         })
@@ -152,6 +153,42 @@ router.post('/',  (req, res) => {
     }
 });//end POST
 
+//POST to set user as reviewer for grant cycle --HALEIGH
+router.post('/userReviewer',  (req, res) => {
+    if(req.isAuthenticated()) {
+        //find current cycle ID
+        let queryText1 = `SELECT c.id
+                        FROM grant_cycle c
+                        WHERE "cycle_complete" = FALSE
+                        ORDER by c.start_date;`;
+        let cycleID = 0;
+        pool.query(queryText1)
+        .then(result => {
+        cycleID = result.rows[0]
+        })
+        .catch(error => {
+        console.log(`Error fetching current cycle ID for reviewer`, error);
+        res.sendStatus(500);
+        });
+        let queryText2 = `INSERT INTO "reviewers" ("reviewer_id", "cycle_id", "available_reviews", "dept_id")
+        VALUES($1, $2, $3, $4)`;
+        let reviewer_id = req.user.id;
+        let cycle_id = cycleID.cycle_id;
+        let available_reviews = req.body.available_reviews;
+        let dept_id = req.user.dept_id;
+        pool.query(queryText2, [ reviewer_id, cycle_id, available_reviews, dept_id ])
+        .then(result => {
+        res.sendStatus(201);
+        })
+        .catch(error => {
+        console.log(`Error setting user as reviewer for grant cycle`, error);
+        res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(401);
+    }
+});//end POST
+
 
 // PUT to finalize review cycle --RILEY
 router.put('/finalizeCycle', (req, res) => {
@@ -179,7 +216,6 @@ router.put('/finalizeCycle', (req, res) => {
 
 // PUT to set scores as reviewer --RILEY
 router.post('/setScores', (req, res) => {
-
     if (req.isAuthenticated()) {
 
         //Get data from request and set to variables
@@ -218,10 +254,10 @@ router.post('/setScores', (req, res) => {
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
-                            console.log(`error making query ${queryText}`);
+                            console.log(`error making query ${queryText}`, error); //JEFF added error log
                             res.sendStatus(500);
                         });
-                } else if (rowCount === 0) {
+                } else if (result.rowCount === 0) { //JEFF changed from rowCount to result.rowCount
                     //if these are new scores create a new database line
                     queryText = `INSERT INTO "scores" (
                                 "created_at", 
@@ -232,14 +268,15 @@ router.post('/setScores', (req, res) => {
                                 "goals",
                                 "method_and_design",
                                 "budget",
-                                "impact")
+                                "impact",
+                                "review_complete")
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
 
-                    pool.query(queryText, [created_at, grant_id, reviewer_id, assigned_by, interdisciplinary, goals, method_and_design, budget, impact])
+                    pool.query(queryText, [created_at, grant_id, reviewer_id, assigned_by, interdisciplinary, goals, method_and_design, budget, impact, review_complete]) //JEFF added review_complete
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
-                            console.log(`error making query ${queryText}`);
+                            console.log(`error making query ${queryText}`, error); //JEFF added error log
                             res.sendStatus(500);
                         })
                 }

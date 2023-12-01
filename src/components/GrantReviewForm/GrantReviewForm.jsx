@@ -14,44 +14,44 @@ function GrantReviewForm() {
 
     const history = useHistory();
 
-    const [interdisciplinary, setInterdisciplinary] = useState('');
-    const [goals, setGoals] = useState('');
-    const [method_and_design, setMethod_and_design] = useState('');
-    const [budget, setBudget] = useState('');
-    const [impact, setImpact] = useState('');
-    const [recommendation, setRecommendation] = useState('');
-    const [comments, setComments] = useState('');
+    const [interdisciplinary, setInterdisciplinary] = useState(null);
+    const [goals, setGoals] = useState(null);
+    const [method_and_design, setMethod_and_design] = useState(null);
+    const [budget, setBudget] = useState(null);
+    const [impact, setImpact] = useState(1);
+    const [recommendation, setRecommendation] = useState(null);
+    const [comments, setComments] = useState(null);
 
     const interdisciplinaryRadioChange = (event) => {
-        setInterdisciplinary(event.target.id);
+        setInterdisciplinary(+event.target.id);
     };
     console.log(interdisciplinary);
 
     const goalsRadioChange = (event) => {
-        setGoals(event.target.id);
+        setGoals(+event.target.id);
     };
     console.log(goals);
     
     const method_and_designRadioChange = (event) => {
-        setMethod_and_design(event.target.id);
+        setMethod_and_design(+event.target.id);
     };
     console.log(method_and_design);
 
     const budgetRadioChange = (event) => {
-        setBudget(event.target.id);
+        setBudget(+event.target.id);
     };
     console.log(budget);
     
     const recommendationRadioChange = (event) => {
-        setRecommendation(event.target.id);
+        setRecommendation(+event.target.id);
     };
     console.log(recommendation);
 
     let submittedScores = {
-        created_at: "1",
-        grant_id: "1",
-        reviewer_id: "1",
-        assigned_by: "1",
+        created_at: "11-27-2023 1:03pm",
+        grant_id: 1,
+        reviewer_id: 1,
+        assigned_by: 1,
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
@@ -61,19 +61,20 @@ function GrantReviewForm() {
     };
 
     let savedScores = {
-        created_at: "1",
-        grant_id: "1",
-        reviewer_id: "1",
-        assigned_by: "1",
+        created_at: "11-27-2023 1:03pm",
+        grant_id: 1,
+        reviewer_id: 1,
+        assigned_by: 1,
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
         budget: budget,
         impact: impact,
-        review_complete: true,
+        review_complete: false,
     };
 
     const saveScores = () => {
+        console.log(savedScores);
         axios.post(`/grants/setScores`, savedScores)
             .then((response) => {
                 console.log(savedScores);
@@ -81,7 +82,7 @@ function GrantReviewForm() {
                 console.log(error);
                 alert('Something went wrong.');
             });
-        history.push(`/reviewerhomepage`);
+        // history.push(`/reviewerhomepage`);
     };
 
     const submitScores = () => {
