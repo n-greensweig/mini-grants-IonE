@@ -3,42 +3,27 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import axios from 'axios';
 
 const AdminHomeView = () => {
-  // Sample test data for grants
-  const [grants, setGrants] = useState([
-    {
-      id: 1,
-      applicant_name: 'John Doe',
-      applicant_email: 'john@example.com',
-      project_title: 'Renewable Energy Research',
-      reviewer_1: 2,
-      reviewer_2: 3,
-      reviewer_3: 1,
-      status: 'Assigned'
-    },
-    
-  ]);
-
-  // Sample test data for reviewers
-  const [reviewers, setReviewers] = useState([
-    { id: 1, name: 'Reviewer A' },
-    { id: 2, name: 'Reviewer B' },
-    { id: 3, name: 'Reviewer C' },
-    
-  ]);
-
+  const [grants, setGrants] = useState([]);
+  const [reviewers, setReviewers] = useState([]);
   const [statusOptions] = useState(['Complete', 'Assigned', 'In Progress']);
 
-  // Replace the following with actual data fetching logic
-  // useEffect(() => { ... }, []);
-//   useEffect(() => {
-//     axios.get('/api/grants')
-//         .then(response => {
-//             setGrants(response.data);
-//         })
-//         .catch(error => {
-//             console.error('Error fetching data', error);
-//         });
-// }, []);
+  useEffect(() => {
+    axios.get('/grants')
+      .then(response => {
+        setGrants(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching grants', error);
+      });
+
+    axios.get('/reviewers')
+      .then(response => {
+        setReviewers(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching reviewers', error);
+      });
+  }, []);
 
   const rowStyle = {
     borderBottom: '1.5px solid black', 
@@ -51,6 +36,7 @@ const AdminHomeView = () => {
       backgroundColor: '#e6b800', 
     },
   };
+
 
   return (
     <TableContainer component={Paper} style={{ backgroundColor: '#D5D6D2' }}>
@@ -77,17 +63,21 @@ const AdminHomeView = () => {
               <TableCell>{grant.project_title}</TableCell>
               {[1, 2, 3].map(num => (
                 <TableCell key={num}>
-                  <Select
-                    value={grant[`reviewer_${num}`]}
-                    onChange={(event) => {/* handle reviewer change */}}
-                  >
-                    {reviewers.map((reviewer) => (
-                      <MenuItem key={reviewer.id} value={reviewer.id}>
-                        {reviewer.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </TableCell>
+                <Select
+                  value={grant[`reviewer_${num}`] || ''}
+                  displayEmpty
+                  onChange={(event) => {/* handle reviewer change */}}
+                >
+                  <MenuItem value="" disabled>
+                    {`Reviewer ${num}`}
+                  </MenuItem>
+                  {reviewers.map((reviewer) => (
+                    <MenuItem key={reviewer.id} value={reviewer.id}>
+                      {reviewer.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </TableCell>
               ))}
               <TableCell>
                 <Select
@@ -102,7 +92,7 @@ const AdminHomeView = () => {
                 </Select>
               </TableCell>
               <TableCell>
-                <Button variant="contained" style={viewButtonStyle}  onClick={() => {/* handle view click */}}>
+                <Button variant="contained" style={viewButtonStyle} onClick={() => {/* handle view click */}}>
                   View
                 </Button>
               </TableCell>
