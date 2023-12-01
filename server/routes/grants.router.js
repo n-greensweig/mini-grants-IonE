@@ -98,7 +98,7 @@ router.get('/reviewer-grants', (req, res) => {
         res.sendStatus(401);
     }
 }); //end GET
-g
+
 //POST to set user as reviewer for grant cycle --HALEIGH
 router.post('/userReviewer',  (req, res) => {
     if(req.isAuthenticated()) {
