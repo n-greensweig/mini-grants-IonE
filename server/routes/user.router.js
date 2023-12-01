@@ -47,4 +47,28 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+
+//GET current cycle ID --HALEIGH
+router.get('/currentCycle', (req, res) => {
+  console.log(`Fetching current grant cycle ID`)
+  if(req.isAuthenticated()) {
+      //find current cycle_id
+      let queryText1 = `SELECT c.id
+                      FROM grant_cycle c
+                      WHERE "cycle_complete" = FALSE
+                      ORDER by c.start_date;`;
+      pool.query(queryText1)
+      .then(result => {
+        res.send(result.rows[0]);
+      })
+      .catch(error => {
+      console.log(`Error fetching current grant cycle ID`, error);
+      res.sendStatus(500);
+      });
+  } else {
+      res.sendStatus(401);
+  }
+}); //end GET
+
+
 module.exports = router;

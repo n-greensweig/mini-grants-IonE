@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_USER':
@@ -9,6 +11,17 @@ const userReducer = (state = {}, action) => {
   }
 };
 
-// user will be on the redux state at:
-// state.user
-export default userReducer;
+const currentCycle = (state = {cycle_id: ""}, action) => {
+  switch (action.type) {
+    case 'SET_CURRENT_CYCLE':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
+export default combineReducers({
+  userReducer,
+  currentCycle,
+});
