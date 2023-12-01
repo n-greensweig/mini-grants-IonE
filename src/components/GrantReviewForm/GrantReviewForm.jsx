@@ -99,9 +99,66 @@ function GrantReviewForm() {
 
     return (
         <div id="review-form">
-            {/* To add tooltips to all titles */}
-            <p className='review-form-title'>Interdisciplinary Collaboration</p>
+            <br />
+            <h4><span>Welcome </span><span>Reviewer</span></h4>
+            <p>This form is unique to each reviewer.</p>
+            <p>Please use the review guidance criteria in Columns F through L to review the proposals assigned for your review in Column E.</p>
+            
+            <h4>Project PI: </h4>
+                <p>PI Name</p>
+            <h4>Project Title:</h4>
+                <p>Project Title</p>
+            
+            <p className='review-form-title'></p>
+
+            <table>
+                <tr>
+                    <th>Interdisciplinary Collaboration</th>
+                </tr>
+                <tr>
+                    <td>
+                        5 pts - This proposal includes both individuals from the university and
+                        external (non-university) collaborators that represent an exemplary
+                        variety of disciplines, expertise, and ways of knowing. Examples would
+                        include a combination of participants or perspectives including (but not
+                        limited to) STEM and/or social scientists, humanities scholars, artists,
+                        community experts, industry experts, and/or policy experts.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3 pts - This proposal includes individuals from within the university as
+                        well as external (non-university) stakeholders or experts, each of whom
+                        add well-articulated value to the project. Partners represent different
+                        units/departments or fields of expertise, but those units, departments, or
+                        forms of expertise are closely related.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2 pts - This proposal includes individuals from the university from
+                        different departments, units, organizations, and/or affiliations (faculty,
+                        staff, students), each of whom add value to the project. The project is
+                        interdisciplinary, but does not appear to have non-university partners.
+                    </td>
+                </tr>
+                <tr id="second-to-last">
+                    <td>
+                        1 pt - This proposal appears to be interdisciplinary based on team
+                        members' affiliation, but one or more of the partners' roles is poorly
+                        defined or does not appear to add value.
+                    </td>
+                </tr>
+                <tr id="last">
+                    <td>
+                        0 pts - This proposal does not appear to be interdisciplinary; only one unit
+                        or discipline is represented, and no external partners are present.
+                    </td>
+                </tr>
+            </table>
             <form>
+                <input type="radio" id="1" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
+                <label for="interdisciplinary">0</label>
                 <input type="radio" id="1" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>
                 <label for="interdisciplinary">1</label>
                 <input type="radio" id="2" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/>

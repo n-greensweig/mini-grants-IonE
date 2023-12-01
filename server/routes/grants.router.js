@@ -237,7 +237,7 @@ router.post('/setScores', (req, res) => {
 
         pool.query(queryText, [grant_id, reviewer_id])
             .then((result) => {
-                //If the scores  have been saved update them with the new values
+                //If the scores have been saved update them with the new values
                 if (result.rowCount > 0) {
                     score_id = result.rows[0].id;
                     console.log('Score Id:', score_id);
@@ -247,10 +247,11 @@ router.post('/setScores', (req, res) => {
                     "goals" = $3,
                     "method_and_design" = $4,
                     "budget" = $5,
-                    "impact" = $6
-                WHERE "id" = $7;`;
+                    "impact" = $6,
+                    "review_complete" = $7
+                WHERE "id" = $8;`;
 
-                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact, score_id])
+                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact, review_complete, score_id])
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
