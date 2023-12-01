@@ -9,9 +9,9 @@ router.get('/generateGrantCycles', (req, res) => {
     let queryText = `INSERT INTO "grant_cycle" ("start_date", "end_date", "grant_type", "cycle_complete", "cycle_name")
                     VALUES ($1, $2, $3, $4, $5);`;
     
-    let year = 2024;
+    let year = 2015;
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 40; i++) {
         let start_date_spring = thirdMondayOfMarch(year);
         let end_date_spring = lastSundayOfApril(year);
         let fall_start_date = secondMondayOfSeptember(year);
