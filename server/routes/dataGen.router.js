@@ -6,6 +6,7 @@ const { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultim
 
 
 router.get('/generateGrantCycles', (req, res) => {
+    if (req.isAuthenticated()) {
     let queryText = `INSERT INTO "grant_cycle" ("start_date", "end_date", "grant_type", "cycle_complete", "cycle_name")
                     VALUES ($1, $2, $3, $4, $5);`;
     
@@ -24,6 +25,7 @@ router.get('/generateGrantCycles', (req, res) => {
             res.send(201);
         }).catch((error) => {
             console.log(error);
+            res.send(500);
         });
         
         pool.query(queryText, [fall_start_date, fall_end_date, "mini", "false", FallName])
@@ -31,9 +33,13 @@ router.get('/generateGrantCycles', (req, res) => {
             res.send(201);
         }).catch((error) => {
             console.log(error);
+            res.send(500);
         });
         year++;
         }
+    } else { //end of Auth if statement
+        res.sendStatus(401);
+    }
     })
 
     module.exports = router;

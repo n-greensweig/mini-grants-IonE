@@ -99,61 +99,6 @@ router.get('/reviewer-grants', (req, res) => {
     }
 }); //end GET
 
-
-//POST to save grant data (interacts with google sheet) --RILEY
-//Moved to googleSheets.router.js
-router.post('/',  (req, res) => {
-    if(req.isAuthenticated()) {
-
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
-
-        let queryText = `INSERT INTO "grant_data" 
-                        ("cycle_id", "time_stamp", "dept_id", "applicant_name", "applicant_email", "abstract", "proposal_narrative", "project_title", "principal_investigator",
-                            "letter_of_support", "PI_email", "PI_employee_id", "PI_primay_college", "PI_primary_campus", "PI_dept_accountant_name", 
-                            "PI_dept_accountant_email", "additional_team_members", "funding_type", "budget_items", "new_endeavor", "heard_from_reference",
-                            "total_requested_budget")
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22);`;
-        
-        //Package raw data submitted from the grant application google form to be inserted into postgres database
-        const dataObj = {
-            cycle_id: req.body.cycle_id,
-            time_stamp: Date.now(),
-            dept_id: req.body.dept_id, //Array
-            applicant_name: req.body.applicant_name,
-            applicant_email: req.body.applicant_email,
-            abstract: req.body.abstract,
-            proposal_narrative: req.body.proposal_narrative,
-            project_title: req.body.project_title,
-            principal_investigator: req.body.principal_investigator,
-            letter_of_support: req.body.letter_of_support, //URL link
-            PI_email: req.body.PI_email,
-            PI_employee_id: bcrypt.hashSync(req.body.PI_employee_id, salt), //employee ID will be salted
-            PI_primary_college: req.body.PI_primary_college,
-            PI_primary_campus: req.body.PI_primary_campus,
-            PI_dept_accountant_name: req.body.PI_dept_accountant_name,
-            PI_dept_accountant_email: req.body.PI_dept_accountant_email,
-            additional_team_members: req.body.additional_team_members,
-            funding_type: req.body.funding_type,
-            budget_items: req.body.budget_items,
-            new_endeavor: req.body.new_endeavor,
-            heard_from_reference: req.body.heard_from_reference,
-            total_requested_budget: req.body.total_requested_budget
-        }
-
-        pool.query(queryText, [ dataObj ])
-        .then(result => {
-        res.sendStatus(201);
-        })
-        .catch(error => {
-        console.log(`Error running query ${queryText}`, error);
-        res.sendStatus(500);
-        });
-    } else {
-        res.sendStatus(401);
-    }
-});//end POST
-
 //POST to set user as reviewer for grant cycle --HALEIGH
 router.post('/userReviewer',  (req, res) => {
     if(req.isAuthenticated()) {

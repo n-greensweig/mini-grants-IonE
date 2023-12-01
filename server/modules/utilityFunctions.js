@@ -1,25 +1,3 @@
-//Returns a first and last name object given a single string containing the full name
-function parseName(fullName) {
-    let names = fullName.split(/, | /); // Splitting based on comma or space
-
-    if (names.length === 2) {
-        return {
-            firstName: names[1],
-            lastName: names[0]
-        };
-    } else {
-        // Assuming the default order as first name followed by last name
-        return {
-            firstName: names[0],
-            lastName: names[1]
-        };
-    }
-}
-
-function isDateBetween(startDate, endDate, checkDate) {
-  return startDate <= checkDate && checkDate <= endDate;
-}
-
 //Spring grant cycle opens third monday of March
 function thirdMondayOfMarch(year) {
     const march = new Date(year, 2, 1); // Month in JavaScript is 0-based (0: January, 1: February, ...)
@@ -90,4 +68,4 @@ function penultimateSundayOfOctober(year) {
     return october;
   }
 
-  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober, isDateBetween};
+  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober };
