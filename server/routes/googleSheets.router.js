@@ -10,9 +10,9 @@ const credentials = require('../../planar-granite-405621-bc999e6010f6.json'); //
 const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI';
 
 let start_col = 'A';
-let start_row = '1';
+let start_row = '2';
 let end_col = 'CA';
-let end_row = '25';
+let end_row = '30';
 
 const range = `Application Sheet Example!${start_col}${start_row}:${end_col}${end_row}`; // Change this to your desired range
 
@@ -91,6 +91,23 @@ function convertCurrencyStringToInt(currencyString) {
   return value;
 }
 
+function parseTeamMembers(dataArr) {
+  let teamsArr = dataArr.slice(14, 68);
+  let teamsObj = [];  
+
+  for (let i = 0; i < teamsArr.length; i += 5) {
+    teamsObj.push([{
+      team_member: teamsArr[i],
+      email: teamsArr[i+1],
+      role: teamsArr[i+2],
+      dept: teamsArr[i+3]
+    }]);
+  }; //end for loop
+  // console.log(teamsObj);
+  return teamsObj;
+  
+}
+
 // Read data from Google Sheets
 const getDataFromGoogleSheet = async () => {
   const auth = await authorize();
@@ -110,7 +127,6 @@ const getDataFromGoogleSheet = async () => {
 
     for (let i = 1; i < grantData.length; i++) {
       const cycleName = await getCycleName(parseDateString(grantData[i][0]));
-      
     const singleLineData = [
       cycleName, //cycle_id
       parseDateString(grantData[i][0]), //time_stamp
@@ -128,7 +144,7 @@ const getDataFromGoogleSheet = async () => {
       grantData[i][29], //PI_primary_campus
       grantData[i][12], //PI_dept_accountant_name
       grantData[i][13], //PI_dept_accountant_email
-      {}, //additional_team_members - To Do - must be parsed into JSON data
+      JSON.stringify(parseTeamMembers(grantData[i])), //additional_team_members - To Do - must be parsed into JSON data
       grantData[i][69], //funding_type
       grantData[i][70], //UMN_campus_or_center
       grantData[i][71], //period_of_performance
@@ -179,9 +195,7 @@ const saveDataToPostgres = async () => {
 
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 
               $16, $17, $18, $19, $20, $21, $22, $23, $24);`;
-          
-        console.log('******************Data***********************', data[i]);
-        
+      
         await pool.query(insertQuery, data[i]);
         console.log('Data inserted:');
       } else {
@@ -198,9 +212,9 @@ const saveDataToPostgres = async () => {
 };
 
 // Route to trigger the data saving process
-router.get('/save-to-postgres', async (req, res) => {
+router.get('/importFromGoogle', async (req, res) => {
   // if(req.isAuthenticated()) {
-  await saveDataToPostgres();
+  await saveDataToPostgres(req.body.sheetId, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
   res.send('Data saved to PostgreSQL!');
   // } else {
   //   res.sendStatus(401);
