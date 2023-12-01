@@ -7,8 +7,6 @@ function ReviewerForm(){
 
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
-        department: 'NONE', 
         grantsToReview: '',
       });
 
@@ -28,9 +26,12 @@ function ReviewerForm(){
     // Handle submit of form page
     function handleSubmit (event) {
         event.preventDefault();
-        console.log('Form Data to be submitted', formData);
-        console.log('Department data', selectedItems);
-        axios.post('/api/reviewerform', {...formData, department: selectedItems})
+        const dataToSubmit = {
+            ...formData, 
+            department: selectedItems
+        }
+        console.log('Form Data to be submitted', dataToSubmit);
+        axios.post('/api/reviewerform', dataToSubmit)
         .then((response) => {
             console.log(`Reviewer data has been submitted successfully`);
         }).catch(error => {
@@ -77,19 +78,7 @@ function ReviewerForm(){
                 required
                 />
             </div>
-        
-            <div>
-                <label>Email Address:</label>
-                <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder='PriceNelson@umn.edu'
-                value={formData.email}
-                onChange={handleChange}
-                required
-                />
-            </div>
+
         {/* Department Affiliations */}
         <div>
                 <label htmlFor="multiSelect">Select any department affiliations:</label>
