@@ -14,7 +14,7 @@ let start_row = '2';
 let end_col = 'CA';
 let end_row = '30';
 
-const range = `Application Sheet Example!${start_col}${start_row}:${end_col}${end_row}`; // Change this to your desired range
+const globalRange = `Application Sheet Example!${start_col}${start_row}:${end_col}${end_row}`; // Change this to your desired range
 
 // Google Sheets API authorization
 const authorize = async () => {
@@ -109,13 +109,15 @@ function parseTeamMembers(dataArr) {
 }
 
 // Read data from Google Sheets
-const getDataFromGoogleSheet = async () => {
+const getDataFromGoogleSheet = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
+
+const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
   const auth = await authorize();
   const sheets = google.sheets({ version: 'v4', auth });
 
   try {
     const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
+      sheetId,
       range,
     });
   
@@ -165,8 +167,8 @@ const getDataFromGoogleSheet = async () => {
 };
 
 // Save data to PostgreSQL
-const saveDataToPostgres = async () => {
-  const data = await getDataFromGoogleSheet();
+const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
+  const data = await getDataFromGoogleSheet(sheetId, tabName, start_col, start_row, end_col, end_row);
   // console.log(typeof data, data.length, data[0].length);
   if (!data) return;
 
@@ -206,15 +208,12 @@ const saveDataToPostgres = async () => {
       console.error('Error inserting data:', error);
     }
   } //end for loop
-
-
-
 };
 
 // Route to trigger the data saving process
 router.get('/importFromGoogle', async (req, res) => {
   // if(req.isAuthenticated()) {
-  await saveDataToPostgres(req.body.sheetId, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
+  await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
   res.send('Data saved to PostgreSQL!');
   // } else {
   //   res.sendStatus(401);
