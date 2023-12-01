@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import './ReviewerForm.css';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function ReviewerForm(){
+
+    const history = useHistory();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -37,6 +40,7 @@ function ReviewerForm(){
         }).catch(error => {
             console.log('Error submitting reviewer form data', error);
         });
+        // history.push('/reviewerhomepage')
     }
 
     //multi select drop down
