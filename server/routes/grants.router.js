@@ -179,7 +179,6 @@ router.put('/finalizeCycle', (req, res) => {
 
 // PUT to set scores as reviewer --RILEY
 router.post('/setScores', (req, res) => {
-
     if (req.isAuthenticated()) {
 
         //Get data from request and set to variables
@@ -218,10 +217,10 @@ router.post('/setScores', (req, res) => {
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
-                            console.log(`error making query ${queryText}`);
+                            console.log(`error making query ${queryText}`, error); //JEFF added error log
                             res.sendStatus(500);
                         });
-                } else if (rowCount === 0) {
+                } else if (result.rowCount === 0) { //JEFF changed from rowCount to result.rowCount
                     //if these are new scores create a new database line
                     queryText = `INSERT INTO "scores" (
                                 "created_at", 
@@ -232,14 +231,15 @@ router.post('/setScores', (req, res) => {
                                 "goals",
                                 "method_and_design",
                                 "budget",
-                                "impact")
+                                "impact",
+                                "review_complete")
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
 
-                    pool.query(queryText, [created_at, grant_id, reviewer_id, assigned_by, interdisciplinary, goals, method_and_design, budget, impact])
+                    pool.query(queryText, [created_at, grant_id, reviewer_id, assigned_by, interdisciplinary, goals, method_and_design, budget, impact, review_complete]) //JEFF added review_complete
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
-                            console.log(`error making query ${queryText}`);
+                            console.log(`error making query ${queryText}`, error); //JEFF added error log
                             res.sendStatus(500);
                         })
                 }
