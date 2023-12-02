@@ -34,7 +34,7 @@ function ReviewerForm(){
             department: selectedItems
         }
         console.log('Form Data to be submitted', dataToSubmit);
-        axios.post('/api/reviewerform', dataToSubmit)
+        axios.post('/api/reviewer', dataToSubmit)
         .then((response) => {
             console.log(`Reviewer data has been submitted successfully`);
         }).catch(error => {
