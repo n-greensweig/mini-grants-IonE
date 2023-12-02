@@ -13,6 +13,7 @@ const oauthRouter = require('./routes/oauth.router');
 const grantsRouter = require('./routes/grants.router')
 const dataGenRoute = require('./routes/dataGen.router');
 const googleSheetsRoute = require('./routes/googleSheets.router');
+const reviewerRoute = require('./routes/reviewer.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -131,6 +132,7 @@ app.use('/auth', oauthRouter);
 app.use('/grants', grantsRouter);
 app.use('/dataGen', dataGenRoute);
 app.use('/googleSheets', googleSheetsRoute);
+app.use('/reviewer', reviewerRoute);
 
 // Serve static files
 app.use(express.static('build'));
