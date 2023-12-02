@@ -49,3 +49,4 @@ router.get('/', (req, res) => {
     }
 }); //end GET
 
+module.exports = router;
