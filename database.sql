@@ -85,6 +85,7 @@ CREATE TABLE "reviewers" (
 	"reviewer_id" INT REFERENCES "user",
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"available_reviews" INT,
+	"name" VARCHAR (250),
 	"dept_id" VARCHAR[]
 );
 

@@ -6,13 +6,12 @@ const router = express.Router();
 router.post('/', (req, res) => {
     console.log('reviewer router post has been hit');
     console.log('req.body', req.body);
-    if(req.isAuthenticated()) {
+
        const {name, grantsToReview, department} = req.body;
 
        const insertQuery = `
             INSERT INTO "reviewers" ("name", "available_reviews", "dept_id")
-            VALUES ($1, $2, $3)
-            RETURNING *;
+            VALUES ($1, $2, $3);
         `;
 
         const values = [name, grantsToReview, department];
@@ -27,10 +26,7 @@ router.post('/', (req, res) => {
             console.log(`Error fetching all grant data`, error);
             res.sendStatus(500);
         });
-    } else {
-        console.log('user unauthorized');
-        res.status(401);
-    }
+   
 }); //end POST
 
 // GET data 
