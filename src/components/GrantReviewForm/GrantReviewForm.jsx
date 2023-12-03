@@ -18,7 +18,9 @@ function GrantReviewForm() {
     const [goals, setGoals] = useState(null);
     const [method_and_design, setMethod_and_design] = useState(null);
     const [budget, setBudget] = useState(null);
-    const [impact, setImpact] = useState(1);
+    const [impact1, setImpact1] = useState(0);
+    const [impact2, setImpact2] = useState(0);
+    const [impact3, setImpact3] = useState(0);
     const [recommendation, setRecommendation] = useState(null);
     const [comments, setComments] = useState(null);
 
@@ -41,11 +43,17 @@ function GrantReviewForm() {
         setBudget(+event.target.id);
     };
     console.log(budget);
-    
+
+    let impactSum = ((+impact1) + (+impact2) + (+impact3))
+    console.log(impactSum);
+
     const recommendationRadioChange = (event) => {
         setRecommendation(+event.target.id);
     };
     console.log(recommendation);
+
+    let totalScore = (interdisciplinary + method_and_design + budget + impactSum + recommendation);
+    console.log(totalScore);
 
     let submittedScores = {
         created_at: "11-27-2023 1:03pm",
@@ -56,7 +64,7 @@ function GrantReviewForm() {
         goals: goals,
         method_and_design: method_and_design,
         budget: budget,
-        impact: impact,
+        impact: impactSum,
         review_complete: true,
     };
 
@@ -69,7 +77,7 @@ function GrantReviewForm() {
         goals: goals,
         method_and_design: method_and_design,
         budget: budget,
-        impact: impact,
+        impact: impactSum,
         review_complete: false,
     };
 
@@ -279,13 +287,13 @@ function GrantReviewForm() {
                         <th colspan="2">Impact <i>(optional)</i></th>
                     </tr>
                     <tr id="white">
-                        <td><input type="checkbox" id="2" name="impact" value="impact" /></td>
+                        <td><input type="checkbox" id="2" name="impact1" value="impact1" onChange={(e) => setImpact1(e.target.checked ? e.target.id : 0)}/></td>
                         <td>
                             <span id="points">2 pts</span> - Meaningfully addresses diversity, equity, or inclusion.
                         </td>
                     </tr>
                     <tr id="white">
-                        <td><input type="checkbox" id="2" name="impact" value="impact" /></td>
+                        <td><input type="checkbox" id="2" name="impact2" value="impact2" onChange={(e) => setImpact2(e.target.checked ? e.target.id : 0)}/></td>
                         <td>
                             <span id="points">2 pts</span> - Clearly aligns with one or more IonE Impact Goals: (1) Building a 
                             Carbon-Neutral Minnesota, (2) Envisioning Future Sustainable Land Use in Minnesota, or (3) Ensuring Safe
@@ -293,7 +301,7 @@ function GrantReviewForm() {
                         </td>
                     </tr>
                     <tr id="white">
-                        <td><input type="checkbox" id="2" name="impact" value="impact" /></td>
+                        <td><input type="checkbox" id="2" name="impact3" value="impact3" onChange={(e) => setImpact3(e.target.checked ? e.target.id : 0)}/></td>
                         <td>
                             <span id="points">2 pts</span> - Clearly aligns with UMN Systemwide Strategic Plan, specifically the 
                             MNtersections initiative: (1) Drives innovation for next-generation health, (2) Build a fully sustainable
@@ -324,16 +332,19 @@ function GrantReviewForm() {
                 </table>
             </form>
 
-            <p className='review-form-title'>Comments<i> (REQUIRED)</i></p>
+            <p className='review-form-title'>Reviewer Comments<i> (REQUIRED)</i></p>
                 <textarea
-                    rows="10"
-                    cols="100"
+                    rows="8"
                     placeholder='Enter review comments here.'
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                 />
 
             <br />
+            <br />
+
+            <h3>Proposal Score: <i>{totalScore}</i></h3>
+
             <br />
 
             <button onClick={saveScores}>Save</button> <button onClick={submitScores}>Submit</button>
