@@ -5,7 +5,7 @@ import axios from 'axios';
 const AdminHomeView = () => {
   const [grants, setGrants] = useState([]);
   const [reviewers, setReviewers] = useState([]);
-  const [statusOptions] = useState(['Complete', 'Assigned', 'In Progress']);
+  const [statusOptions] = useState(['Unassigned', 'InReview', 'Complete']);
 
   useEffect(() => {
     axios.get('/grants')
