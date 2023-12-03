@@ -60,8 +60,11 @@ CREATE TABLE "scores" (
 	"method_and_design" INT,
 	"budget" INT,
 	"impact" INT,
+	"comments" VARCHAR (2000), 
 	"review_complete" BOOLEAN DEFAULT FALSE
 );
+
+-- JEFF added comments column in "scores" table
 
 
 CREATE TABLE "departments" (
