@@ -120,7 +120,7 @@ function GrantReviewForm() {
                     <tr>
                         <th colspan="2">Interdisciplinary Collaboration</th>
                     </tr>
-                    <tr>
+                    <tr id="first">
                         <td><input type="radio" id="5" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
                         <td>
                             <span id="points">5 pts</span> - This proposal includes both individuals from the university and external 
@@ -129,7 +129,7 @@ function GrantReviewForm() {
                             STEM and/or social scientists, humanities scholars, artists, community experts, industry experts, and/or policy experts.
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="second">
                         <td><input type="radio" id="3" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
                         <td>
                             <span id="points">3 pts</span> - This proposal includes individuals from within the university as well as 
@@ -138,7 +138,7 @@ function GrantReviewForm() {
                             forms of expertise are closely related.
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="third">
                         <td><input type="radio" id="2" name="interdisciplinary" value={interdisciplinary} onChange={interdisciplinaryRadioChange}/></td>
                         <td>
                             <span id="points">2 pts</span> - This proposal includes individuals from the university from different 
@@ -168,7 +168,7 @@ function GrantReviewForm() {
                     <tr>
                         <th colspan="2">Project Goals</th>
                     </tr>
-                    <tr>
+                    <tr id="first">
                         <td><input type="radio" id="5" name="goals" value={goals} onChange={goalsRadioChange}/></td>
                         <td>
                             <span id="points">5 pts</span> - Illustrates a powerful approach or solution to a compelling problem or 
@@ -176,14 +176,14 @@ function GrantReviewForm() {
                             and clear. Proposal is able to articulate the impact of successful outcomes.
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="second">
                         <td><input type="radio" id="3" name="goals" value={goals} onChange={goalsRadioChange}/></td>
                         <td>
                             <span id="points">3 pts</span> - Provides an interesting or novel approach to a compelling problem or 
                             opportunity; goals are clear and attainable. Connection to the environment or sustainability is clear.
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="third">
                         <td><input type="radio" id="2" name="goals" value={goals} onChange={goalsRadioChange}/></td>
                         <td>
                             <span id="points">2 pts</span> - Goals and/or outcomes are clear, but their relationship to the 
@@ -213,14 +213,14 @@ function GrantReviewForm() {
                     <tr>
                         <th colspan="2">Method/Design</th>
                     </tr>
-                    <tr>
+                    <tr id="first">
                         <td><input type="radio" id="5" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/></td>
                         <td>
                             <span id="points">5 pts</span> - All aspects of this cohesive project are thoroughly articulated and 
                             logically connected. Purpose and impact are clear.
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="second">
                         <td><input type="radio" id="3" name="method_and_design" value="method_and_design" onChange={method_and_designRadioChange}/></td>
                         <td>
                             <span id="points">3 pts</span> - Most aspects of the project or proposal are thoroughly articulated and 
@@ -250,14 +250,14 @@ function GrantReviewForm() {
                     <tr>
                         <th colspan="2">Budget</th>
                     </tr>
-                    <tr>
+                    <tr id="first">
                         <td><input type="radio" id="2" name="budget" value="budget" onChange={budgetRadioChange}/></td>
                         <td>
                             <span id="points">2 pts</span> - Budget is accurate, detailed, cost-effective, and crafted to fully 
                             support the scope of work.
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="second">
                         <td><input type="radio" id="1" name="budget" value="budget" onChange={budgetRadioChange}/></td>
                         <td>
                             <span id="points">1 pts</span> - Budget is accurate and detailed, but it may inadequately support the scope
@@ -322,11 +322,11 @@ function GrantReviewForm() {
                     <tr>
                         <th colspan="2">Final Recommendation</th>
                     </tr>
-                    <tr>
+                    <tr id="first">
                         <td><input type="radio" id="3" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/></td>
                         <td><span id="points">3 pts</span><span id="points"></span>- Proposal recommended for full funding.</td>
                     </tr>
-                    <tr>
+                    <tr id="second">
                         <td><input type="radio" id="2" name="recommendation" value={recommendation} onChange={recommendationRadioChange}/></td>
                         <td><span id="points">2 pts</span> - Proposal should be funded in accordance withavailable resources.</td>
                     </tr>
@@ -340,7 +340,7 @@ function GrantReviewForm() {
             <p className='review-form-title'>Reviewer Comments</p>
                 <textarea
                     rows="8"
-                    placeholder='Enter review comments here.'
+                    placeholder='Required: Please provide a brief comment about this proposal.'
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                 />
@@ -353,7 +353,7 @@ function GrantReviewForm() {
             <br />
             <br />
 
-            <button onClick={saveScores}>Save</button> <button onClick={submitScores}>Submit</button>
+            <button id="save-button" onClick={saveScores}>Save</button> <button id="submit-button" onClick={submitScores}>Submit</button>
 
         </div>
     )
