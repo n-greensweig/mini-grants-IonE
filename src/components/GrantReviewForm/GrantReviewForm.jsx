@@ -103,13 +103,15 @@ function GrantReviewForm() {
     return (
         <div id="review-form">
             <br />
-            <h4><span>Welcome </span><span><i>Reviewer</i></span></h4>
-            <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
-            
-            <h4>Project PI: </h4>
-                <p>PI Name</p>
-            <h4>Project Title:</h4>
-                <p>Project Title</p>
+            <div className="heading">
+                <h4><span>Welcome </span><span><i>Reviewer</i></span></h4>
+                <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
+                
+                <h4>Project PI: </h4>
+                    <p>PI Name</p>
+                <h4>Project Title:</h4>
+                    <p>Project Title</p>
+            </div>
 
             <form>
                 <table>
