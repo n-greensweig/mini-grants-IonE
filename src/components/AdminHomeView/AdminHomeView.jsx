@@ -16,7 +16,7 @@ const AdminHomeView = () => {
         console.error('Error fetching grants', error);
       });
 
-    axios.get('/reviewers')
+    axios.get('/grants/reviewers')
       .then(response => {
         setReviewers(response.data);
       })
@@ -24,6 +24,16 @@ const AdminHomeView = () => {
         console.error('Error fetching reviewers', error);
       });
   }, []);
+
+  const handleReviewerChange = (grantId, reviewerNum, newReviewerId) => {
+    const updatedGrants = grants.map(grant => {
+      if (grant.id === grantId) {
+        return { ...grant, [`reviewer_${reviewerNum}`]: newReviewerId };
+      }
+      return grant;
+    });
+    setGrants(updatedGrants);
+  };
 
   const rowStyle = {
     borderBottom: '1.5px solid black', 
@@ -66,7 +76,7 @@ const AdminHomeView = () => {
                 <Select
                   value={grant[`reviewer_${num}`] || ''}
                   displayEmpty
-                  onChange={(event) => {/* handle reviewer change */}}
+                  onChange={(event) => handleReviewerChange(grant.id, num, event.target.value)}
                 >
                   <MenuItem value="" disabled>
                     {`Reviewer ${num}`}
