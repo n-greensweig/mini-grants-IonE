@@ -160,7 +160,7 @@ router.put('/finalizeCycle', (req, res) => {
 }
 )// end PUT
 
-// PUT to set scores as reviewer --RILEY
+// POST to set scores as reviewer --RILEY
 router.post('/setScores', (req, res) => {
     if (req.isAuthenticated()) {
 
@@ -175,8 +175,9 @@ router.post('/setScores', (req, res) => {
         const method_and_design = req.body.method_and_design;
         const budget = req.body.budget;
         const impact = req.body.impact;
+        const comments = req.body.comments; //JEFF added this line
         const review_complete = req.body.review_complete;
-
+        
         //Check if scores have already been saved for this grant and reviewer combination
         let queryText = `SELECT "id" FROM "scores"
                         WHERE "grant_id" = $1 AND "reviewer_id" = $2;`;
@@ -194,10 +195,11 @@ router.post('/setScores', (req, res) => {
                     "method_and_design" = $4,
                     "budget" = $5,
                     "impact" = $6,
-                    "review_complete" = $7
-                WHERE "id" = $8;`;
+                    "comments" = $7,
+                    "review_complete" = $8
+                WHERE "id" = $9;`;
 
-                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact, review_complete, score_id])
+                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete, score_id])
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
@@ -216,10 +218,11 @@ router.post('/setScores', (req, res) => {
                                 "method_and_design",
                                 "budget",
                                 "impact",
+                                "comments"
                                 "review_complete")
-                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
 
-                    pool.query(queryText, [created_at, grant_id, reviewer_id, assigned_by, interdisciplinary, goals, method_and_design, budget, impact, review_complete]) //JEFF added review_complete
+                    pool.query(queryText, [created_at, grant_id, reviewer_id, assigned_by, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete]) //JEFF added comments, review_complete
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
@@ -233,9 +236,6 @@ router.post('/setScores', (req, res) => {
                 console.log(`Error making query ${queryText}`, err);
                 res.sendStatus(500)
             });
-
-
-
     } else {
         res.sendStatus(401);
     }
@@ -261,6 +261,5 @@ router.put('/complete/:id', (req, res) => {
       res.sendStatus(401);
     }
 })// end PUT
-
 
 module.exports = router;

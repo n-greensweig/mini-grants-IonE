@@ -104,14 +104,16 @@ function GrantReviewForm() {
         <div id="review-form">
             <br />
             <div className="heading">
-                <h4><span>Welcome </span><span><i>Reviewer</i></span></h4>
+                <h3><span>Welcome </span><span><i>Reviewer</i></span></h3>
                 <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
                 
-                <h4>Project PI: </h4>
+                <h4><u>Project PI</u></h4>
                     <p>PI Name</p>
-                <h4>Project Title:</h4>
+                <h4><u>Project Title</u></h4>
                     <p>Project Title</p>
             </div>
+
+            <br/>
 
             <form>
                 <table>
@@ -335,7 +337,7 @@ function GrantReviewForm() {
                 </table>
             </form>
 
-            <p className='review-form-title'>Reviewer Comments<i> (REQUIRED)</i></p>
+            <p className='review-form-title'>Reviewer Comments</p>
                 <textarea
                     rows="8"
                     placeholder='Enter review comments here.'
@@ -344,10 +346,11 @@ function GrantReviewForm() {
                 />
 
             <br />
+
+            <h4>Proposal Score <i className="score">{totalScore}</i></h4>
+
             <br />
-
-            <h3>Proposal Score: <i>{totalScore}</i></h3>
-
+            <br />
             <br />
 
             <button onClick={saveScores}>Save</button> <button onClick={submitScores}>Submit</button>
