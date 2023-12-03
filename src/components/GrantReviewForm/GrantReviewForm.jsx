@@ -31,7 +31,7 @@ function GrantReviewForm() {
     const [comments, setComments] = useState(null);
 
     const interdisciplinaryRadioChange = (event) => {
-        setInterdisciplinary(+event.target.id);
+        setInterdisciplinary(+event.target.id); // '+' turns value to integer instead of a string
     };
 
     const goalsRadioChange = (event) => {
@@ -46,7 +46,7 @@ function GrantReviewForm() {
         setBudget(+event.target.id);
     };
 
-    let impactSum = ((+impact1) + (+impact2) + (+impact3))
+    const impactSum = ((+impact1) + (+impact2) + (+impact3))
 
     const recommendationRadioChange = (event) => {
         setRecommendation(+event.target.id);
@@ -54,11 +54,12 @@ function GrantReviewForm() {
 
     let totalScore = (interdisciplinary + method_and_design + budget + impactSum + recommendation);
 
+    // Will need data from other components for created_at, grant_id, reviewer_id, and assigned_by
     let submittedScores = {
-        created_at: "11-27-2023 1:03pm",
-        grant_id: 1,
-        reviewer_id: 1,
-        assigned_by: 1,
+        created_at: "11-27-2023 1:03pm", // Test data
+        grant_id: 1, // Test data
+        reviewer_id: 1, // Test data
+        assigned_by: 1, // Test data
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
@@ -69,20 +70,20 @@ function GrantReviewForm() {
     };
 
     let savedScores = {
-        created_at: "11-27-2023 1:03pm",
-        grant_id: 1,
-        reviewer_id: 1,
-        assigned_by: 1,
+        created_at: "11-27-2023 1:03pm", // Test data
+        grant_id: 1, // Test data
+        reviewer_id: 1, // Test data
+        assigned_by: 1, // Test data
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
         budget: budget,
         impact: impactSum,
         comments: comments,
-        review_complete: false,
+        review_complete: false, 
     };
 
-    // Material UI Dialog Box
+    // Material UI Dialog Box variables
 
     const [openSaveDialog, setOpenSaveDialog] = useState(false);
     const [openSubmitDialog, setOpenSubmitDialog] = useState(false);
@@ -104,7 +105,6 @@ function GrantReviewForm() {
         setOpenSubmitDialog(false);
         console.log('closing submit dialog box');
     };
-
 
     // End MUI 
 
@@ -138,6 +138,7 @@ function GrantReviewForm() {
         <div id="review-form">
             <br />
             <div className="heading">
+                {/* Reviewer will be variable brought in from other components */}
                 <h3><span>Welcome </span><span><i>Reviewer</i></span></h3>
                 <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
                 
@@ -145,10 +146,12 @@ function GrantReviewForm() {
 
                     <div>
                         <h4><u>Project PI</u></h4>
-                        <p>PI Name</p>
+                        {/* PI Name will be variable sourced from other components */}
+                        <p>PI Name</p> 
                     </div>
                     <div>
                         <h4><u>Project Title</u></h4>
+                        {/* Project Title will be variable sourced from other components */}
                         <p>Project Title</p>
                     </div>
                 </div>
@@ -458,7 +461,7 @@ function GrantReviewForm() {
                             </td>
                         <td>
                             <span id="points">0 pts</span> - Budget is incomplete, over $3,000, or contains unallowable expenses 
-                            includingfaculty / staff salary, alcohol, or other banned expenses per UMN policy.
+                            including faculty / staff salary, alcohol, or other banned expenses per UMN policy.
                         </td>
                     </tr>
                 </table>
@@ -628,8 +631,6 @@ function GrantReviewForm() {
                         </Button>
                     </DialogActions>
                 </Dialog>
-            
-
         </div>
     )
 }
