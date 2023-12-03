@@ -29,6 +29,14 @@ function Nav() {
           Grant-ReviewForm
         </Link>
 
+        <Link className="navLink" to="/reviewerform">
+        Reviewer-Form
+        </Link>
+
+        <Link className="navLink" to="/reviewerhomepage">
+        Reviewer/Home
+        </Link>
+
 
 
         {/* If a user is logged in, show these links */}
