@@ -1,8 +1,8 @@
 // View 3.3 Reviewer View
 
 // React
-import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useState} from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Axios
 import axios from 'axios';
@@ -18,42 +18,35 @@ function GrantReviewForm() {
     const [goals, setGoals] = useState(null);
     const [method_and_design, setMethod_and_design] = useState(null);
     const [budget, setBudget] = useState(null);
-    const [impact1, setImpact1] = useState(0);
-    const [impact2, setImpact2] = useState(0);
-    const [impact3, setImpact3] = useState(0);
+    const [impact1, setImpact1] = useState(null);
+    const [impact2, setImpact2] = useState(null);
+    const [impact3, setImpact3] = useState(null);
     const [recommendation, setRecommendation] = useState(null);
     const [comments, setComments] = useState(null);
 
     const interdisciplinaryRadioChange = (event) => {
         setInterdisciplinary(+event.target.id);
     };
-    console.log(interdisciplinary);
 
     const goalsRadioChange = (event) => {
         setGoals(+event.target.id);
     };
-    console.log(goals);
     
     const method_and_designRadioChange = (event) => {
         setMethod_and_design(+event.target.id);
     };
-    console.log(method_and_design);
 
     const budgetRadioChange = (event) => {
         setBudget(+event.target.id);
     };
-    console.log(budget);
 
     let impactSum = ((+impact1) + (+impact2) + (+impact3))
-    console.log(impactSum);
 
     const recommendationRadioChange = (event) => {
         setRecommendation(+event.target.id);
     };
-    console.log(recommendation);
 
     let totalScore = (interdisciplinary + method_and_design + budget + impactSum + recommendation);
-    console.log(totalScore);
 
     let submittedScores = {
         created_at: "11-27-2023 1:03pm",
@@ -65,6 +58,7 @@ function GrantReviewForm() {
         method_and_design: method_and_design,
         budget: budget,
         impact: impactSum,
+        comments: comments,
         review_complete: true,
     };
 
@@ -78,6 +72,7 @@ function GrantReviewForm() {
         method_and_design: method_and_design,
         budget: budget,
         impact: impactSum,
+        comments: comments,
         review_complete: false,
     };
 
@@ -109,7 +104,7 @@ function GrantReviewForm() {
         <div id="review-form">
             <br />
             <h4><span>Welcome </span><span><i>Reviewer</i></span></h4>
-            <p>This form is unique to each reviewer. Please use the review guidance criteria in Columns F through L to review the proposals assigned for your review in Column E.</p>
+            <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
             
             <h4>Project PI: </h4>
                 <p>PI Name</p>
@@ -289,29 +284,35 @@ function GrantReviewForm() {
                     <tr id="white">
                         <td><input type="checkbox" id="2" name="impact1" value="impact1" onChange={(e) => setImpact1(e.target.checked ? e.target.id : 0)}/></td>
                         <td>
-                            <span id="points">2 pts</span> - Meaningfully addresses diversity, equity, or inclusion.
+                            <span id="points">2 pts</span> - Meaningfully addresses diversity, equity, inclusion and/or justice.
                         </td>
                     </tr>
                     <tr id="white">
                         <td><input type="checkbox" id="2" name="impact2" value="impact2" onChange={(e) => setImpact2(e.target.checked ? e.target.id : 0)}/></td>
                         <td>
-                            <span id="points">2 pts</span> - Clearly aligns with one or more IonE Impact Goals: (1) Building a 
-                            Carbon-Neutral Minnesota, (2) Envisioning Future Sustainable Land Use in Minnesota, or (3) Ensuring Safe
-                            Drinking Water in Minnesota.
+                            <span id="points">2 pts</span> - Clearly aligns with one or more IonE Impact Goals: 
+                                <ul>
+                                    <li>Building a Carbon-Neutral Minnesota.</li>
+                                    <li>Envisioning Future Sustainable Land Use in Minnesota.</li>
+                                    <li>Ensuring Safe Drinking Water in Minnesota.</li>
+                                </ul>
                         </td>
                     </tr>
                     <tr id="white">
                         <td><input type="checkbox" id="2" name="impact3" value="impact3" onChange={(e) => setImpact3(e.target.checked ? e.target.id : 0)}/></td>
                         <td>
                             <span id="points">2 pts</span> - Clearly aligns with UMN Systemwide Strategic Plan, specifically the 
-                            MNtersections initiative: (1) Drives innovation for next-generation health, (2) Build a fully sustainable
-                            future, or (3) Advance natural resources and agro-food systems to elevate human security and potential.
+                            MNtersections initiative: 
+                                <ul>
+                                    <li>Drives innovation for next-generation health.</li>
+                                    <li>Build a fully sustainable future.</li>
+                                    <li>Advance natural resources and agro-food systems to elevate human security and potential.</li>
+                                </ul>
                         </td>
                     </tr>
                 </table>
             </form>
 
-            {/* Have to figure out how to add these up */}
             <form>
                 <table>
                     <tr>

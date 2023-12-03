@@ -72,6 +72,10 @@ label {
     margin-left: -8px;
 }
 
+ul {
+    margin-left: 30px;
+}
+
 textarea {
     display: flex;
     flex-direction: column;
