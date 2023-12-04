@@ -6,7 +6,9 @@ const bcrypt = require('bcryptjs');
 //GET all grant data
 router.get('/', (req, res) => {
     if(req.isAuthenticated()) {
-        let queryText = 'SELECT * from "grant_data";';
+        const queryText = `SELECT gd.*, gc.start_date, gc.end_date, gc.grant_type
+        FROM grant_data gd
+        JOIN grant_cycle gc ON gd.cycle_id = gc.id;`;
         console.log('Fetching all grant data')
         pool.query(queryText)
         .then(result => {
