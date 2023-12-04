@@ -264,19 +264,7 @@ router.put('/complete/:id', (req, res) => {
     }
 })// end PUT
 
-router.get('/grants', (req, res) => {
-    const queryText = `SELECT gd.*, gc.start_date, gc.end_date
-                       FROM grant_data gd
-                       JOIN grant_cycle gc ON gd.cycle_id = gc.id;`;
-    pool.query(queryText)
-        .then(result => {
-            res.json(result.rows);
-        })
-        .catch(error => {
-            console.error('Error fetching grants with dates', error);
-            res.status(500).send('Internal Server Error');
-        });
-});
+
 
 
 
