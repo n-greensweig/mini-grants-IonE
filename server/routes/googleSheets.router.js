@@ -10,7 +10,7 @@ const credentials = require('../../sheets_api.json'); // Path to your Google Clo
 //Below lines are for example purposes
 const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI'; //Default example sheet
 let start_col = 'A';
-let start_row = '2';
+let start_row = '3';
 let end_col = 'CA';
 let end_row = '30';
 const globalRange = `Application Sheet Example!${start_col}${start_row}:${end_col}${end_row}`; // Change this to your desired range
@@ -214,12 +214,12 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
 
 // Route to trigger the data saving process
 router.get('/importFromGoogle', async (req, res) => {
-  if(req.isAuthenticated()) {
+  //if(req.isAuthenticated()) {
   await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
   res.send('Data saved to PostgreSQL!');
-  } else {
-    res.sendStatus(401);
-  }
+  // } else {
+  //   res.sendStatus(401);
+  // }
 });
 
 module.exports = router;
