@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { Button } from '@mui/material';
 import './LandingPage.css';
 
-// CUSTOM COMPONENTS
-import RegisterForm from '../RegisterForm/RegisterForm';
+//Material UI Icon
+import GoogleIcon from '@mui/icons-material/Google';
 
 function LandingPage() {
   const [heading, setHeading] = useState('Welcome');
   const history = useHistory();
 
   const onLogin = (event) => {
-    history.push('/login');
+    axios.get('/google')
+    .then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+    })
   };
 
   return (
@@ -52,13 +59,11 @@ function LandingPage() {
           </p>
         </div>
         <div className="grid-col grid-col_4">
-          <RegisterForm />
 
           <center>
-            <h4>Already a Member?</h4>
-            <button className="btn btn_sizeSm" onClick={onLogin}>
-              Login
-            </button>
+            <Button className="btn btn_sizeSm" variant={"contained"} onClick={onLogin}>
+              <GoogleIcon />  Login Using Google
+            </Button>
           </center>
         </div>
       </div>

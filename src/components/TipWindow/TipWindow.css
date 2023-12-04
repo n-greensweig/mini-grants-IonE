@@ -1,0 +1,20 @@
+.tipWindowContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.tipWindow {
+    position: absolute;
+    min-width: 225px;
+    min-height: 25px;
+    top: 100%;
+    left: 120%;
+    transform: translateX(-50%);
+    background-color: rgba(99, 99, 99, 0.9);
+    color: antiquewhite;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.1);
+    z-index: 999;
+}
