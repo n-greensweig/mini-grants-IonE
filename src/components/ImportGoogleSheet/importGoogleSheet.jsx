@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { Typography, TextField } from "@mui/material";
 import TipWindow from "../TipWindow/TipWindow";
 
@@ -28,13 +29,27 @@ function ImportGoogleSheet() {
 
     const runImport = () => {
         setError('');
-        if (!sheetURL) { return setError('Please enter spreadsheet URL')
-    } else {
-        const sheetId = extractGoogleSheetId(sheetURL);
-    }
+        if (!sheetURL) { return setError('Please enter spreadsheet URL')} 
         if (!tabName) return setError('Please Enter the tab name');
         if (!start_col || !end_col) return setError('Please enter column information');
         if (!start_row || !end_row) return setError('Please enter row information');
+        const sheetId = extractGoogleSheetId(sheetURL);
+
+    const dataObj = {
+        sheetId: sheetId,
+        tabName: tabName,
+        start_col: start_col,
+        start_row: start_row,
+        end_col: end_col,
+        end_row: end_row
+    }
+
+        axios.post('/googleSheets/importFromGoogle', dataObj)
+        .then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
 
