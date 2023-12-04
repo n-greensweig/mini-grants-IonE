@@ -43,7 +43,7 @@ try {
   if (result.rows.length > 0) {
     return result.rows[0].id;
   } else {
-    return 'N/A';
+    return null;
   } 
 } catch (error) {
   console.error(`Error running query`, error);
@@ -207,7 +207,7 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
     } //end try
     catch(error) {
       console.error('Error inserting data:', error);
-      res.sent(500);
+      res.send(500);
     }
   } //end for loop
 };

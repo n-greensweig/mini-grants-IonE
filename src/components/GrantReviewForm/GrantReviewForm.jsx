@@ -163,7 +163,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Interdisciplinary Collaboration</th>
+                        <th colSpan="2">Interdisciplinary Collaboration</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">
@@ -251,7 +251,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Project Goals</th>
+                        <th colSpan="2">Project Goals</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td"
@@ -335,7 +335,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Method/Design</th>
+                        <th colSpan="2">Method/Design</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">
@@ -404,7 +404,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Budget</th>
+                        <th colSpan="2">Budget</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">
@@ -470,7 +470,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Impact <i>(optional)</i></th>
+                        <th colSpan="2">Impact <i>(optional)</i></th>
                     </tr>
                     <tr id="white">
                         <td className="radio-td">
@@ -531,7 +531,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Final Recommendation</th>
+                        <th colSpan="2">Final Recommendation</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">

@@ -218,7 +218,7 @@ router.post('/setScores', (req, res) => {
                                 "method_and_design",
                                 "budget",
                                 "impact",
-                                "comments"
+                                "comments",
                                 "review_complete")
                             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
 
