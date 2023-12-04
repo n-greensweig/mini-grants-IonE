@@ -13,12 +13,13 @@ function LandingPage() {
 
   const onLogin = (event) => {
     axios.get('/google')
-    .then((response) => {
-      console.log(response);
+    .then((repsonse) => {
+
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
     })
-  };
+    }
+  
 
   return (
     <div className="container">

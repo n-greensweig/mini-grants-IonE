@@ -207,7 +207,7 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
     } //end try
     catch(error) {
       console.error('Error inserting data:', error);
-      res.send(500);
+      res.sendStatus(500);
     }
   } //end for loop
 };
