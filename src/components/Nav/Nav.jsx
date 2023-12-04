@@ -25,6 +25,10 @@ function Nav() {
           Admin-Home
         </Link>
 
+        <Link className="navLink" to="/adminallgrantsdata">
+          Admin-AllGrantsData
+        </Link>
+
         <Link className="navLink" to="/grantreviewform">
           Grant-ReviewForm
         </Link>
