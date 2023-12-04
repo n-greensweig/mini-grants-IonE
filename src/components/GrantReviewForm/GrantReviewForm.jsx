@@ -15,6 +15,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 
 function GrantReviewForm() {
 
@@ -163,7 +165,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Interdisciplinary Collaboration</th>
+                        <th colSpan="2">Interdisciplinary Collaboration</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">
@@ -251,7 +253,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Project Goals</th>
+                        <th colSpan="2">Project Goals</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td"
@@ -335,7 +337,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Method/Design</th>
+                        <th colSpan="2">Method/Design</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">
@@ -404,7 +406,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Budget</th>
+                        <th colSpan="2">Budget</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">
@@ -470,7 +472,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Impact <i>(optional)</i></th>
+                        <th colSpan="2">Impact <i>(optional)</i></th>
                     </tr>
                     <tr id="white">
                         <td className="radio-td">
@@ -531,7 +533,7 @@ function GrantReviewForm() {
             <form>
                 <table>
                     <tr>
-                        <th colspan="2">Final Recommendation</th>
+                        <th colSpan="2">Final Recommendation</th>
                     </tr>
                     <tr id="first">
                         <td className="radio-td">
@@ -590,7 +592,7 @@ function GrantReviewForm() {
             <br />
             <br />
 
-            <button id="save-button" onClick={handleOpenSaveDialog}>Save</button> 
+            <button id="save-button" onClick={handleOpenSaveDialog}>SAVE</button> 
                 <Dialog
                     open={openSaveDialog}
                     onClose={handleCloseSaveDialog}
@@ -602,16 +604,16 @@ function GrantReviewForm() {
                     </DialogTitle>
 
                     <DialogActions>
-                        <Button autoFocus id="responsive-dialog-title" onClick={handleCloseSaveDialog}>
+                        <Button autoFocus id="responsive-dialog-button" onClick={handleCloseSaveDialog}>
                             Continue Review
                         </Button>
-                        <Button autoFocus id="responsive-dialog-title" onClick={saveScores}>
+                        <Button autoFocus id="responsive-dialog-button2" onClick={saveScores}>
                             Save Progress
                         </Button>
                     </DialogActions>
                 </Dialog>
             
-            <button id="submit-button" onClick={handleOpenSubmitDialog}>Submit</button>
+            <button id="submit-button" onClick={handleOpenSubmitDialog}>SUBMIT</button>
                 <Dialog
                     open={openSubmitDialog}
                     onClose={handleCloseSubmitDialog}
@@ -619,14 +621,22 @@ function GrantReviewForm() {
                     id="dialog"
                     >
                     <DialogTitle id="responsive-dialog-title">
-                        {"Would you like to submit your review? WARNING: Review cannot be retrieved once submitted."}
+                        {"Are you sure you want to submit your review?"}
                     </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            WARNING: REVIEW CANNOT BE RETRIEVED ONCE SUBMITTED.
+                        </DialogContentText>
+                        <DialogContentText id="alert-dialog-description">
+                            You can SAVE your progress instead.
+                        </DialogContentText>
+                    </DialogContent>
 
                     <DialogActions>
-                        <Button autoFocus id="responsive-dialog-title" onClick={handleCloseSubmitDialog}>
+                        <Button autoFocus id="responsive-dialog-button" onClick={handleCloseSubmitDialog}>
                             No, Continue Working
                         </Button>
-                        <Button autoFocus id="responsive-dialog-title" onClick={submitScores}>
+                        <Button autoFocus id="responsive-dialog-button2" onClick={submitScores}>
                             Yes, Submit Review
                         </Button>
                     </DialogActions>

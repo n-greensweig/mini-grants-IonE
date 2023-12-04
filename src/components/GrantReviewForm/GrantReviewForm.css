@@ -27,13 +27,13 @@ h4 {
     margin-bottom: -1px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f2f2f2;
-    border: 3px solid #b6b6b6;
+    background-color: #f0efee;
+    border: 3px solid #5a5a5a;
 }
 
 form {
     margin-bottom: 50px;
-    background-color: #f2f2f2;
+    background-color: #f0efee;
 
 }
 
@@ -45,13 +45,13 @@ table {
 
 
 th {
-    border: 3px solid #b6b6b6;
+    border: 3px solid #5a5a5a;
     padding: 8px;
     font-size: 16px;
 }
 
 td {
-    border: 2px solid #b6b6b6;
+    border: 2px solid #5a5a5a;
     padding: 8px;
     text-align: left;
 }
@@ -102,7 +102,7 @@ textarea {
     flex-direction: column;
     align-items: stretch;
     padding: 8px;
-    border: 3px solid #b6b6b6;
+    border: 3px solid #5a5a5a;
     margin-right: auto;
     margin-left: auto;
     box-sizing: border-box;
@@ -111,27 +111,28 @@ textarea {
 }
 
 .score {
-    padding: 3px;
-    padding-left: 12px;
-    padding-right: 12px;
-    border: 1.5px solid #8f8f8f;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1.5px solid #5a5a5a;
     margin-left: 15px;
 }
 
 #save-button {
     border-radius: 10%;
-    color: #7a0019;
+    background-color: #ffffff;
+    color: #5b0013;
     padding: 12px;
-    border: none;
+    border: 1px solid #5b0013;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
 }
 
 #submit-button {
-    background-color: #ffcc33;
+    background-color: #ffde71;
     border-radius: 10%;
-    color: #7a0019;
+    color: #5b0013;
     padding: 12px;
     border: none;
     cursor: pointer;
@@ -141,5 +142,29 @@ textarea {
 }
 
 #save-button:hover, #submit-button:hover {
+    background-color: #ffb71e;
+}
+
+#responsive-dialog-button {
+    color: #5b0013;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid #5b0013;
+    padding: 8px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+#responsive-dialog-button2 {
+    color: #5b0013;
+    background-color: #ffde71;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+#responsive-dialog-button:hover,#responsive-dialog-button2:hover {
     background-color: #ffb71e;
 }
