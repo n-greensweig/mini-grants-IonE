@@ -11,7 +11,7 @@ const userReducer = (state = {}, action) => {
   }
 };
 
-const currentCycle = (state = {cycle_id: ""}, action) => {
+const currentCycle = (state = {}, action) => {
   switch (action.type) {
     case 'SET_CURRENT_CYCLE':
       return action.payload;
@@ -19,7 +19,6 @@ const currentCycle = (state = {cycle_id: ""}, action) => {
       return state;
   }
 };
-
 
 export default combineReducers({
   userReducer,

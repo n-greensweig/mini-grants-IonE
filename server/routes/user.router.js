@@ -51,7 +51,7 @@ router.post('/logout', (req, res) => {
 //GET current cycle ID --HALEIGH
 router.get('/currentCycle', (req, res) => {
   console.log(`Fetching current grant cycle ID`)
-  if(req.isAuthenticated()) {
+  // if(req.isAuthenticated()) {
       //find current cycle_id
       let queryText1 = `SELECT c.id
                       FROM grant_cycle c
@@ -65,9 +65,9 @@ router.get('/currentCycle', (req, res) => {
       console.log(`Error fetching current grant cycle ID`, error);
       res.sendStatus(500);
       });
-  } else {
-      res.sendStatus(401);
-  }
+  // } else {
+  //     res.sendStatus(401);
+  // }
 }); //end GET
 
 
