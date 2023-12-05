@@ -219,9 +219,9 @@ router.post('/importFromGoogle', async (req, res) => {
 
   await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
   res.send('Data saved to PostgreSQL!');
-  // } else {
-  //   res.sendStatus(401);
-  // }
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 module.exports = router;
