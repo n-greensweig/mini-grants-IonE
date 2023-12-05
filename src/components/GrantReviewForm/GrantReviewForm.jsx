@@ -98,7 +98,6 @@ function GrantReviewForm() {
 
     const handleCloseSaveDialog = () => {
         setOpenSaveDialog(false);
-        console.log('closing save dialog box');
     };
 
     const handleOpenSubmitDialog = () => {
@@ -107,7 +106,6 @@ function GrantReviewForm() {
 
     const handleCloseSubmitDialog = () => {
         setOpenSubmitDialog(false);
-        console.log('closing submit dialog box');
     };
 
     // End MUI 
