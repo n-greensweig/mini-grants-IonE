@@ -111,10 +111,10 @@ function parseTeamMembers(dataArr) {
 const getDataFromGoogleSheet = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
   
   //To import default data comment out two below lines and remove comment from line 117
-  // const spreadsheetId = sheetid;
-  // const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
+  const spreadsheetId = sheetid;
+  const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
   
-  range = globalRange;
+  // range = globalRange;
   const auth = await authorize();
   const sheets = google.sheets({ version: 'v4', auth });
 

@@ -60,7 +60,7 @@ router.get('/unreviewed', (req, res) => {
 }); //end GET
 
 //GET grants for a given reviewer --HALEIGH
-router.get('/reviewer-grants', (req, res) => {
+router.get('/reviewerhomepage', (req, res) => {
     console.log(`Fetching grants for user id: ${req.user.id}`)
     if(req.isAuthenticated()) {
         //find current cycle_id
@@ -88,6 +88,7 @@ router.get('/reviewer-grants', (req, res) => {
                         AND a.cycle_id = $2`;
         pool.query(queryText2, [userID, cycleID.cycle_id])
         .then(result => {
+            console.log('.then in the querytext2', result);
         res.send(result.rows);
         })
         .catch(error => {
@@ -98,6 +99,50 @@ router.get('/reviewer-grants', (req, res) => {
         res.sendStatus(401);
     }
 }); //end GET
+
+//GET grants for a given reviewer on reviewerhomepage
+/*
+router.get('/reviewerhomepage', (req, res) => {
+    console.log(`fetching grants for user id: ${req.user.id}`);
+
+    // Find current cycle id
+    let queryText1 = `SELECT id FROM grant_cycle WHERE cycle_complete = FALSE ORDER BY start_date LIMIT 1;`;
+    pool.query(queryText1)
+    .then(result => {
+        const cycleID = result.rows[0].id;
+
+        // Fetch relevant data from grant_assignments, grant_data, and departments table
+        let queryText2 = `
+        SELECT 
+            to_char(gd.time_stamp, 'YYYY-MM-DD') as formatted_time_stamp,
+            gd.project_title, gd.principal_investigator, d.name AS department_name
+        FROM grant_assignments ga
+        JOIN grant_data gd ON ga.grant_id = gd.id
+        LEFT JOIN departments d ON gd.dept_id[1]::VARCHAR = d.id::VARCHAR
+        WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR AND ga.cycle_id = $2;
+        `;
+        // let queryText2 = `
+        // SELECT gd.time_stamp, gd.project_title, gd.principal_investigator, d.name AS department_name
+        // FROM grant_assignments ga
+        // JOIN grant_data gd ON ga.grant_id = gd.id
+        // LEFT JOIN departments d ON gd.dept_id[1]::VARCHAR = d.id::VARCHAR
+        // WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR AND ga.cycle_id = $2;
+        // `;
+        return pool.query(queryText2, [req.user.id, cycleID]);
+    })
+    .then(result => {
+        console.log('Time_stamp:', result.rows.map(row => row.formatted_time_stamp)); // Log time_stamp to the console
+        // console.log('cycleID', cycleID);
+        console.log('result', result);
+        res.send(result.rows);
+
+    })
+    .catch(error => {
+        console.log(`Error fetching grants for user id: ${req.user.id}`, error);
+        res.sendStatus(500);
+    })
+});
+*/
 
 //POST to set user as reviewer for grant cycle --HALEIGH
 router.post('/userReviewer',  (req, res) => {
