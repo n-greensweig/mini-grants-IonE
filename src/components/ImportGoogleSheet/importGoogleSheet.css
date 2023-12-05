@@ -21,3 +21,8 @@
     grid-row: 3 span 1;
 }
 
+.loader {
+    grid-column: 2 / span 2;
+    grid-row: 3 / span 3;
+    margin-top:25%;
+}

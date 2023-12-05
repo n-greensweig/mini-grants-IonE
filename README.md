@@ -28,9 +28,9 @@
 
   #### Importing the data
   
-  Obtain the spreadsheet ID from the URL in your browser's address bar. The spreadsheet ID is the long string of characters between /d/ and /edit in the URL. Example: 1QOxCZr7Q3mbeEMQV4JhXpDLnOt6O3IrPct1-5nVQxI
+  Obtain the spreadsheet URL from the "Share" menu item in the Google Spreadsheet. 
 
-  On the Admin page of the IonE Mini-Grants application select "Import Data From Google Spreadsheet". Provide the spreadsheet ID and the start and end rows and columns. **Note: Do not include the header row (Row 1)**. 
+  On the Admin page of the IonE Mini-Grants application select "Import Data From Google Spreadsheet". Provide the spreadsheet URL and the start and end rows and columns. **Note: Do not include the header row (Row 1)**. 
   **Example: A2 to K20.**. Then provide the name of the tab that contains the data you wish to import. 
 
   **Important:** The order of columns in the google sheet cannot be changed and must match the format set by the current Google form submission. Any modification of the column order will result in data being placed erroneously in the database and will need to be fixed manually. 

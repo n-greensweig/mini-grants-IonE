@@ -162,17 +162,24 @@ const getDataFromGoogleSheet = async (sheetId, tabName, start_col, start_row, en
     } //End for loop
     return dataObj;
   } catch (err) {
-    console.error('The API returned an error:', err);
-    return null;
+    console.error('The API returned an error:', err.errors);
+    return err.errors;
   }
 };
 
 // Save data to PostgreSQL
 const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
   const data = await getDataFromGoogleSheet(sheetId, tabName, start_col, start_row, end_col, end_row);
+  let importedRecords = 0;
+  let skippedRecords = 0;
   // console.log(typeof data, data.length, data[0].length);
+  // console.log(data);
+  // console.log('*************data.errors************', data[0].message);
   if (!data) return;
-
+  if (data[0].message) {
+    
+    return { error: data[0].message };
+  }
   for (let i = 0; i < data.length; i++) {
     try {
     
@@ -200,9 +207,9 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
               $16, $17, $18, $19, $20, $21, $22, $23, $24);`;
       
         await pool.query(insertQuery, data[i]);
-        console.log('Data inserted:');
+        importedRecords++;
       } else {
-        console.log('Skipping duplicate entry');
+        skippedRecords++;
       } //end if isDuplicate()
     } //end try
     catch(error) {
@@ -210,15 +217,14 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
       res.sendStatus(500);
     }
   } //end for loop
+  return {sheetData: data, importedRecords: importedRecords, skippedRecords: skippedRecords }
 };
 
 // Route to trigger the data saving process
 router.post('/importFromGoogle', async (req, res) => {
   if(req.isAuthenticated()) {
-    console.log(req.body);
-
-  await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
-  res.send('Data saved to PostgreSQL!');
+  const outputData = await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
+  res.json(outputData);
   } else {
     res.sendStatus(401);
   }
