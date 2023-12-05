@@ -50,6 +50,9 @@ const GrantsTable = () => {
                             <Button onClick={() => requestSort('cycle_id')}>Cycle ID</Button>
                         </TableCell>
                         <TableCell>
+                            <Button onClick={() => requestSort('cycle_name')}>Cycle ID</Button>
+                        </TableCell>
+                        <TableCell>
                             <Button onClick={() => requestSort('grant_type')}>Grant Type</Button>
                         </TableCell>
                         <TableCell>
@@ -77,6 +80,7 @@ const GrantsTable = () => {
                     {sortedGrants.map(grant => (
                         <TableRow key={grant.id}>
                             <TableCell>{grant.cycle_id}</TableCell>
+                            <TableCell>{grant.cycle_name}</TableCell>
                             <TableCell>{grant.grant_type}</TableCell>
                             <TableCell>{grant.PI_dept_id}</TableCell>
                             <TableCell>{new Date(grant.start_date).toLocaleDateString()}</TableCell>
