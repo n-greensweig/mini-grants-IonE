@@ -2,7 +2,7 @@
 
 // React
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // Axios
 import axios from 'axios';
@@ -13,22 +13,27 @@ import './ReviewerHomePage.css';
 function ReviewerHomePage(){
 
     const history = useHistory();
+    const [data, setData] = useState([]);
 
-    const data = [
-        {
-            dateSubmitted: '2023-11-27',
-            grantName: 'Research Grant A',
-            sponsoringProfessor: 'Dr. Johnson',
-            department: 'Mathematics',
-            status: 'Review Needed',
-        }
-    ];
+    const fetchData = () => {
+        axios.get('/grants/reviewerhomepage')
+        .then(response => {
+            setData(response.data);
+        })
+        .catch(error => {
+            console.log('Error fetching reviewer grants:', error);
+        });
+    }
 
     const handleReviewClick = (grantName) => {
         console.log(`Review button clicked for grant: ${grantName}`);
         // Use history.push to navigate to the "/grantreviewform" route
         history.push('/grantreviewform')
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <table className="reviewerTable">
@@ -45,13 +50,13 @@ function ReviewerHomePage(){
             <tbody>
                 {data.map((item, index) => (
                     <tr key={index}>
-                        <td>{item.dateSubmitted}</td>
-                        <td>{item.grantName}</td>
-                        <td>{item.sponsoringProfessor}</td>
-                        <td>{item.department}</td>
-                        <td>{item.status}</td>
+                        <td>{item.time_stamp}</td>
+                        <td>{item.project_title}</td>
+                        <td>{item.principal_investigator}</td>
+                        <td>{item.department_name}</td>
+                        <td>Status Placeholder</td>
                         <td>
-                            <button onClick={() => handleReviewClick(item.grantName)}>
+                            <button onClick={() => handleReviewClick(item.project_title)}>
                                 Review
                             </button>
                         </td>
@@ -59,7 +64,6 @@ function ReviewerHomePage(){
                 ))}
             </tbody>
         </table>
-
     );
 
 }
