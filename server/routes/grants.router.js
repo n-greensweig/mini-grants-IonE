@@ -12,7 +12,12 @@ router.get('/', (req, res) => {
         console.log('Fetching all grant data')
         pool.query(queryText)
         .then(result => {
+            if (result.rows.length > 0) {
             res.send(result.rows);
+            } else {
+                console.log('No grant data');
+                res.sendStatus(200)
+            }
         })
         .catch(error => {
             console.log(`Error fetching all grant data`, error);
@@ -29,7 +34,12 @@ router.get('/reviewers', (req, res) => {
         console.log('Fetching all reviewers')
         pool.query(queryText)
         .then(result => {
+            if (result.rows.length > 0) {
             res.send(result.rows);
+            } else {
+                console.log('No reviewers');
+                res.sendStatus(200)
+            }
         })
         .catch(error => {
             console.log(`Error fetching all reviewers`, error);
@@ -50,7 +60,12 @@ router.get('/unreviewed', (req, res) => {
                     WHERE review_complete = TRUE;`;
     pool.query(queryText)
     .then(result => {
+        if (result.rows.length > 0) {
         res.send(result.rows);
+        } else {
+            console.log('No unreviewed grants');
+            res.sendStatus(200)
+        }
     })
     .catch(error => {
         console.log(`Error fetching unreviewed grants`, error);
@@ -90,8 +105,12 @@ router.get('/reviewer-grants', (req, res) => {
                         AND a.cycle_id = $2`;
         pool.query(queryText2, [userID, cycleID.cycle_id])
         .then(result => {
-            console.log('.then in the querytext2', result);
-        res.send(result.rows);
+            if (result.rows.length > 0) {
+            res.send(result.rows);
+            } else {
+                console.log('No grants for user');
+                res.sendStatus(200)
+            }
         })
         .catch(error => {
         console.log(`Error fetching grants for user id: ${req.user.id}`, error);
