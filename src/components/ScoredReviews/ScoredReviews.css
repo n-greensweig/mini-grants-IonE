@@ -10,7 +10,7 @@
 
 .scoresTable th, .scoresTable td {
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1.5px solid #ebebeb;
     /* width: 20%; */
 }
 
@@ -24,8 +24,14 @@
     font-size: 13px;
 }
 
-#select-label, #menu-item {
+#select-label {
     font-size: 13px;
+}
+
+#funding-selection {
+    font-size: 13px;
+    padding: 12px;
+    margin: 0px;
 }
 
 .scoresTable button {

@@ -38,6 +38,7 @@ function ScoredReviews() {
     const selectFunding = (event) => {
         setFunding(event.target.value);
     }
+    console.log(funding);
 
     return (
         <table className="scoresTable">
@@ -67,14 +68,14 @@ function ScoredReviews() {
                                 <InputLabel id="select-label">Select</InputLabel>
                                 <Select
                                     labelId="select-label"
-                                    id="demo-simple-select"
+                                    id="funding-selection"
                                     value={funding}
                                     label="Select"
-                                    onChange={setFunding}
-                                    >
-                                    <MenuItem className="menu-item" value={10}>Full</MenuItem>
-                                    <MenuItem className="menu-item" value={20}>Per Availability</MenuItem>
-                                    <MenuItem className="menu-item" value={30}>Not Recommended</MenuItem>
+                                    onChange={selectFunding}
+                                >
+                                    <MenuItem id="funding-selection" value={'Full'}>Full</MenuItem>
+                                    <MenuItem id="funding-selection" value={'Per Availability'}>Per Availability</MenuItem>
+                                    <MenuItem id="funding-selection" value={'Not Recommended'}>Not Recommended</MenuItem>
                                 </Select>
                             </FormControl>
                         </td>
