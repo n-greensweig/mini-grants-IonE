@@ -6,7 +6,7 @@ const passport = require('./strategies/user.strategy');
 const cookieSession = require('cookie-session');
 const sessionMiddleware = require('./modules/session-middleware');
 const pool = require('./modules/pool');
-
+const cors = require('cors');
 // Route includes
 const userRouter = require('./routes/user.router');
 const oauthRouter = require('./routes/oauth.router');
@@ -14,6 +14,11 @@ const grantsRouter = require('./routes/grants.router')
 const dataGenRoute = require('./routes/dataGen.router');
 const googleSheetsRoute = require('./routes/googleSheets.router');
 const reviewerRoute = require('./routes/reviewer.router');
+
+let id = '';
+let email = '';
+let fullName = '';
+let googleId = '';
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -59,14 +64,18 @@ passport.use(new GoogleStrategy({
             const user = result && result.rows && result.rows[0];
             if (user) {
               console.log('Existing User Found', user);
+              id = user.id;
+              email = user.email;
+              fullName = user.full_name;
+              googleId = user.google_id;
               return done(null, user);
             } else {
               console.log('Create new user condition called');
               // const password = null;
-              const email = firstEmail.value;
-              const fullName = profile.displayName;
-              const googleId = profile.id;
-
+              email = firstEmail.value;
+              fullName = profile.displayName;
+              googleId = profile.id;
+      
               const queryText = `INSERT INTO "user" (email, full_name, google_id)
                       VALUES ($1, $2, $3) RETURNING id;`;
               await pool.query(queryText, [email, fullName, googleId]);
@@ -108,13 +117,20 @@ app.get('/google',
         }
     ));
 
+
+app.get('/userInfoRoute', (req,res) => {
+  // console.log('********SEND THESE*******', email, fullName, googleId)
+  res.send({ id: id, email: email, fullName:fullName, googleId: googleId });
+});
+
+
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: `${process.env.BASE_URL}/#/login` }),
   (req, res) => {
     if (process.env.NODE_ENV !== 'production') {
       res.redirect(`${process.env.BASE_URL}/#/home`);
     } else {
-      res.redirect(`${process.env.BASE_URL}/#/home`); // TODO: After login page.
+      res.redirect(`/userInfoRoute`); // TODO: After login page.
     }
   }
 );

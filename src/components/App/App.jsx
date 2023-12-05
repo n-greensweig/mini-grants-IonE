@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-
+import axios from 'axios';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
@@ -38,9 +38,14 @@ function App() {
 
   const user = useSelector(store => store.user);
 
-  useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   axios.get('/userInfoRoute')
+  //   .then((response) => {
+  //     dispatch({ action: 'SET_USER', payload: response.data })
+  //   }).catch((error) => {
+  //     console.error(error);
+  //   })
+  // }, [dispatch]);
 
   return (
     <Router>
