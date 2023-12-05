@@ -64,7 +64,6 @@ function ReviewerHomePage(){
                 ))}
             </tbody>
         </table>
-
     );
 
 }
