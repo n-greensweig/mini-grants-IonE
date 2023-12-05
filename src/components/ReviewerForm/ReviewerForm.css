@@ -3,7 +3,43 @@
     box-shadow: 0 4px 8px #333333;
     border-radius: 8px;
     padding: 20px;
-    width: 500px; /* Set your desired width */
+    width: 600px; /* Set your desired width */
     margin: 20px auto; /* Center the card on the page */
     text-align: center;
+}
+
+#reviewer-form-save-button {
+    border-radius: 10%;
+    background-color: #ffcc33;
+    color: #5b0013;
+    padding: 5px;
+    border: 1px solid #5b0013;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#reviewer-view {
+    font-size: larger;
+}
+
+#reviewer-form-title {
+    color:#5b0013
+}
+
+#department-affiliation-label{
+    size: 15px;
+}
+
+#multiSelect {
+    width: 350px;
+}
+
+.largerOptions {
+    font-size: 15px;
+}
+
+#department-affiliations{
+    padding: 20px;
+    margin: 20px auto;
 }

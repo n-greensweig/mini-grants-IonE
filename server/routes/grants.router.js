@@ -90,6 +90,7 @@ router.get('/reviewer-grants', (req, res) => {
                         AND a.cycle_id = $2`;
         pool.query(queryText2, [userID, cycleID.cycle_id])
         .then(result => {
+            console.log('.then in the querytext2', result);
         res.send(result.rows);
         })
         .catch(error => {
@@ -100,6 +101,30 @@ router.get('/reviewer-grants', (req, res) => {
         res.sendStatus(401);
     }
 }); //end GET
+
+//GET grants for a given reviewer on reviewerhomepage --JENNY
+router.get('/reviewerhomepage', (req, res) => {
+    // Fetch relevant data from grant_assignments, grant_data, and departments table
+    const userID = req.user.id;
+    let queryText = `
+                    SELECT gd.time_stamp, gd.project_title, gd.principal_investigator, d.name AS department_name
+                    FROM grant_assignments ga
+                    JOIN grant_data gd ON ga.grant_id = gd.id
+                    LEFT JOIN departments d ON gd.dept_id[1]::VARCHAR = d.id::VARCHAR
+                    WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR;
+                    `;       
+    pool.query(queryText, [userID])
+    .then(result => {
+        console.log('result', result);
+        res.send(result.rows);
+
+    })
+    .catch(error => {
+        console.log(`Error fetching grants for user id: ${req.user.id}`, error);
+        res.sendStatus(500);
+    })
+});
+
 
 //POST to set user as reviewer for grant cycle --HALEIGH
 router.post('/userReviewer',  (req, res) => {

@@ -65,9 +65,9 @@ function ReviewerForm(){
 
     return (
         <>
-        <div id='Reviewer-Card'>
-            
-        <h2>Please submit some information about you! </h2>
+        <div id='reviewer-view'>
+        <div id='Reviewer-Card'>  
+            <h2 id='reviewer-form-title'>Tell us about You and Your Academic Affiliations!</h2>
 
             <form onSubmit={handleSubmit}>
             <div>
@@ -82,19 +82,19 @@ function ReviewerForm(){
                 required
                 />
             </div>
-
         {/* Department Affiliations */}
-        <div>
-                <label htmlFor="multiSelect">Select any department affiliations:</label>
-                <br />
+        <div id='department-affiliations'>
+                <label id='department-affiliation-label' htmlFor="multiSelect">Select Your Academic Affiliations:</label>
+                <br /> <br />
                 <select
                     id="multiSelect"
                     multiple
+                    size={9}
                     onChange={handleSelectionChange}
                     value={selectedItems}
                 >
                     {options.map(option => (
-                    <option key={option} value={option}>
+                    <option key={option} value={option} className='largerOptions'>
                         {option}
                     </option>
                     ))}
@@ -103,21 +103,22 @@ function ReviewerForm(){
                 <p>Selected Departments: {selectedItems.join(', ')}</p>
             </div>
         </div>
-        
             <div>
-                <label>Grants to Review:</label>
+                <label>Review Quantity for this Cycle: {}</label>
                 <input
                 type="number"
                 id="grantsToReview"
                 name="grantsToReview"
+                placeholder='1 - 5'
                 value={formData.grantsToReview}
                 onChange={handleChange}
                 required
                 />
             </div>
-        
-            <button type="submit">Submit</button>
+             <br />
+            <button id='reviewer-form-save-button' type="submit">Submit</button>
             </form>
+        </div>
         </div>
         </>
       );

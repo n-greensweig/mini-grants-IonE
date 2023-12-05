@@ -69,6 +69,7 @@ function GrantReviewForm() {
         impact: impactSum,
         comments: comments,
         review_complete: true,
+        // date/time_scored?
     };
 
     let savedScores = {
@@ -83,6 +84,7 @@ function GrantReviewForm() {
         impact: impactSum,
         comments: comments,
         review_complete: false, 
+        // date/time_scored?
     };
 
     // Material UI Dialog Box variables
@@ -96,7 +98,6 @@ function GrantReviewForm() {
 
     const handleCloseSaveDialog = () => {
         setOpenSaveDialog(false);
-        console.log('closing save dialog box');
     };
 
     const handleOpenSubmitDialog = () => {
@@ -105,7 +106,6 @@ function GrantReviewForm() {
 
     const handleCloseSubmitDialog = () => {
         setOpenSubmitDialog(false);
-        console.log('closing submit dialog box');
     };
 
     // End MUI 
