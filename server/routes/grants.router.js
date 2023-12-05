@@ -60,7 +60,7 @@ router.get('/unreviewed', (req, res) => {
 }); //end GET
 
 //GET grants for a given reviewer --HALEIGH
-router.get('/reviewerhome', (req, res) => {
+router.get('/reviewer-grants', (req, res) => {
     console.log(`Fetching grants for user id: ${req.user.id}`)
     if(req.isAuthenticated()) {
         //find current cycle_id
@@ -100,40 +100,23 @@ router.get('/reviewerhome', (req, res) => {
     }
 }); //end GET
 
-//GET grants for a given reviewer on reviewerhomepage
-
+//GET grants for a given reviewer on reviewerhomepage --JENNY
 router.get('/reviewerhomepage', (req, res) => {
-    console.log(`fetching grants for user id: ${req.user.id}`);
-
-    // Find current cycle id
-    let queryText1 = `SELECT id FROM grant_cycle WHERE cycle_complete = FALSE ORDER BY start_date LIMIT 1;`;
-    pool.query(queryText1)
+    console.log(`fetching reviewerhomepage grants for user id: ${req.user.id}`);
+    // Fetch relevant data from grant_assignments, grant_data, and departments table
+    const userID = req.user.id;
+    let queryText = `
+                    SELECT gd.time_stamp, gd.project_title, gd.principal_investigator, d.name AS department_name
+                    FROM grant_assignments ga
+                    JOIN grant_data gd ON ga.grant_id = gd.id
+                    LEFT JOIN departments d ON gd.dept_id[1]::VARCHAR = d.id::VARCHAR
+                    WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR;
+                    `;       
+    pool.query(queryText, [userID])
     .then(result => {
-        const cycleID = result.rows[0].id;
-
-        // Fetch relevant data from grant_assignments, grant_data, and departments table
-        // let queryText2 = `
-        // SELECT 
-        //     to_char(gd.time_stamp, 'YYYY-MM-DD') as formatted_time_stamp,
-        //     gd.project_title, gd.principal_investigator, d.name AS department_name
-        // FROM grant_assignments ga
-        // JOIN grant_data gd ON ga.grant_id = gd.id
-        // LEFT JOIN departments d ON gd.dept_id[1]::VARCHAR = d.id::VARCHAR
-        // WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR AND ga.cycle_id = $2;
-        // `;
-        let queryText2 = `
-        SELECT gd.time_stamp, gd.project_title, gd.principal_investigator, d.name AS department_name
-        FROM grant_assignments ga
-        JOIN grant_data gd ON ga.grant_id = gd.id
-        LEFT JOIN departments d ON gd.dept_id[1]::VARCHAR = d.id::VARCHAR
-        WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR AND ga.cycle_id = $2;
-        `;
-        return pool.query(queryText2, [req.user.id, cycleID]);
-    })
-    .then(result => {
-        console.log('Time_stamp:', result.rows.map(row => row.formatted_time_stamp)); // Log time_stamp to the console
+        console.log('queryText:', queryText); // Log time_stamp to the console
+        console.log('Time_stamp:', result.rows.map(row => row.time_stamp)); // Log time_stamp to the console
         console.log('project_title:', result.rows.map(row => row.project_title)); // Log project_title to the console
-        // console.log('cycleID', cycleID);
         console.log('result', result);
         res.send(result.rows);
 

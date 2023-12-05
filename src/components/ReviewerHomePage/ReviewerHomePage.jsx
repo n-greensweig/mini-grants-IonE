@@ -15,16 +15,6 @@ function ReviewerHomePage(){
     const history = useHistory();
     const [data, setData] = useState([]);
 
-    // const data = [
-    //     {
-    //         dateSubmitted: '',
-    //         grantName: '',
-    //         sponsoringProfessor: '',
-    //         department: '',
-    //         status: '',
-    //     }
-    // ];
-
     const fetchData = () => {
         axios.get('/grants/reviewerhomepage')
         .then(response => {
