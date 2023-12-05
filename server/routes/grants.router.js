@@ -104,7 +104,6 @@ router.get('/reviewer-grants', (req, res) => {
 
 //GET grants for a given reviewer on reviewerhomepage --JENNY
 router.get('/reviewerhomepage', (req, res) => {
-    console.log(`fetching reviewerhomepage grants for user id: ${req.user.id}`);
     // Fetch relevant data from grant_assignments, grant_data, and departments table
     const userID = req.user.id;
     let queryText = `
@@ -116,9 +115,6 @@ router.get('/reviewerhomepage', (req, res) => {
                     `;       
     pool.query(queryText, [userID])
     .then(result => {
-        console.log('queryText:', queryText); // Log time_stamp to the console
-        console.log('Time_stamp:', result.rows.map(row => row.time_stamp)); // Log time_stamp to the console
-        console.log('project_title:', result.rows.map(row => row.project_title)); // Log project_title to the console
         console.log('result', result);
         res.send(result.rows);
 
