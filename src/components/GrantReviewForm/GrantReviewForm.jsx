@@ -3,6 +3,7 @@
 // React
 import React, { useState} from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // Axios
 import axios from 'axios';
@@ -19,6 +20,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
 function GrantReviewForm() {
+
+    const user = useSelector((store) => store.user);
 
     const history = useHistory();
 
@@ -141,6 +144,7 @@ function GrantReviewForm() {
             <br />
             <div className="heading">
                 {/* Reviewer will be variable brought in from other components */}
+                <h3>Hello, {user.full_name}</h3>
                 <h3><span>Welcome </span><span><i>Reviewer</i></span></h3>
                 <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
                 

@@ -21,6 +21,31 @@ function Nav() {
           </Link>
         )}
 
+        {/* REVIEWER VIEW
+        
+        <Link className="navLink" to="/reviewerhomepage">
+            Reviewer/Home
+        </Link> 
+        // LOG OUT
+        
+        */}
+
+        {/* ADMIN VIEW 
+        
+        <Link className="navLink" to="/adminhomeview">
+          Admin-Home
+        </Link> 
+        
+        <Link className="navLink" to="/adminallgrantsdata">
+          Admin-AllGrantsData
+        </Link>
+
+        <Link className="navLink" to="/scoredreviews">
+          Scored Reviews
+        </Link>
+
+        */}
+
         <Link className="navLink" to="/adminhomeview">
           Admin-Home
         </Link>
@@ -34,11 +59,15 @@ function Nav() {
         </Link>
 
         <Link className="navLink" to="/reviewerform">
-        Reviewer-Form
+          Reviewer-Form
         </Link>
 
         <Link className="navLink" to="/reviewerhomepage">
-        Reviewer/Home
+          Reviewer/Home
+        </Link>
+
+        <Link className="navLink" to="/scoredreviews">
+          Scored Reviews
         </Link>
 
 
