@@ -111,10 +111,10 @@ function parseTeamMembers(dataArr) {
 const getDataFromGoogleSheet = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
   
   //To import default data comment out two below lines and remove comment from line 117
-  // const spreadsheetId = sheetid;
-  // const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
+  const spreadsheetId = sheetId;
+  const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
   
-  range = globalRange;
+  // range = globalRange;
   const auth = await authorize();
   const sheets = google.sheets({ version: 'v4', auth });
 
@@ -207,14 +207,16 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
     } //end try
     catch(error) {
       console.error('Error inserting data:', error);
-      res.send(500);
+      res.sendStatus(500);
     }
   } //end for loop
 };
 
 // Route to trigger the data saving process
-router.get('/importFromGoogle', async (req, res) => {
-  //if(req.isAuthenticated()) {
+router.post('/importFromGoogle', async (req, res) => {
+  if(req.isAuthenticated()) {
+    console.log(req.body);
+
   await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
   res.send('Data saved to PostgreSQL!');
   // } else {
