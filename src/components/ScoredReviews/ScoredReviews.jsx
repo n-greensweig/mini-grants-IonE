@@ -32,6 +32,10 @@ function ScoredReviews() {
         }
     ]
 
+    const viewReviewDetails = () => {
+
+    }
+
     // MUI 
 
     const [funding, setFunding] = React.useState('');
@@ -50,7 +54,7 @@ function ScoredReviews() {
                     <th>Score 1</th>
                     <th>Score 2</th>
                     <th>Score 3</th>
-                    <th>Funding Recommendation</th>
+                    <th>Average Score</th>
                     <th></th>
                 </tr>
             </thead>
@@ -64,7 +68,7 @@ function ScoredReviews() {
                         <td>{item.score2}</td>
                         <td>{item.score3}</td>
                         <td>
-                            <FormControl fullWidth>
+                            {/* <FormControl fullWidth>
                                 <InputLabel id="select-label">Select</InputLabel>
                                 <Select
                                     labelId="select-label"
@@ -77,10 +81,10 @@ function ScoredReviews() {
                                     <MenuItem id="funding-selection" value={'Per Availability'}>Per Availability</MenuItem>
                                     <MenuItem id="funding-selection" value={'Not Recommended'}>Not Recommended</MenuItem>
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
                         </td>
                         <td>
-                            <button onClick={() => handleReviewClick(item.grantName)}>
+                            <button onClick={() => viewReviewDetails(item.grantName)}>
                                 View Details
                             </button>
                         </td>
