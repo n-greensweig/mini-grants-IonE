@@ -44,8 +44,8 @@ CREATE TABLE "grant_cycle" (
 	"start_date" DATE,
 	"end_date" DATE,
 	"grant_type" VARCHAR(60),
-	"cycle_name" VARCHAR(30),
-	"cycle_complete" BOOLEAN DEFAULT FALSE
+	"cycle_complete" BOOLEAN DEFAULT FALSE,
+	"cycle_name" VARCHAR(30)
 );
 
 
@@ -60,8 +60,11 @@ CREATE TABLE "scores" (
 	"method_and_design" INT,
 	"budget" INT,
 	"impact" INT,
+	"comments" VARCHAR (2000), 
 	"review_complete" BOOLEAN DEFAULT FALSE
 );
+
+-- JEFF added comments column in "scores" table
 
 
 CREATE TABLE "departments" (

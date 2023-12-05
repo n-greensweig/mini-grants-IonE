@@ -10,7 +10,7 @@ const credentials = require('../../sheets_api.json'); // Path to your Google Clo
 //Below lines are for example purposes
 const spreadsheetId = '1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI'; //Default example sheet
 let start_col = 'A';
-let start_row = '2';
+let start_row = '3';
 let end_col = 'CA';
 let end_row = '30';
 const globalRange = `Application Sheet Example!${start_col}${start_row}:${end_col}${end_row}`; // Change this to your desired range
@@ -43,7 +43,7 @@ try {
   if (result.rows.length > 0) {
     return result.rows[0].id;
   } else {
-    return 'N/A';
+    return null;
   } 
 } catch (error) {
   console.error(`Error running query`, error);
@@ -111,7 +111,7 @@ function parseTeamMembers(dataArr) {
 const getDataFromGoogleSheet = async (sheetId, tabName, start_col, start_row, end_col, end_row) => {
   
   //To import default data comment out two below lines and remove comment from line 117
-  const spreadsheetId = sheetid;
+  const spreadsheetId = sheetId;
   const range = `${tabName}!${start_col}${start_row}:${end_col}${end_row}`;
   
   // range = globalRange;
@@ -207,14 +207,16 @@ const saveDataToPostgres = async (sheetId, tabName, start_col, start_row, end_co
     } //end try
     catch(error) {
       console.error('Error inserting data:', error);
-      res.sent(500);
+      res.sendStatus(500);
     }
   } //end for loop
 };
 
 // Route to trigger the data saving process
-router.get('/importFromGoogle', async (req, res) => {
+router.post('/importFromGoogle', async (req, res) => {
   if(req.isAuthenticated()) {
+    console.log(req.body);
+
   await saveDataToPostgres(req.body.sheetId, req.body.tabName, req.body.start_col, req.body.start_row, req.body.end_col, req.body.end_row);
   res.send('Data saved to PostgreSQL!');
   } else {

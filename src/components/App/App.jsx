@@ -27,6 +27,9 @@ import AdminReviewersTable from '../AdminReviewersTable/AdminReviewersTable';
 import GrantReviewForm from '../GrantReviewForm/GrantReviewForm';
 import ReviewerForm from '../ReviewerForm/ReviewerForm';
 import ReviewerHomePage from '../ReviewerHomePage/ReviewerHomePage';
+import ScoredReviews from '../ScoredReviews/ScoredReviews';
+import ImportGoogleSheet from '../ImportGoogleSheet/importGoogleSheet';
+
 
 import './App.css';
 
@@ -80,7 +83,7 @@ function App() {
           <Route exact path="/adminallgrantsdata">
             <AdminAllGrantsData />
           </Route>
-
+            <Route exact path="/importSheet" component={ImportGoogleSheet} />
           <Route exact path="/adminhomeview">
             <AdminHomeView />
           </Route>
@@ -99,6 +102,10 @@ function App() {
 
           <Route exact path="/reviewerhomepage">
             <ReviewerHomePage />
+          </Route>
+
+          <Route exact path="/scoredreviews">
+            <ScoredReviews />
           </Route>
 
           <Route

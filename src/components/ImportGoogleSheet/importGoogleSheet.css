@@ -1,0 +1,23 @@
+.importContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 0.2fr, 0.2fr, 1fr, 1fr, 1fr;
+    margin: 10px;
+}
+
+.importTitle {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 1;
+}
+
+.importIn {
+    grid-column: 1 / span 3;
+    grid-row: 2 span 1;
+    padding: 5px;
+}
+
+.importRange {
+    grid-column: 1 / span 3;
+    grid-row: 3 span 1;
+}
+
