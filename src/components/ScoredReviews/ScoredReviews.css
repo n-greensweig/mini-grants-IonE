@@ -1,0 +1,44 @@
+.scoresTable {
+    margin-top: 20px;
+    margin: 2.5%;
+    width: 95%;
+    border-collapse: collapse;
+    margin-top: 35px;
+    background-color: #d5d6d2;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.scoresTable th, .scoresTable td {
+    text-align: center;
+    border: 1px solid #ddd;
+    /* width: 20%; */
+}
+
+.scoresTable th {
+    padding: 15px;
+    font-size: 14px;
+}
+
+.scoresTable td {
+    padding: 8px;
+    font-size: 13px;
+}
+
+#select-label, #menu-item {
+    font-size: 13px;
+}
+
+.scoresTable button {
+    background-color: #ffcc33;
+    border-radius: 10%;
+    color: #7a0019;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.scoresTable button:hover {
+    background-color: #ffb71e;
+}

@@ -69,6 +69,7 @@ function GrantReviewForm() {
         impact: impactSum,
         comments: comments,
         review_complete: true,
+        // date/time_scored?
     };
 
     let savedScores = {
@@ -83,6 +84,7 @@ function GrantReviewForm() {
         impact: impactSum,
         comments: comments,
         review_complete: false, 
+        // date/time_scored?
     };
 
     // Material UI Dialog Box variables
