@@ -50,10 +50,10 @@ function ReviewerHomePage(){
             <tbody>
                 {data.map((item, index) => (
                     <tr key={index}>
-                        <td>{item.time_stamp}</td>
+                        <td>{item.formatted_date}</td>
                         <td>{item.project_title}</td>
                         <td>{item.principal_investigator}</td>
-                        <td>{item.department_name}</td>
+                        <td>{item.PI_primary_college}</td>
                         <td>Status Placeholder</td>
                         <td>
                             <button onClick={() => handleReviewClick(item.project_title)}>
