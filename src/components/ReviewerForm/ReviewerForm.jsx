@@ -86,6 +86,7 @@ function ReviewerForm(){
         {/* Department Affiliations */}
         <div>
                 <label htmlFor="multiSelect">Select any department affiliations:</label>
+                <br />
                 <select
                     id="multiSelect"
                     multiple

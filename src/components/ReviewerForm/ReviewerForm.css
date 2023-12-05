@@ -1,3 +1,9 @@
 #Reviewer-Card {
+    background-color: #f0efee;
+    box-shadow: 0 4px 8px #333333;
+    border-radius: 8px;
+    padding: 20px;
+    width: 500px; /* Set your desired width */
+    margin: 20px auto; /* Center the card on the page */
     text-align: center;
 }
