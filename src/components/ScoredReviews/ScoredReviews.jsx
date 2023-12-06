@@ -25,16 +25,18 @@ function ScoredReviews() {
             dateSubmitted: '2023-11-27',
             projectTitle: 'Research Grant A',
             projectPI: 'Dr. Johnson',
-            score1: '15',
+            score1: '21',
             score2: '16',
             score3: '17',
             placeholder: 'placeholder data',
         }
     ]
+    const averageScore = () => {
+        let result = (+data[0].score1 + +data[0].score2 + +data[0].score3) / 3
+        return result;
+    };
 
-    const viewReviewDetails = () => {
-
-    }
+    console.log(averageScore());
 
     // MUI 
 
@@ -67,7 +69,8 @@ function ScoredReviews() {
                         <td>{item.score1}</td>
                         <td>{item.score2}</td>
                         <td>{item.score3}</td>
-                        <td>
+                        <td> {averageScore()}
+
                             {/* <FormControl fullWidth>
                                 <InputLabel id="select-label">Select</InputLabel>
                                 <Select
