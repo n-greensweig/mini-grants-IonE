@@ -138,13 +138,14 @@ function GrantReviewForm() {
         handleCloseSubmitDialog();
         history.push(`/reviewerhomepage`);
     };
+    console.log(user);
 
     return (
         <div id="review-form">
             <br />
             <div className="heading">
                 {/* Reviewer will be variable brought in from other components */}
-                <h3>Hello, {user.full_name}</h3>
+                <h3>Hello, {user.fullName}</h3>
                 <h3><span>Welcome </span><span><i>Reviewer</i></span></h3>
                 <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
                 
