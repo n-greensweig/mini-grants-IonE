@@ -26,6 +26,7 @@ import PDFDocument from '../PDF/PDFDocument';
 function GrantReviewForm() {
 
     const user = useSelector((store) => store.user);
+    const grantInfo = useSelector((store) => store.reviewer.reviewGrantReducer);
 
     const history = useHistory();
 
@@ -148,6 +149,7 @@ function GrantReviewForm() {
         <div id="review-form">
             <br />
             <div className="heading">
+                <p>{JSON.stringify(grantInfo)}</p>
                 {/* Reviewer will be variable brought in from other components */}
                 <h3>Hello, {user.fullName}</h3>
                 <h3><span>Welcome </span><span><i>Reviewer</i></span></h3>

@@ -89,11 +89,11 @@ router.get('/reviewer-grants', (req, res) => {
     if(req.isAuthenticated()) {
         const userID = req.user.id;
         const cycle_id = req.body.cycle_id
-        let queryText = `SELECT d.*, s.* 
+        let queryText = `SELECT d.*, s.review_complete, TO_CHAR(d.time_stamp, 'YYYY-MM-DD') as formatted_date 
                         FROM grant_assignments a
                         JOIN grant_data d
                         ON a.grant_id = d.id
-                        FULL JOIN scores s
+                        LEFT JOIN scores s
                         ON a.grant_id = s.grant_id
                         WHERE a.reviewer_id = $1
                         AND a.cycle_id = $2`;
@@ -101,9 +101,11 @@ router.get('/reviewer-grants', (req, res) => {
         .then(result => {
             if (result.rows.length > 0) {
                 res.send(result.rows);
+                console.log(result.rows, "results")
             } else {
                 console.log('No grants for user');
-                res.sendStatus(200)
+                console.log('cycleID', cycle_id)
+                res.send([])
             }
         })
         .catch(error => {
