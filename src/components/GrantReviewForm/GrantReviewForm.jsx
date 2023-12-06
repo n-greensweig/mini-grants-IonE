@@ -26,8 +26,6 @@ import PDFDocument from '../PDF/PDFDocument';
 function GrantReviewForm() {
 
     const user = useSelector((store) => store.user);
-    const grantInfo = useSelector((store) => store.reviewer.reviewGrantReducer);
-
     const history = useHistory();
 
     const [interdisciplinary, setInterdisciplinary] = useState(null);
