@@ -17,13 +17,19 @@ const styles = StyleSheet.create({
 // Create Document Component
 function PDFDocument () {
   return (
-  <Document title="hi">
+  <Document title="REPLACE">
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text>Section #1</Text>
+        <Text>Section #1
+          Grant Name
+          Pi, research team etc
+          Cycle
+        </Text>
       </View>
       <View style={styles.section}>
-        <Text>Section #2</Text>
+        <Text>
+          Abstract
+        </Text>
       </View>
     </Page>
   </Document>
