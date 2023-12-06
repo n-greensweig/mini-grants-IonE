@@ -35,7 +35,7 @@ function ReviewerHomePage(){
         fetchData();
     }, []);
 
-    return (
+    return (      
         <table className="reviewerTable">
             <thead>
                 <tr>

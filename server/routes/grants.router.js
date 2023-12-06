@@ -118,10 +118,10 @@ router.get('/reviewerhomepage', (req, res) => {
     // Fetch relevant data from grant_assignments, grant_data, and departments table
     const userID = req.user.id;
     let queryText = `
-                    SELECT TO_CHAR(gd.time_stamp, 'YYYY-MM-DD') as formatted_date, gd.project_title, gd.principal_investigator, gd."PI_primary_college", d.name AS department_name
+                    SELECT TO_CHAR(gd.time_stamp, 'YYYY-MM-DD') as formatted_date,
+                    gd.project_title, gd.principal_investigator, gd."PI_primary_college", ga.assigned_at, ga.assigned_by, ga.grant_id, ga.reviewer_id, ga. cycle_id
                     FROM grant_assignments ga
                     JOIN grant_data gd ON ga.grant_id = gd.id
-                    LEFT JOIN departments d ON gd.dept_id[1]::VARCHAR = d.id::VARCHAR
                     WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR;
                     `;       
     pool.query(queryText, [userID])
