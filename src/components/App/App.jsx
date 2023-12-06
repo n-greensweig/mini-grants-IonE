@@ -40,6 +40,7 @@ function App() {
     axios.get('/userInfoRoute')
     .then((response) => {
       dispatch({ type: 'SET_USER', payload: response.data });
+      dispatch({ type: 'FETCH_CURRENT_CYCLE'});
     }).catch((error) => {
       console.error(error);
     })

@@ -32,7 +32,7 @@ function UserMenu () {
           const fullURL = `${process.env.REACT_APP_serverURL}/${route}`;
           fetch(route)
           .then((response) => {
-            dispatch({ type: 'SET_USER', payload: {}});
+            dispatch({ type: 'UNSET_USER'});
             history.push('/');
           }).catch((error) => {
             console.error(error);
