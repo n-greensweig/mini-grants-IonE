@@ -21,5 +21,5 @@ INSERT INTO "grant_assignments" ("assigned_at", "assigned_by", "grant_id", "revi
 VALUES ()
 
 --"reviewers"
-INSERT INTO "reviewers" ("reviewer_id", "cycle_id", "available_reviews", "dept_id")
+INSERT INTO "reviewers" ("reviewer_id", "cycle_id", "available_reviews", "name", "dept_id")
 VALUES()

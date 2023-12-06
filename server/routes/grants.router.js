@@ -53,24 +53,26 @@ router.get('/reviewers', (req, res) => {
 }); //end GET
 
 
-//GET unreviewed grants --HALEIGH in progress
+//GET unreviewed grants --HALEIGH in progress **update with department ID field
 router.get('/unreviewed', (req, res) => {
     console.log('Fetching all unreviewed grants')
     // if(req.isAuthenticated()) {
-    let queryText = `SELECT COUNT(DISTINCT g.id) as "reviews", g.*
-                    FROM grant_data g
-                    JOIN scores s
-                    ON g.id = s.grant_id
-                    WHERE review_complete = TRUE
-                    GROUP BY g.id;`;
+    let queryText = `SELECT * FROM (
+                                SELECT COUNT(DISTINCT a.reviewer_id) as "reviews", d.id, d.cycle_id, d.project_title, d."PI_dept_id"
+                                FROM grant_data d
+                                FULL JOIN grant_assignments a
+                                ON d.id = a.grant_id
+                                WHERE d.cycle_id = 18
+                                GROUP BY d.id ) x
+                        WHERE x.reviews <3`;
     pool.query(queryText)
     .then(result => {
-        // if (result.rows.length > 0) {
+        if (result.rows.length > 0) {
             res.send(result.rows);
-        // } else {
-        //     console.log('No unreviewed grants');
-        //     res.sendStatus(200)
-        // }
+        } else {
+            console.log('No unreviewed grants');
+            res.sendStatus(200)
+        }
     })
     .catch(error => {
         console.log(`Error fetching unreviewed grants`, error);
