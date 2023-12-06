@@ -84,16 +84,16 @@ router.get('/unreviewed', (req, res) => {
 }); //end GET
 
 //GET grants for a given reviewer --HALEIGH
-router.get('/reviewer-grants', (req, res) => {
+router.get('/reviewer-grants/:id', (req, res) => {
     console.log(`Fetching grants for user id: ${req.user.id}`)
-    if(req.isAuthenticated()) {
+    // if(req.isAuthenticated()) {
         const userID = req.user.id;
-        const cycle_id = req.body.cycle_id
-        let queryText = `SELECT d.*, s.* 
+        const cycle_id = req.params.id
+        let queryText = `SELECT d.*, s.review_complete, TO_CHAR(d.time_stamp, 'YYYY-MM-DD') as formatted_date 
                         FROM grant_assignments a
                         JOIN grant_data d
                         ON a.grant_id = d.id
-                        FULL JOIN scores s
+                        LEFT JOIN scores s
                         ON a.grant_id = s.grant_id
                         WHERE a.reviewer_id = $1
                         AND a.cycle_id = $2`;
@@ -101,18 +101,20 @@ router.get('/reviewer-grants', (req, res) => {
         .then(result => {
             if (result.rows.length > 0) {
                 res.send(result.rows);
+                console.log(result.rows, "results")
             } else {
                 console.log('No grants for user');
-                res.sendStatus(200)
+                console.log('cycleID', cycle_id)
+                res.send([])
             }
         })
         .catch(error => {
             console.log(`Error fetching grants for user id: ${req.user.id}`, error);
             res.sendStatus(500);
         });
-    } else {
-        res.sendStatus(401);
-    }
+    // } else {
+    //     res.sendStatus(401);
+    // }
 }); //end GET
 
 //GET grants for a given reviewer on reviewerhomepage --JENNY
