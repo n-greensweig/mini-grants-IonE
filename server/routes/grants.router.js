@@ -7,8 +7,8 @@ const bcrypt = require('bcryptjs');
 router.get('/', (req, res) => {
     if(req.isAuthenticated()) {
         const queryText = `SELECT gd.*, gc.start_date, gc.end_date, gc.grant_type, gc.cycle_name
-        FROM grant_data gd
-        JOIN grant_cycle gc ON gd.cycle_id = gc.id;`;
+                        FROM grant_data gd
+                        JOIN grant_cycle gc ON gd.cycle_id = gc.id;`;
         console.log('Fetching all grant data')
         pool.query(queryText)
         .then(result => {
@@ -23,6 +23,8 @@ router.get('/', (req, res) => {
             console.log(`Error fetching all grant data`, error);
             res.sendStatus(500);
         });
+    } else {
+        res.sendStatus(401)
     }
 }); //end GET
 
@@ -45,35 +47,38 @@ router.get('/reviewers', (req, res) => {
             console.log(`Error fetching all reviewers`, error);
             res.sendStatus(500);
         });
+    } else {
+        res.sendStatus(401)
     }
 }); //end GET
 
 
-//GET unreviewed grants --HALEIGH
+//GET unreviewed grants --HALEIGH in progress
 router.get('/unreviewed', (req, res) => {
     console.log('Fetching all unreviewed grants')
-    if(req.isAuthenticated()) {
+    // if(req.isAuthenticated()) {
     let queryText = `SELECT COUNT(DISTINCT g.id) as "reviews", g.*
-                    FROM grants_data g
+                    FROM grant_data g
                     JOIN scores s
                     ON g.id = s.grant_id
-                    WHERE review_complete = TRUE;`;
+                    WHERE review_complete = TRUE
+                    GROUP BY g.id;`;
     pool.query(queryText)
     .then(result => {
-        if (result.rows.length > 0) {
+        // if (result.rows.length > 0) {
             res.send(result.rows);
-        } else {
-            console.log('No unreviewed grants');
-            res.sendStatus(200)
-        }
+        // } else {
+        //     console.log('No unreviewed grants');
+        //     res.sendStatus(200)
+        // }
     })
     .catch(error => {
         console.log(`Error fetching unreviewed grants`, error);
         res.sendStatus(500);
     });
-  } else {
-    res.sendStatus(401);
-  }
+//   } else {
+//     res.sendStatus(401);
+//   }
 }); //end GET
 
 //GET grants for a given reviewer --HALEIGH
@@ -93,7 +98,7 @@ router.get('/reviewer-grants', (req, res) => {
         pool.query(queryText, [userID, cycle_id])
         .then(result => {
             if (result.rows.length > 0) {
-            res.send(result.rows);
+                res.send(result.rows);
             } else {
                 console.log('No grants for user');
                 res.sendStatus(200)
