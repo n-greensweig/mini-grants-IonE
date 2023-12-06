@@ -46,6 +46,12 @@ function ScoredReviews() {
     }
     console.log(funding);
 
+    const viewReviewDetails = (grantName) => {
+        console.log(`Review button clicked for grant: ${grantName}`);
+        // Use history.push to navigate to the "/grantreviewform" route
+        history.push('/scoredreviewdetails')
+    };
+
     return (
         <table className="scoresTable">
             <thead>
