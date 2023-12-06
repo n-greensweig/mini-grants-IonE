@@ -26,6 +26,8 @@ import PDFDocument from '../PDF/PDFDocument';
 function GrantReviewForm() {
 
     const user = useSelector((store) => store.user);
+    const grantInfo = useSelector((store) => store.reviewer.reviewGrantReducer);
+
     const history = useHistory();
 
     const [interdisciplinary, setInterdisciplinary] = useState(null);
@@ -147,7 +149,6 @@ function GrantReviewForm() {
         <div id="review-form">
             <br />
             <div className="heading">
-                <p>{JSON.stringify(grantInfo)}</p>
                 {/* Reviewer will be variable brought in from other components */}
                 <h3>Hello, {user.fullName}</h3>
                 <h3><span>Welcome </span><span><i>Reviewer</i></span></h3>
@@ -166,7 +167,7 @@ function GrantReviewForm() {
                         <p>Project Title</p>
                     </div>
                     <div>
-                        <PDFDownloadLink document={<PDFDocument />} fileName="Replace.pdf">
+                        <PDFDownloadLink document={<PDFDocument grantInfo={grantInfo} />} fileName="Replace.pdf">
                             {({ blob, url, loading, error }) =>
                             loading ? 'Loading document...' : 'Download Grant PDF'
                             }
@@ -657,6 +658,7 @@ function GrantReviewForm() {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <p>{JSON.stringify(grantInfo)}</p>
         </div>
     )
 }

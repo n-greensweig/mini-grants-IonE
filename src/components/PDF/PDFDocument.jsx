@@ -16,9 +16,7 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-function PDFDocument () {
-
-  const grantInfo = useSelector((store) => store.reviewer.reviewGrantReducer);
+function PDFDocument ({grantInfo}) {
 
   return (
   <Document title={`IonE_Mini_Grant_ID_${grantInfo.id}`}>
