@@ -5,7 +5,8 @@ CREATE TABLE "user" (
   "email" VARCHAR (120) UNIQUE NOT NULL,
   "full_name" VARCHAR(240),
   "google_id" VARCHAR(120),
-  "admin" BOOLEAN DEFAULT FALSE
+  "admin" BOOLEAN DEFAULT FALSE,
+  "avatarPic" VARCHAR(220)
 );
 
 
