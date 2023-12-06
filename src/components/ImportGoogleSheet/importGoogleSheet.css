@@ -5,7 +5,15 @@
     margin-top: 25px;
 }
 
+.importRange  {
+    padding: 10px;
+}
+
+.sheetId {
+    padding: 10px;
+}
+
 .importIn {
-    padding: 15px;
+    padding: 10px;
 }
 

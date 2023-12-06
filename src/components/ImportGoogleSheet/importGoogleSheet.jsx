@@ -121,7 +121,8 @@ function ImportGoogleSheet() {
                     sx={{ p: '5px' }}
                     id="spreadSheetLink" label="Google Sheet URL" fullWidth variant="outlined" value={sheetURL}
                     onChange={(e) => setSheetURL(e.target.value)} />
-
+            </div>
+            <div className="sheetId">
                 <TextField sx={{ p: '5px' }} label="Tab Name" fullWidth variant="outlined" value={tabName}
                 onChange={(e) => setTabName(e.target.value)} />
             </div>
