@@ -7,13 +7,13 @@ const bcrypt = require('bcryptjs');
 router.get('/', (req, res) => {
     if(req.isAuthenticated()) {
         const queryText = `SELECT gd.*, gc.start_date, gc.end_date, gc.grant_type, gc.cycle_name
-        FROM grant_data gd
-        JOIN grant_cycle gc ON gd.cycle_id = gc.id;`;
+                        FROM grant_data gd
+                        JOIN grant_cycle gc ON gd.cycle_id = gc.id;`;
         console.log('Fetching all grant data')
         pool.query(queryText)
         .then(result => {
             if (result.rows.length > 0) {
-            res.send(result.rows);
+                res.send(result.rows);
             } else {
                 console.log('No grant data');
                 res.sendStatus(200)
@@ -23,6 +23,8 @@ router.get('/', (req, res) => {
             console.log(`Error fetching all grant data`, error);
             res.sendStatus(500);
         });
+    } else {
+        res.sendStatus(401)
     }
 }); //end GET
 
@@ -35,7 +37,7 @@ router.get('/reviewers', (req, res) => {
         pool.query(queryText)
         .then(result => {
             if (result.rows.length > 0) {
-            res.send(result.rows);
+                res.send(result.rows);
             } else {
                 console.log('No reviewers');
                 res.sendStatus(200)
@@ -45,57 +47,47 @@ router.get('/reviewers', (req, res) => {
             console.log(`Error fetching all reviewers`, error);
             res.sendStatus(500);
         });
+    } else {
+        res.sendStatus(401)
     }
 }); //end GET
 
 
-//GET unreviewed grants --HALEIGH, need to test all my routes with data
+//GET unreviewed grants --HALEIGH in progress
 router.get('/unreviewed', (req, res) => {
     console.log('Fetching all unreviewed grants')
-    if(req.isAuthenticated()) {
+    // if(req.isAuthenticated()) {
     let queryText = `SELECT COUNT(DISTINCT g.id) as "reviews", g.*
-                    FROM grants_data g
+                    FROM grant_data g
                     JOIN scores s
                     ON g.id = s.grant_id
-                    WHERE review_complete = TRUE;`;
+                    WHERE review_complete = TRUE
+                    GROUP BY g.id;`;
     pool.query(queryText)
     .then(result => {
-        if (result.rows.length > 0) {
-        res.send(result.rows);
-        } else {
-            console.log('No unreviewed grants');
-            res.sendStatus(200)
-        }
+        // if (result.rows.length > 0) {
+            res.send(result.rows);
+        // } else {
+        //     console.log('No unreviewed grants');
+        //     res.sendStatus(200)
+        // }
     })
     .catch(error => {
         console.log(`Error fetching unreviewed grants`, error);
         res.sendStatus(500);
     });
-  } else {
-    res.sendStatus(401);
-  }
+//   } else {
+//     res.sendStatus(401);
+//   }
 }); //end GET
 
 //GET grants for a given reviewer --HALEIGH
 router.get('/reviewer-grants', (req, res) => {
     console.log(`Fetching grants for user id: ${req.user.id}`)
     if(req.isAuthenticated()) {
-        //find current cycle_id
-        let queryText1 = `SELECT c.id
-                        FROM grant_cycle c
-                        WHERE "cycle_complete" = FALSE
-                        ORDER by c.start_date;`;
-        let cycleID = 0;
-        pool.query(queryText1)
-        .then(result => {
-        cycleID = result.rows[0]
-        })
-        .catch(error => {
-        console.log(`Error fetching current cycle ID for reviewer`, error);
-        res.sendStatus(500);
-        });
         const userID = req.user.id;
-        let queryText2 = `SELECT d.*, s.* 
+        const cycle_id = req.body.cycle_id
+        let queryText = `SELECT d.*, s.* 
                         FROM grant_assignments a
                         JOIN grant_data d
                         ON a.grant_id = d.id
@@ -103,18 +95,18 @@ router.get('/reviewer-grants', (req, res) => {
                         ON a.grant_id = s.grant_id
                         WHERE a.reviewer_id = $1
                         AND a.cycle_id = $2`;
-        pool.query(queryText2, [userID, cycleID.cycle_id])
+        pool.query(queryText, [userID, cycle_id])
         .then(result => {
             if (result.rows.length > 0) {
-            res.send(result.rows);
+                res.send(result.rows);
             } else {
                 console.log('No grants for user');
                 res.sendStatus(200)
             }
         })
         .catch(error => {
-        console.log(`Error fetching grants for user id: ${req.user.id}`, error);
-        res.sendStatus(500);
+            console.log(`Error fetching grants for user id: ${req.user.id}`, error);
+            res.sendStatus(500);
         });
     } else {
         res.sendStatus(401);
@@ -148,33 +140,19 @@ router.get('/reviewerhomepage', (req, res) => {
 //POST to set user as reviewer for grant cycle --HALEIGH
 router.post('/userReviewer',  (req, res) => {
     if(req.isAuthenticated()) {
-        //find current cycle ID
-        let queryText1 = `SELECT c.id
-                        FROM grant_cycle c
-                        WHERE "cycle_complete" = FALSE
-                        ORDER by c.start_date;`;
-        let cycleID = 0;
-        pool.query(queryText1)
-        .then(result => {
-        cycleID = result.rows[0]
-        })
-        .catch(error => {
-        console.log(`Error fetching current cycle ID for reviewer`, error);
-        res.sendStatus(500);
-        });
-        let queryText2 = `INSERT INTO "reviewers" ("reviewer_id", "cycle_id", "available_reviews", "dept_id")
+        let queryText = `INSERT INTO "reviewers" ("reviewer_id", "cycle_id", "available_reviews", "dept_id")
         VALUES($1, $2, $3, $4)`;
         let reviewer_id = req.user.id;
-        let cycle_id = cycleID.cycle_id;
+        let cycle_id = req.body.cycle_id;
         let available_reviews = req.body.available_reviews;
         let dept_id = req.user.dept_id;
-        pool.query(queryText2, [ reviewer_id, cycle_id, available_reviews, dept_id ])
+        pool.query(queryText, [ reviewer_id, cycle_id, available_reviews, dept_id ])
         .then(result => {
-        res.sendStatus(201);
+            res.sendStatus(201);
         })
         .catch(error => {
-        console.log(`Error setting user as reviewer for grant cycle`, error);
-        res.sendStatus(500);
+            console.log(`Error setting user as reviewer for grant cycle`, error);
+            res.sendStatus(500);
         });
     } else {
         res.sendStatus(401);

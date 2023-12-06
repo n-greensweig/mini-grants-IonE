@@ -29,6 +29,7 @@ function* fetchUser() {
 function* fetchCurrentCycle() {
   try {
     const response = yield axios.get('/api/user/currentCycle');
+    yield console.log(response)
     yield put({ type: 'SET_CURRENT_CYCLE', payload:response.data });
   } catch (error) {
     console.log('Error with fetching current cycle:', error);

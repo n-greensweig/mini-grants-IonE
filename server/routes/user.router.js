@@ -53,17 +53,22 @@ router.get('/currentCycle', (req, res) => {
   console.log(`Fetching current grant cycle ID`)
   // if(req.isAuthenticated()) {
       //find current cycle_id
-      let queryText1 = `SELECT c.id
-                      FROM grant_cycle c
+      let queryText1 = `SELECT * FROM grant_cycle c
                       WHERE "cycle_complete" = FALSE
                       ORDER by c.start_date;`;
       pool.query(queryText1)
       .then(result => {
-        res.send(result.rows[0]);
+        if (result.rows.length > 1) {
+          res.send(result.rows[0]);
+          console.log(result.rows, "result")
+        } else {
+          res.sendStatus(200)
+          console.log("No cycles in DB. Run dataGen route")
+        }
       })
       .catch(error => {
-      console.log(`Error fetching current grant cycle ID`, error);
-      res.sendStatus(500);
+        console.log(`Error fetching current grant cycle ID`, error);
+        res.sendStatus(500);
       });
   // } else {
   //     res.sendStatus(401);
