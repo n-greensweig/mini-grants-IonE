@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-function Document () {
+function PDFDocument () {
   return (
-  <Document>
+  <Document title="hi">
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
         <Text>Section #1</Text>
@@ -30,4 +30,4 @@ function Document () {
   )
 };
 
-export default Document
+export default PDFDocument
