@@ -60,7 +60,7 @@ router.get('/currentCycle', (req, res) => {
       .then(result => {
         if (result.rows.length > 1) {
           res.send(result.rows[0]);
-          console.log(result.rows, "result")
+          console.log(result.rows[0], "result")
         } else {
           res.sendStatus(200)
           console.log("No cycles in DB. Run dataGen route")
