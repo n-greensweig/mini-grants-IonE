@@ -68,4 +68,20 @@ function penultimateSundayOfOctober(year) {
     return october;
   }
 
-  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober };
+  function getInitials(fullName) {
+    const names = fullName.split(' ');
+    let initials = '';
+  
+    for (let i = 0; i < names.length; i++) {
+      initials += names[i].charAt(0).toUpperCase();
+    }
+  
+    // Check if the name has more than two parts
+    if (names.length > 2) {
+      initials = `${initials.charAt(0)}${initials.charAt(1)}${initials.charAt(2)}`;
+    }
+  
+    return initials;
+  }
+
+  module.exports = { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober, getInitials };

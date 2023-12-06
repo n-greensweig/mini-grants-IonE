@@ -2,12 +2,23 @@
 
 .nav {
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
   align-items: center;
   background-color:  #7A0019;
   color: #FFCC33;
   padding: 1rem;
 }
+
+.menuContainer {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navMenu {
+  margin-left: 10px;
+}
+
 
 .nav-title {
   font-size: 1.5rem;

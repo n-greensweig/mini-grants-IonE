@@ -15,11 +15,8 @@ import Footer from '../Footer/Footer';
 // import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
+
 // Page imports
 import AdminAllGrantsData from '../AdminAllGrantsData/AdminAllGrantsData';
 import AdminHomeView from '../AdminHomeView/AdminHomeView';
@@ -37,16 +34,16 @@ import './App.css';
 function App() {
   const dispatch = useDispatch();
 
-  const user = useSelector(store => store.user);
+  const user = useSelector(store => store.user.userReducer);
 
-  // useEffect(() => {
-  //   axios.get('/userInfoRoute')
-  //   .then((response) => {
-  //     dispatch({ action: 'SET_USER', payload: response.data })
-  //   }).catch((error) => {
-  //     console.error(error);
-  //   })
-  // }, [dispatch]);
+  useEffect(() => {
+    axios.get('/userInfoRoute')
+    .then((response) => {
+      dispatch({ type: 'SET_USER', payload: response.data });
+    }).catch((error) => {
+      console.error(error);
+    })
+  }, [dispatch]);
 
   return (
     <Router>
@@ -65,100 +62,17 @@ function App() {
             <AboutPage />
           </Route>
 
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <Route
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/user"
-          >
-            <UserPage />
-          </Route>
-
-          <Route
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </Route>
-
           {/* Routes for our pages are here */}
-          <Route exact path="/adminallgrantsdata">
-            <AdminAllGrantsData />
-          </Route>
-            <Route exact path="/importSheet" component={ImportGoogleSheet} />
-          <Route exact path="/adminhomeview">
-            <AdminHomeView />
-          </Route>
-
-          <Route exact path="/adminreviewerstable">
-            <AdminReviewersTable />
-          </Route>
-
-          <Route exact path="/grantreviewform">
-            <GrantReviewForm />
-          </Route>
-
-          <Route exact path="/reviewerform">
-            <ReviewerForm />
-          </Route>
-
-          <Route exact path="/reviewerhomepage">
-            <ReviewerHomePage />
-          </Route>
-
-          <Route exact path="/scoredreviews">
-            <ScoredReviews />
-          </Route>
-
-          <Route exact path="/scoredreviewdetails">
-            <ScoredReviewDetails />
-          </Route>
-
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the login page
-              <LoginPage />
-            }
-          </Route>
-
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the registration page
-              <RegisterPage />
-            }
-          </Route>
-
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the Landing page
-              <LandingPage />
-            }
-          </Route>
+          <Route exact path="/adminallgrantsdata" component={AdminAllGrantsData} />
+          <Route exact path="/importSheet" component={ImportGoogleSheet} />
+          <Route exact path="/adminhomeview" component={AdminHomeView} />
+          <Route exact path="/adminreviewerstable" component={AdminReviewersTable} />
+          <Route exact path="/grantreviewform" component={GrantReviewForm} />
+          <Route exact path="/reviewerform" component={ReviewerForm} />
+          <Route exact path="/reviewerhomepage" component={ReviewerHomePage} />
+          <Route exact path="/scoredreviews" component={ScoredReviews} />
+          <Route exact path="/scoredreviewdetails" component={ScoredReviewDetails} />
+          <Route exact path="/home" component={LandingPage} />
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>

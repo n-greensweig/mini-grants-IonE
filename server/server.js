@@ -14,11 +14,14 @@ const grantsRouter = require('./routes/grants.router')
 const dataGenRoute = require('./routes/dataGen.router');
 const googleSheetsRoute = require('./routes/googleSheets.router');
 const reviewerRoute = require('./routes/reviewer.router');
+const { getInitials } = require('./modules/utilityFunctions');
 
 let id = '';
 let email = '';
 let fullName = '';
 let googleId = '';
+let avatarPic = '';
+let admin = false;
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -68,6 +71,8 @@ passport.use(new GoogleStrategy({
               email = user.email;
               fullName = user.full_name;
               googleId = user.google_id;
+              admin = user.admin;
+              avatarPic = user.avatarPic;
               return done(null, user);
             } else {
               console.log('Create new user condition called');
@@ -75,10 +80,11 @@ passport.use(new GoogleStrategy({
               email = firstEmail.value;
               fullName = profile.displayName;
               googleId = profile.id;
+              avatarPic = profile.photos[0].value;
       
-              const queryText = `INSERT INTO "user" (email, full_name, google_id)
-                      VALUES ($1, $2, $3) RETURNING id;`;
-              await pool.query(queryText, [email, fullName, googleId]);
+              const queryText = `INSERT INTO "user" ("email", "full_name", "google_id", "avatarPic")
+                      VALUES ($1, $2, $3, $4) RETURNING id;`;
+              await pool.query(queryText, [email, fullName, googleId, avatarPic]);
               const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
               const user = result && result.rows && result.rows[0];
               if (user) {
@@ -117,11 +123,26 @@ app.get('/google',
         }
     ));
 
+app.get('/logout', (req, res) => {
+  req.logout();
+  req.session = null;
+  res.clearCookie('google-auth-session');
+  res.redirect('/');
+  
+});
+
 
 app.get('/userInfoRoute', (req,res) => {
-  // console.log('********SEND THESE*******', email, fullName, googleId)
-  res.send({ id: id, email: email, fullName:fullName, googleId: googleId });
+  if (req.isAuthenticated()) {
+  const initials = getInitials(fullName);
+  console.log('Avatar Pic', avatarPic)
+  res.send({ id: id, email: email, fullName:fullName, initials: initials, gogoleId: googleId, avatarPic: avatarPic, admin: admin });
+  } else {
+    res.sendStatus(401);
+  }
+
 });
+
 
 
 app.get('/auth/google/callback',
