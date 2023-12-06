@@ -1,52 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import { useSelector } from 'react-redux';
+
+import UserMenu from './UserMenu';
+import NavMenu from './navMenu';
 
 
 function Nav() {
-  const user = useSelector((store) => store.user);
+  
+
 
   return (
     <div className="nav">
       <Link to="/home">
         <h2 className="nav-title">Mini Grants</h2>
       </Link>
-      <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        )}
-
-        {/* REVIEWER VIEW
-        
-        <Link className="navLink" to="/reviewerhomepage">
-            Reviewer/Home
-        </Link> 
-        // LOG OUT
-        
-        */}
-
-        {/* ADMIN VIEW 
-        
-        <Link className="navLink" to="/adminhomeview">
-          Admin-Home
-        </Link> 
-        
-        <Link className="navLink" to="/adminallgrantsdata">
-          Admin-AllGrantsData
-        </Link>
-
-        <Link className="navLink" to="/scoredreviews">
-          Scored Reviews
-        </Link>
-
-        */}
-
+      <div className="menuContainer">
+      <div className='navMenu'>
+      <NavMenu />
+      </div>
+    <div className="userMenu">
+    <UserMenu />
+    </div>
+    </div>
+    
+    
+    {/* <div className="nav">
+      <Link to="/home">
+        <h2 className="nav-title">Mini Grants</h2>
+      </Link>
+    
         <Link className="navLink" to="/adminhomeview">
           Admin-Home
         </Link>
@@ -71,28 +54,8 @@ function Nav() {
           Scored Reviews
         </Link>
 
-
-
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
-            <LogOutButton className="navLink" />
-          </>
-        )}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
-      </div>
-    </div>
+      </div> */}
+</div>
   );
 }
 
