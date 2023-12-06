@@ -2,10 +2,10 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-const { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober } = require('../modules/utilityFunctions')
+const { thirdMondayOfMarch, lastSundayOfApril, secondMondayOfSeptember, penultimateSundayOfOctober } = require('../modules/utilityFunctions');
 
 
-router.post('/generateGrantCycles', async (req, res) => {
+router.get('/generateGrantCycles', async (req, res) => {
    // if (req.isAuthenticated()) {
     const connection = await pool.connect();
     let queryText = `INSERT INTO "grant_cycle" ("start_date", "end_date", "grant_type", "cycle_complete", "cycle_name")
