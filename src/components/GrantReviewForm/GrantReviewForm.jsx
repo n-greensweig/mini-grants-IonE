@@ -4,6 +4,7 @@
 import React, { useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 // Axios
 import axios from 'axios';
@@ -18,6 +19,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+
+// child components
+import PDFDocument from '../PDF/PDFDocument';
 
 function GrantReviewForm() {
 
@@ -160,6 +164,13 @@ function GrantReviewForm() {
                         <h4><u>Project Title</u></h4>
                         {/* Project Title will be variable sourced from other components */}
                         <p>Project Title</p>
+                    </div>
+                    <div>
+                        <PDFDownloadLink document={<PDFDocument />} fileName="Replace.pdf">
+                            {({ blob, url, loading, error }) =>
+                            loading ? 'Loading document...' : 'Download Grant PDF'
+                            }
+                        </PDFDownloadLink>
                     </div>
                 </div>
 
