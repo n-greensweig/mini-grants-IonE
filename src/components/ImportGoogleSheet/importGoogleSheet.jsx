@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Typography, TextField, Button, Modal } from "@mui/material";
+import { Typography, TextField, Button, Modal, Container } from "@mui/material";
 import TipWindow from "../TipWindow/TipWindow";
 
 import './importGoogleSheet.css';
@@ -10,9 +10,9 @@ import { CircleLoader } from 'react-spinners';
 function ImportGoogleSheet() {
     const [sheetURL, setSheetURL] = useState('');
     const [tabName, setTabName] = useState('');
-    const [start_col, setStart_col] = useState('');
-    const [start_row, setStart_row] = useState('');
-    const [end_col, setEnd_col] = useState('');
+    const [start_col, setStart_col] = useState('A');
+    const [start_row, setStart_row] = useState('2');
+    const [end_col, setEnd_col] = useState('CA');
     const [end_row, setEnd_row] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ function ImportGoogleSheet() {
         if (!sheetURL) { return setError('Please enter spreadsheet URL')} 
         if (!tabName) return setError('Please Enter the tab name');
         if (!start_col || !end_col) return setError('Please enter column information');
-        if (!start_row || !end_row) return setError('Please enter row information');
+        if (!start_row || !end_row || start_row < 2 || end_row < 2) return setError('Please enter row information');
         if (start_row == 1) { setStart_row('2'); return setError('The column header row(row 1) should not be included');
     } else {
         setLoading(true);
@@ -83,10 +83,12 @@ function ImportGoogleSheet() {
   `;
 
     return (
-        <div className="importContainer">
+        <Container maxWidth="md">
             {loading && 
                 <div className="loader">
+                    <center>
                 <CircleLoader override={override} color={'#e01616'} loading={loading} size={250} />
+                </center>
                 </div>
             }
             {importData.records >= 1 && 
@@ -111,16 +113,16 @@ function ImportGoogleSheet() {
             <div className="importIn">
                 <TipWindow
                     data={"Open the google spreadheet to be imported, click on share and then copy link. For additional help: https://support.google.com/drive/answer/2494822?hl=en"}>
-                    <Typography variant="body">Enter the URL or ID of the spreadsheet</Typography>
+                    <Typography variant="body">Enter the URL of the spreadsheet</Typography>
                 </TipWindow>
             </div>
             <div className="sheetId">
                 <TextField
                     sx={{ p: '5px' }}
-                    id="spreadSheetLink" label="Google Sheet URL" variant="outlined" value={sheetURL}
+                    id="spreadSheetLink" label="Google Sheet URL" fullWidth variant="outlined" value={sheetURL}
                     onChange={(e) => setSheetURL(e.target.value)} />
 
-                <TextField sx={{ p: '5px' }} label="Tab Name" variant="outlined" value={tabName}
+                <TextField sx={{ p: '5px' }} label="Tab Name" fullWidth variant="outlined" value={tabName}
                 onChange={(e) => setTabName(e.target.value)} />
             </div>
 
@@ -154,15 +156,17 @@ function ImportGoogleSheet() {
             </div>
         
         <Button variant="contained" onClick={runImport}>Import</Button>
+        <div className="error">
         {error &&
             <>
             <br/>
             <Typography variant="body" sx={{ color: 'red'}}>{error}</Typography>
             </>
         }
+        </div>
         </>
     }
-        </div>
+        </Container>
     )
 }
 

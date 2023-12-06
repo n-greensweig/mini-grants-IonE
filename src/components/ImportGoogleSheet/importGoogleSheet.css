@@ -1,28 +1,11 @@
-.importContainer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 0.2fr, 0.2fr, 1fr, 1fr, 1fr;
-    margin: 10px;
-}
-
-.importTitle {
-    grid-column: 1 / span 3;
-    grid-row: 1 / span 1;
+.MuiContainer-maxWidthMd {
+    box-shadow: 1px 1px 12px rgba(52, 64, 58, 0.3);
+    padding-top: 15px;
+    padding-bottom: 10px;
+    margin-top: 25px;
 }
 
 .importIn {
-    grid-column: 1 / span 3;
-    grid-row: 2 span 1;
-    padding: 5px;
+    padding: 15px;
 }
 
-.importRange {
-    grid-column: 1 / span 3;
-    grid-row: 3 span 1;
-}
-
-.loader {
-    grid-column: 2 / span 2;
-    grid-row: 3 / span 3;
-    margin-top:25%;
-}
