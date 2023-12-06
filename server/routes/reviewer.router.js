@@ -29,6 +29,35 @@ router.post('/', (req, res) => {
    
 }); //end POST
 
+router.post('/assignReviewer', (req, res) => {
+    const queryString = `INSERT INTO "grant_assignments" ("assigned_at", "assigned_by", "grant_id", "reviewer_id", "cycle_id")
+                        VALUES($1, $2, $3, $4, $5);`;
+
+    const currentDate = new Date();
+
+    const dataObj = {
+        assigned_at: currentDate,
+        assigned_by: req.body.assigned_by,
+        grant_id: req.body.grant_id,
+        reviewer_id: req.body.reviewer_id,
+        cycle_id: req.body.cycle_id
+    }
+
+    pool.query(queryString, [dataObj])
+    .then((response) => {
+        console.log(response);
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    })
+
+})
+
+
+
+
+
 // GET data 
 router.get('/', (req, res) => {
     if(req.isAuthenticated()) {
