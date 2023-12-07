@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, Button } from '@mui/material';
+import { useSelector } from 'react-redux'
 import axios from 'axios';
 
 const AdminHomeView = () => {
   const [grants, setGrants] = useState([]);
   const [reviewers, setReviewers] = useState([]);
   const [statusOptions] = useState(['Unassigned', 'InReview', 'Complete']);
+  const user = useSelector((store) => store.user.userReducer);
+  const cycleId = useSelector((store) => store.user.currentCycle);
 
   useEffect(() => {
     axios.get('/grants')
       .then(response => {
-        if (response.data.length) setGrants(response.data);
+        setGrants(response.data);
       })
       .catch(error => {
         console.error('Error fetching grants', error);
@@ -18,9 +21,7 @@ const AdminHomeView = () => {
 
     axios.get('/grants/reviewers')
       .then(response => {
-        if (response.data.length) setReviewers(response.data);
-        
-        
+        setReviewers(response.data);
       })
       .catch(error => {
         console.error('Error fetching reviewers', error);
@@ -35,7 +36,28 @@ const AdminHomeView = () => {
       return grant;
     });
     setGrants(updatedGrants);
+
+    const dataObj = {
+      assigned_at: new Date(), 
+      assigned_by: user.id, 
+      grant_id: grantId,
+      reviewer_id: newReviewerId,
+      cycle_id: 18
   };
+
+  axios.post('/reviewer/assignReviewer', dataObj)
+.then(response => {
+    console.log('Reviewer assignment updated successfully');
+})
+.catch(error => {
+    console.error('Error updating reviewer assignment', error);
+});
+
+  };
+
+
+
+
 
   const rowStyle = {
     borderBottom: '1.5px solid black', 
@@ -83,7 +105,7 @@ const AdminHomeView = () => {
                   <MenuItem value="" disabled>
                     {`Reviewer ${num}`}
                   </MenuItem>
-                  {reviewers?.map((reviewer) => (
+                  {reviewers.map((reviewer) => (
                     <MenuItem key={reviewer.id} value={reviewer.id}>
                       {reviewer.name}
                     </MenuItem>
