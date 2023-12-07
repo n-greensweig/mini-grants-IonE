@@ -89,12 +89,17 @@ router.get ('/getCycle', async (req, res) => {
         values: [date]
       };
 
+      const queryString2 = {
+        query: `SELECT "id" FROM "grant_cycle" WHERE $1 <= "start_date"";`,
+        values: [date]
+      };
+
       const result = await connection.query(queryString.query, queryString.values)
-      if (result.rows.length > 0) {
+      if (result.rows.length !== 0) {
         res.send(result.rows[0]);
       } else {
-        console.log('No grant cycle currently in DB matches current date:', date);
-        res.sendStatus(200)      
+        const result2 = await connection.query(queryString2.query, queryString2.values)
+        res.send(result.rows[0]);
       } 
     } catch (error) {
         console.error('get grant cycle error:', err)
