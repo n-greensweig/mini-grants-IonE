@@ -73,7 +73,7 @@ function App() {
           <Route exact path="/reviewerform" component={ReviewerForm} />
           <Route exact path="/reviewerhomepage" component={ReviewerHomePage} />
           <Route exact path="/scoredreviews" component={ScoredReviews} />
-          <Route exact path="/scoredreviewdetails" component={ScoredReviewDetails} />
+          <Route exact path="/scoredreviewdetails/:id" component={ScoredReviewDetails} />
           <Route exact path="/home" component={LandingPage} />
           <Route exact path="/departments" component={Departments} />
           {/* If none of the other routes matched, we will show a 404. */}

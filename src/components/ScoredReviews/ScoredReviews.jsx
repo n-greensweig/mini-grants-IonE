@@ -1,7 +1,7 @@
 // View 3.4 Reviewer View
 
 // React
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Axios
@@ -20,23 +20,30 @@ function ScoredReviews() {
 
     const history = useHistory();
 
-    const data = [
-        {
-            dateSubmitted: '2023-11-27',
-            projectTitle: 'Research Grant A',
-            projectPI: 'Dr. Johnson',
-            score1: '21',
-            score2: '16',
-            score3: '17',
-            placeholder: 'placeholder data',
-        }
-    ]
+    const [scoredReviews, setScoredReviews] = useState([]);
+
+    const fetchScoredReviews = () => {
+        axios.get('/grants/scored-reviews')
+        .then(response => {
+            setScoredReviews(response.data);
+        })
+        .catch(error => {
+            console.log('Error fetching scored reviews:', error);
+        });
+    }
+
     const averageScore = () => {
-        let result = (+data[0].score1 + +data[0].score2 + +data[0].score3) / 3
-        return result;
+        //let result = (+data[0].score1 + +data[0].score2 + +data[0].score3) / 3
+        //return result;
     };
 
     console.log(averageScore());
+
+    useEffect(() => {
+        fetchScoredReviews();
+    }, []);
+
+    console.log(scoredReviews);
 
     // MUI 
 
@@ -46,10 +53,10 @@ function ScoredReviews() {
     }
     console.log(funding);
 
-    const viewReviewDetails = (grantName) => {
-        console.log(`Review button clicked for grant: ${grantName}`);
+    const viewReviewDetails = (id) => {
+        console.log(`Clicked view scored review details button`);
         // Use history.push to navigate to the "/grantreviewform" route
-        history.push('/scoredreviewdetails')
+        history.push(`/scoredreviewdetails/${id}`)
     };
 
     return (
@@ -67,12 +74,12 @@ function ScoredReviews() {
                 </tr>
             </thead>
             <tbody>
-                {data.map((item, index) => (
+                {scoredReviews.map((item, index) => (
                     <tr key={index}>
-                        <td>{item.dateSubmitted}</td>
-                        <td>{item.projectPI}</td>
-                        <td>{item.projectTitle}</td>
-                        <td>{item.score1}</td>
+                        <td>{item.created_at}</td>
+                        <td>{item.principal_investigator}</td>
+                        <td>{item.project_title}</td>
+                        <td>{item.total_score}</td>
                         <td>{item.score2}</td>
                         <td>{item.score3}</td>
                         <td> {averageScore()}
@@ -93,7 +100,7 @@ function ScoredReviews() {
                             </FormControl> */}
                         </td>
                         <td>
-                            <button onClick={() => viewReviewDetails(item.grantName)}>
+                            <button onClick={() => viewReviewDetails(item.grant_id)}>
                                 View Details
                             </button>
                         </td>
