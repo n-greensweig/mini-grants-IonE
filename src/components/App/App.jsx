@@ -27,6 +27,7 @@ import ReviewerHomePage from '../ReviewerHomePage/ReviewerHomePage';
 import ScoredReviews from '../ScoredReviews/ScoredReviews';
 import ScoredReviewDetails from '../ScoredReviewDetails/ScoredReviewDetails';
 import ImportGoogleSheet from '../ImportGoogleSheet/importGoogleSheet';
+import Departments from '../Departments/Departments';
 
 
 import './App.css';
@@ -74,7 +75,7 @@ function App() {
           <Route exact path="/scoredreviews" component={ScoredReviews} />
           <Route exact path="/scoredreviewdetails" component={ScoredReviewDetails} />
           <Route exact path="/home" component={LandingPage} />
-
+          <Route exact path="/departments" component={Departments} />
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>

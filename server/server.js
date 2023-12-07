@@ -15,6 +15,7 @@ const dataGenRoute = require('./routes/dataGen.router');
 const googleSheetsRoute = require('./routes/googleSheets.router');
 const reviewerRoute = require('./routes/reviewer.router');
 const { getInitials } = require('./modules/utilityFunctions');
+const departmentRoute = require('./routes/departments.router')
 
 let id = '';
 let email = '';
@@ -170,6 +171,7 @@ app.use('/grants', grantsRouter);
 app.use('/dataGen', dataGenRoute);
 app.use('/googleSheets', googleSheetsRoute);
 app.use('/reviewer', reviewerRoute);
+app.use('/departments', departmentRoute);
 
 // Serve static files
 app.use(express.static('build'));
