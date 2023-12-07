@@ -58,13 +58,15 @@ CREATE TABLE "scores" (
 	"interdisciplinary" INT,
 	"goals" INT,
 	"method_and_design" INT,
-	"budget" INT,
+	"budget" NUMERIC(1, 1),
 	"impact" INT,
 	"comments" VARCHAR (2000), 
-	"review_complete" BOOLEAN DEFAULT FALSE
+	"review_complete" BOOLEAN DEFAULT FALSE,
+	"total_score" NUMERIC(2, 1),
+	"principal_investigator" VARCHAR(100),
+	"project_title" VARCHAR(500)
 );
 
--- JEFF added comments column in "scores" table
 
 
 CREATE TABLE "departments" (

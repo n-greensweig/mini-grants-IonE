@@ -192,13 +192,13 @@ router.put('/finalizeCycle', (req, res) => {
 // POST to set scores as reviewer --RILEY
 router.post('/setScores', (req, res) => {
     if (req.isAuthenticated()) {
-
+        console.log(req.body);
         //Get data from request and set to variables
         let grant_id = req.body.grant_id;
         let reviewer_id = req.body.reviewer_id;
         let score_id = null;
         const created_at = req.body.created_at;
-        const assigned_by = req.body.assigned_by;
+        //const assigned_by = req.body.assigned_by;
         const interdisciplinary = req.body.interdisciplinary;
         const goals = req.body.goals;
         const method_and_design = req.body.method_and_design;
@@ -206,6 +206,9 @@ router.post('/setScores', (req, res) => {
         const impact = req.body.impact;
         const comments = req.body.comments; //JEFF added this line
         const review_complete = req.body.review_complete;
+        const total_score = req.body.total_score;
+        const principal_investigator = req.body.principal_investigator;
+        const project_title = req.body.project_title;
         
         //Check if scores have already been saved for this grant and reviewer combination
         let queryText = `SELECT "id" FROM "scores"
@@ -247,10 +250,13 @@ router.post('/setScores', (req, res) => {
                                 "budget",
                                 "impact",
                                 "comments",
-                                "review_complete")
-                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
+                                "review_complete",
+                                "total_score",
+                                "principal_investigator",
+                                "project_title")
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);`;
 
-                    pool.query(queryText, [created_at, grant_id, reviewer_id, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete]) //JEFF added comments, review_complete
+                    pool.query(queryText, [created_at, grant_id, reviewer_id, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete, total_score, principal_investigator, project_title]) //JEFF added comments, review_complete
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
@@ -321,6 +327,8 @@ router.get('/unassigned/:id', (req, res) => {
   }
 }); //end GET
 
+
+// GET ROUTE FOR SCORED REVIEWS --JEFF
 
 
 

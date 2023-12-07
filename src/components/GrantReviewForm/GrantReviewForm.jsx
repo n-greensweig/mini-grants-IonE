@@ -69,7 +69,7 @@ function GrantReviewForm() {
 
     // Will need data from other components for created_at, grant_id, reviewer_id, and assigned_by
     let submittedScores = {
-        created_at: submittedDate, // Test data
+        created_at: submittedDate,
         grant_id: grantInfo.id,
         reviewer_id: user.id,
         interdisciplinary: interdisciplinary,
@@ -79,10 +79,13 @@ function GrantReviewForm() {
         impact: impactSum,
         comments: comments,
         review_complete: true,
+        total_score: totalScore,
+        principal_investigator: grantInfo.principal_investigator,
+        project_title: grantInfo.project_title,
     };
 
     let savedScores = {
-        created_at: submittedDate, // Test data
+        created_at: submittedDate,
         grant_id: grantInfo.id,
         reviewer_id: user.id,
         interdisciplinary: interdisciplinary,
@@ -91,7 +94,12 @@ function GrantReviewForm() {
         budget: budget,
         impact: impactSum,
         comments: comments,
-        review_complete: false, 
+        review_complete: false,
+        total_score: totalScore,
+        principal_investigator: grantInfo.principal_investigator,
+        project_title: grantInfo.project_title,
+
+
     };
 
     // Material UI Dialog Box variables
