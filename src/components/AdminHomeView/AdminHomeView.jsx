@@ -10,7 +10,7 @@ const AdminHomeView = () => {
   useEffect(() => {
     axios.get('/grants')
       .then(response => {
-        if (response.rows.length) setGrants(response.data);
+        if (response.data.length) setGrants(response.data);
       })
       .catch(error => {
         console.error('Error fetching grants', error);
@@ -18,7 +18,7 @@ const AdminHomeView = () => {
 
     axios.get('/grants/reviewers')
       .then(response => {
-        if (response.rows.length) setReviewers(response.data);
+        if (response.data.length) setReviewers(response.data);
         
         
       })
