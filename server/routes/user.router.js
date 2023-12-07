@@ -90,7 +90,7 @@ router.get ('/getCycle', async (req, res) => {
       };
 
       const queryString2 = {
-        query: `SELECT * FROM "grant_cycle" WHERE '2023-12-07' >= "end_date"
+        query: `SELECT * FROM "grant_cycle" WHERE $1 >= "end_date"
                 ORDER BY start_date DESC;`,
         values: [date]
       };
@@ -101,14 +101,14 @@ router.get ('/getCycle', async (req, res) => {
       } else {
         const result2 = await connection.query(queryString2.query, queryString2.values)
           if (result2.rows.length !== 0) {
-              res.send(result.rows[0]);
+              res.send(result2.rows[0]);
           } else {
             console.log('check grant_cycles table in DB, might need to run dataGen route')
             res.sendStatus(200)
           }
       } 
     } catch (error) {
-        console.error('get grant cycle error:', err)
+        console.error('get grant cycle error:', error)
         res.sendStatus(500);
     }
 // } else {
