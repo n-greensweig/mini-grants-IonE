@@ -28,6 +28,7 @@ export default function NavMenu() {
         case 'Scored Reviews': history.push('/scoredreviews'); break;
         case 'Import Google Sheet': history.push('/importSheet'); break;
         case 'Reviewer Home': history.push('/reviewerhomepage'); break;
+        case 'Reviewer Form': history.push('/reviewerform'); break;
     }
   }
 
@@ -60,6 +61,7 @@ console.log(user);
         </div>
         }
         <MenuItem onClick={(e) => handleSelect(e)}>Reviewer Home</MenuItem>
+        <MenuItem onClick={(e) => handleSelect(e)}>Reviewer Form</MenuItem>
 
       </Menu>
     </div>
