@@ -26,6 +26,7 @@ import PDFDocument from '../PDF/PDFDocument';
 function GrantReviewForm() {
 
     const user = useSelector(store => store.user.userReducer);
+    const grantInfo = useSelector((store) => store.reviewer.reviewGrantReducer);
 
     const history = useHistory();
 
@@ -156,14 +157,14 @@ function GrantReviewForm() {
                 <div id="title">
 
                     <div>
-                        <h4><u>Project PI</u></h4>
+                        <h4><u>Project PI:</u></h4>
                         {/* PI Name will be variable sourced from other components */}
-                        <p>PI Name</p> 
+                        <p>{grantInfo.principal_investigator}</p> 
                     </div>
                     <div>
                         <h4><u>Project Title</u></h4>
                         {/* Project Title will be variable sourced from other components */}
-                        <p>Project Title</p>
+                        <p>{grantInfo.project_title}</p>
                     </div>
                     <div>
                         <h4 id="download"><PDFDownloadLink document={<PDFDocument />} fileName="Replace.pdf">
@@ -657,6 +658,7 @@ function GrantReviewForm() {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <p>{JSON.stringify(grantInfo)}</p>
         </div>
     )
 }
