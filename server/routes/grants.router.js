@@ -28,6 +28,48 @@ router.get('/', (req, res) => {
     }
 }); //end GET
 
+//get all info about grants including reviewers and scores
+router.get('/allGrantInfo', async (req, res) => {
+    console.log('Fetching all grant info')
+    // if(req.isAuthenticated()) {
+        const connection = await pool.connect();
+        // let cycle_id = req.params.id;
+        let queryText = `CREATE TEMPORARY TABLE temp_results AS
+                        SELECT gd.* , array[ga.assigned_by::VARCHAR, ga.grant_id::VARCHAR, u.full_name, s.review_complete::VARCHAR ] AS "reviewer_info"
+                        FROM grant_data gd
+                        LEFT JOIN grant_assignments ga
+                        ON gd.id = ga.grant_id
+                        LEFT JOIN "user" u
+                        ON ga.reviewer_id = u.id
+                        LEFT JOIN "scores" s
+                        ON gd.id = s.grant_id
+                        WHERE gd.cycle_id = 18;`;
+        let queryText2 = `SELECT "id", "project_title", "principal_investigator", array_agg(reviewer_info) as reviewer
+                        FROM temp_results
+                         GROUP BY "id"
+                         ORDER BY "id";`;
+            try {
+                await connection.query('BEGIN');
+                await connection.query(queryText)
+                const result = await connection.query(queryText2);
+                if (result.rows.length > 0) {
+                    res.send(result.rows);
+                } else {
+                    console.log('No grants for cycle');
+                    res.sendStatus(200)
+                }
+                await connection.query('DROP TABLE temp_results;')
+                await connection.query('COMMIT');
+            } catch (err) {
+                console.error('get all grant error:', err)
+                await connection.query('ROLLBACK');
+                res.sendStatus(500);
+            }
+//   } else {
+//     res.sendStatus(401);
+//   }
+}); //end GET
+
 
 // GET all reviewers --HALEIGH
 router.get('/reviewers', (req, res) => {
@@ -52,37 +94,6 @@ router.get('/reviewers', (req, res) => {
     }
 }); //end GET
 
-
-//GET unreviewed grants --HALEIGH in progress **update with department ID field
-router.get('/review-progress/:id', (req, res) => {
-    console.log('Fetching all unreviewed grants')
-    // if(req.isAuthenticated()) {
-        let cycle_id = req.params.id
-        let queryText = `SELECT * FROM (
-                                    SELECT COUNT(DISTINCT a.reviewer_id) as "reviews", d.id, d.cycle_id, d.project_title, d."PI_dept_id"
-                                    FROM grant_data d
-                                    FULL JOIN grant_assignments a
-                                    ON d.id = a.grant_id
-                                    WHERE d.cycle_id = $1
-                                    GROUP BY d.id ) x
-                            WHERE x.reviews <3`;
-    pool.query(queryText, [cycle_id])
-    .then(result => {
-        if (result.rows.length > 0) {
-            res.send(result.rows);
-        } else {
-            console.log('No unreviewed grants');
-            res.sendStatus(200)
-        }
-    })
-    .catch(error => {
-        console.log(`Error fetching unreviewed grants`, error);
-        res.sendStatus(500);
-    });
-//   } else {
-//     res.sendStatus(401);
-//   }
-}); //end GET
 
 //GET grants for a given reviewer --HALEIGH
 router.get('/reviewer-grants/:id', (req, res) => {
