@@ -76,4 +76,33 @@ router.get('/currentCycle', (req, res) => {
 }); //end GET
 
 
+//Searches the database for the correct cycle ID 
+router.get ('/getCycle', async (req, res) => {
+  console.log(`Fetching current grant cycle info`)
+  // if(req.isAuthenticated()) {
+      const connection = await pool.connect();
+      let date = new Date().toJSON().slice(0,10)
+    try {
+
+      const queryString = {
+        query: `SELECT "id" FROM "grant_cycle" WHERE $1 BETWEEN "start_date" AND "end_date";`,
+        values: [date]
+      };
+
+      const result = await connection.query(queryString.query, queryString.values)
+      if (result.rows.length > 0) {
+        res.send(result.rows[0]);
+      } else {
+        console.log('No grant cycle currently in DB matches current date:', date);
+        res.sendStatus(200)      
+      } 
+    } catch (error) {
+        console.error('get grant cycle error:', err)
+        res.sendStatus(500);
+    }
+// } else {
+  //     res.sendStatus(401);
+  // }
+})
+
 module.exports = router;

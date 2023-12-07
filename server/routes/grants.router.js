@@ -45,9 +45,9 @@ router.get('/allGrantInfo/:id', async (req, res) => {
                         LEFT JOIN "scores" s
                         ON gd.id = s.grant_id
                         WHERE gd.cycle_id = $1;`;
-        let queryText2 = `SELECT "id", "project_title", "principal_investigator", array_agg(reviewer_info) as reviewer_scores
+        let queryText2 = `SELECT "id", "project_title", "applicant_name", "applicant_email", "abstract", "principal_investigator", array_agg(reviewer_info) as reviewer_scores
                         FROM temp_results
-                         GROUP BY "id", "project_title", "principal_investigator"
+                         GROUP BY "id", "project_title", "applicant_name", "applicant_email", "abstract", "principal_investigator"
                          ORDER BY "id";`;
             try {
                 await connection.query('BEGIN');
