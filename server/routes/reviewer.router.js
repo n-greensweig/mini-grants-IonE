@@ -35,24 +35,15 @@ router.post('/assignReviewer', (req, res) => {
 
     const currentDate = new Date();
 
-    const dataObj = {
-        assigned_at: currentDate,
-        assigned_by: req.body.assigned_by,
-        grant_id: req.body.grant_id,
-        reviewer_id: req.body.reviewer_id,
-        cycle_id: req.body.cycle_id
-    }
-
-    pool.query(queryString, [dataObj])
+    pool.query(queryString, [currentDate, req.body.assigned_by, req.body.grant_id, req.body.reviewer_id, req.body.cycle_id])
     .then((response) => {
         console.log(response);
         res.sendStatus(201);
     }).catch((error) => {
         console.log(error);
         res.sendStatus(500);
-    })
-
-})
+    });
+});
 
 
 
