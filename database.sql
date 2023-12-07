@@ -61,7 +61,7 @@ CREATE TABLE "scores" (
 	"budget" NUMERIC(12, 1),
 	"impact" INT,
 	"comments" VARCHAR (2000),
-	"final_recommendation" INT< 
+	"final_recommendation" INT, 
 	"review_complete" BOOLEAN DEFAULT FALSE,
 	"total_score" NUMERIC(12, 1),
 	"principal_investigator" VARCHAR(100),
