@@ -54,18 +54,19 @@ router.get('/reviewers', (req, res) => {
 
 
 //GET unreviewed grants --HALEIGH in progress **update with department ID field
-router.get('/unreviewed', (req, res) => {
+router.get('/review-progress/:id', (req, res) => {
     console.log('Fetching all unreviewed grants')
     // if(req.isAuthenticated()) {
-    let queryText = `SELECT * FROM (
-                                SELECT COUNT(DISTINCT a.reviewer_id) as "reviews", d.id, d.cycle_id, d.project_title, d."PI_dept_id"
-                                FROM grant_data d
-                                FULL JOIN grant_assignments a
-                                ON d.id = a.grant_id
-                                WHERE d.cycle_id = 18
-                                GROUP BY d.id ) x
-                        WHERE x.reviews <3`;
-    pool.query(queryText)
+        let cycle_id = req.params.id
+        let queryText = `SELECT * FROM (
+                                    SELECT COUNT(DISTINCT a.reviewer_id) as "reviews", d.id, d.cycle_id, d.project_title, d."PI_dept_id"
+                                    FROM grant_data d
+                                    FULL JOIN grant_assignments a
+                                    ON d.id = a.grant_id
+                                    WHERE d.cycle_id = $1
+                                    GROUP BY d.id ) x
+                            WHERE x.reviews <3`;
+    pool.query(queryText, [cycle_id])
     .then(result => {
         if (result.rows.length > 0) {
             res.send(result.rows);
@@ -289,5 +290,39 @@ router.put('/complete/:id', (req, res) => {
       res.sendStatus(401);
     }
 })// end PUT
+
+//GET grants that need to be assigned --HALEIGH in progress **update with department ID field
+router.get('/unassigned/:id', (req, res) => {
+    console.log('Fetching all grants to be assigned')
+    if(req.isAuthenticated()) {
+        let cycle_id = req.params.id
+        let queryText = `SELECT * FROM (
+                                    SELECT COUNT(DISTINCT a.reviewer_id) as "reviews", d.id, d.cycle_id, d.project_title, d."PI_dept_id"
+                                    FROM grant_data d
+                                    FULL JOIN grant_assignments a
+                                    ON d.id = a.grant_id
+                                    WHERE d.cycle_id = $1
+                                    GROUP BY d.id ) x
+                            WHERE x.reviews <3`;
+    pool.query(queryText, [cycle_id])
+    .then(result => {
+        if (result.rows.length > 0) {
+            res.send(result.rows);
+        } else {
+            console.log('No unassigned grants');
+            res.sendStatus(200)
+        }
+    })
+    .catch(error => {
+        console.log(`Error fetching unassigned grants`, error);
+        res.sendStatus(500);
+    });
+  } else {
+    res.sendStatus(401);
+  }
+}); //end GET
+
+
+
 
 module.exports = router;
