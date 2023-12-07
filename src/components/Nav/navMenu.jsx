@@ -30,7 +30,7 @@ export default function NavMenu() {
         case 'Reviewer Home': history.push('/reviewerhomepage'); break;
     }
   }
-  
+
 console.log(user);
   return (
     <div>
@@ -52,12 +52,12 @@ console.log(user);
         }}
       >
         {user.admin && 
-        <>
+        <div>
         <MenuItem onClick={(e) => handleSelect(e)}>Admin</MenuItem>
         <MenuItem onClick={(e) => handleSelect(e)}>All Grants</MenuItem>
         <MenuItem onClick={(e) => handleSelect(e)}>Scored Reviews</MenuItem>
         <MenuItem onClick={(e) => handleSelect(e)}>Import Google Sheet</MenuItem>
-        </>
+        </div>
         }
         <MenuItem onClick={(e) => handleSelect(e)}>Reviewer Home</MenuItem>
 

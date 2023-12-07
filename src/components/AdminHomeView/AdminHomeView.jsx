@@ -10,7 +10,7 @@ const AdminHomeView = () => {
   useEffect(() => {
     axios.get('/grants')
       .then(response => {
-        setGrants(response.data);
+        if (response.rows.length) setGrants(response.data);
       })
       .catch(error => {
         console.error('Error fetching grants', error);
@@ -18,7 +18,9 @@ const AdminHomeView = () => {
 
     axios.get('/grants/reviewers')
       .then(response => {
-        setReviewers(response.data);
+        if (response.rows.length) setReviewers(response.data);
+        
+        
       })
       .catch(error => {
         console.error('Error fetching reviewers', error);
@@ -81,7 +83,7 @@ const AdminHomeView = () => {
                   <MenuItem value="" disabled>
                     {`Reviewer ${num}`}
                   </MenuItem>
-                  {reviewers.map((reviewer) => (
+                  {reviewers?.map((reviewer) => (
                     <MenuItem key={reviewer.id} value={reviewer.id}>
                       {reviewer.name}
                     </MenuItem>
