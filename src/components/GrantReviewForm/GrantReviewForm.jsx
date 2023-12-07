@@ -25,7 +25,7 @@ import PDFDocument from '../PDF/PDFDocument';
 
 function GrantReviewForm() {
 
-    const user = useSelector((store) => store.user);
+    const user = useSelector(store => store.user.userReducer);
 
     const history = useHistory();
 
@@ -166,11 +166,11 @@ function GrantReviewForm() {
                         <p>Project Title</p>
                     </div>
                     <div>
-                        <PDFDownloadLink document={<PDFDocument />} fileName="Replace.pdf">
+                        <h4 id="download"><PDFDownloadLink document={<PDFDocument />} fileName="Replace.pdf">
                             {({ blob, url, loading, error }) =>
                             loading ? 'Loading document...' : 'Download Grant PDF'
                             }
-                        </PDFDownloadLink>
+                        </PDFDownloadLink></h4>
                     </div>
                 </div>
 

@@ -15,6 +15,17 @@
     justify-content: space-around;
 }
 
+#download {
+    border: 2px solid #5a5a5a;
+    border-radius: 5px;
+    padding: 3px;
+    padding-bottom: 10px;
+}
+
+#download:hover {
+    background-color: #bebebe;
+}
+
 h4 {
     margin-bottom: -13px;
 }
