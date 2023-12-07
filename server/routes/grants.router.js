@@ -46,7 +46,7 @@ router.get('/allGrantInfo', async (req, res) => {
                         WHERE gd.cycle_id = 18;`;
         let queryText2 = `SELECT "id", "project_title", "principal_investigator", array_agg(reviewer_info) as reviewer
                         FROM temp_results
-                         GROUP BY "id"
+                         GROUP BY "id", "project_title", "principal_investigator",
                          ORDER BY "id";`;
             try {
                 await connection.query('BEGIN');
