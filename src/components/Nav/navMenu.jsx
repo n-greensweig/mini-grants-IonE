@@ -29,6 +29,7 @@ export default function NavMenu() {
         case 'Import Google Sheet': history.push('/importSheet'); break;
         case 'Reviewer Home': history.push('/reviewerhomepage'); break;
         case 'Reviewer Form': history.push('/reviewerform'); break;
+        case 'Departments': history.push('/departments');break;
     }
   }
 
@@ -58,6 +59,7 @@ console.log(user);
         <MenuItem onClick={(e) => handleSelect(e)}>All Grants</MenuItem>
         <MenuItem onClick={(e) => handleSelect(e)}>Scored Reviews</MenuItem>
         <MenuItem onClick={(e) => handleSelect(e)}>Import Google Sheet</MenuItem>
+        <MenuItem onClick={(e) => handleSelect(e)}>Departments</MenuItem>
         </div>
         }
         <MenuItem onClick={(e) => handleSelect(e)}>Reviewer Home</MenuItem>
