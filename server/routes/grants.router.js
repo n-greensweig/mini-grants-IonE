@@ -29,11 +29,11 @@ router.get('/', (req, res) => {
 }); //end GET
 
 //get all info about grants including reviewers and scores
-router.get('/allGrantInfo', async (req, res) => {
+router.get('/allGrantInfo/:id', async (req, res) => {
     console.log('Fetching all grant info')
     // if(req.isAuthenticated()) {
         const connection = await pool.connect();
-        // let cycle_id = req.params.id;
+        let cycle_id = req.params.id;
         let queryText = `CREATE TEMPORARY TABLE temp_results AS
                         SELECT gd.* , array[ga.assigned_by::VARCHAR, ga.grant_id::VARCHAR, u.full_name, s.review_complete::VARCHAR ] AS "reviewer_info"
                         FROM grant_data gd
@@ -43,14 +43,14 @@ router.get('/allGrantInfo', async (req, res) => {
                         ON ga.reviewer_id = u.id
                         LEFT JOIN "scores" s
                         ON gd.id = s.grant_id
-                        WHERE gd.cycle_id = 18;`;
+                        WHERE gd.cycle_id = $1;`;
         let queryText2 = `SELECT "id", "project_title", "principal_investigator", array_agg(reviewer_info) as reviewer
                         FROM temp_results
                          GROUP BY "id", "project_title", "principal_investigator",
                          ORDER BY "id";`;
             try {
                 await connection.query('BEGIN');
-                await connection.query(queryText)
+                await connection.query(queryText, [cycle_id])
                 const result = await connection.query(queryText2);
                 if (result.rows.length > 0) {
                     res.send(result.rows);
