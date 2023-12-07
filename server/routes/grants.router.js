@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const { log } = require('console');
 
 //GET all grant data
 router.get('/', (req, res) => {
@@ -204,6 +205,7 @@ router.post('/setScores', (req, res) => {
         const method_and_design = req.body.method_and_design;
         const budget = req.body.budget;
         const impact = req.body.impact;
+        const final_recommendation = req.body.final_recommendation;
         const comments = req.body.comments; //JEFF added this line
         const review_complete = req.body.review_complete;
         const total_score = req.body.total_score;
@@ -227,11 +229,12 @@ router.post('/setScores', (req, res) => {
                     "method_and_design" = $4,
                     "budget" = $5,
                     "impact" = $6,
-                    "comments" = $7,
-                    "review_complete" = $8
-                WHERE "id" = $9;`;
+                    "final_recommendation" = $7,
+                    "comments" = $8,
+                    "review_complete" = $9
+                WHERE "id" = $10;`;
 
-                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete, score_id])
+                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact, final_recommendation, comments, review_complete, score_id])
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
@@ -249,14 +252,15 @@ router.post('/setScores', (req, res) => {
                                 "method_and_design",
                                 "budget",
                                 "impact",
+                                "final_recommendation",
                                 "comments",
                                 "review_complete",
                                 "total_score",
                                 "principal_investigator",
                                 "project_title")
-                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);`;
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);`;
 
-                    pool.query(queryText, [created_at, grant_id, reviewer_id, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete, total_score, principal_investigator, project_title]) //JEFF added comments, review_complete
+                    pool.query(queryText, [created_at, grant_id, reviewer_id, interdisciplinary, goals, method_and_design, budget, impact, final_recommendation, comments, review_complete, total_score, principal_investigator, project_title]) //JEFF added comments, review_complete
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
@@ -330,6 +334,58 @@ router.get('/unassigned/:id', (req, res) => {
 
 // GET ROUTE FOR SCORED REVIEWS --JEFF
 
+router.get('/scored-reviews', (req, res) => {
+    console.log('Fetching scored reviews')
+    if(req.isAuthenticated()) {
+        let queryText = `SELECT * FROM "scores";`;
+        console.log('Fetching all scores');
+        pool.query(queryText)
+        .then(result => {
+            if (result.rows.length > 0) {
+                res.send(result.rows);
+            } else {
+                console.log('No scores');
+                res.sendStatus(200)
+            }
+        })
+        .catch(error => {
+            console.log(`Error fetching all reviewers`, error);
+            res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(401)
+    }
+});
 
+// GET ROUTE FOR SCORED REVIEWS --JEFF
+
+router.get('/scoredreviewsdetails/:id', (req, res) => {
+    console.log(req.body);
+    console.log('Fetching scored review details')
+    if(req.isAuthenticated()) {
+        const id = req.params.id;
+        console.log(id);
+        let queryText = `SELECT "scores".*, "reviewers"."name"
+            FROM "scores"
+            JOIN "reviewers" ON "reviewers".reviewer_id = "scores".reviewer_id
+            WHERE "scores".grant_id = $1;`;
+        console.log('Fetching all scores');
+        pool.query(queryText, [id])
+        .then(result => {
+            if (result.rows.length > 0) {
+                res.send(result.rows);
+            } else {
+                console.log('No scores');
+                res.sendStatus(200)
+            }
+        })
+        .catch(error => {
+            console.log(`Error fetching all reviewers`, error);
+            res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(401)
+    }
+});
 
 module.exports = router;
