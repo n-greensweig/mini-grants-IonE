@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, Button } from '@mui/material';
 import { useSelector } from 'react-redux'
 import axios from 'axios';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+
+// child components
+import PDFDocument from '../PDF/PDFDocument';
 
 const AdminHomeView = () => {
   const [grants, setGrants] = useState([]);
@@ -114,7 +118,13 @@ const AdminHomeView = () => {
               ))}
               <TableCell>
                 <Button variant="contained" style={viewButtonStyle} onClick={() => {/* handle view click */}}>
-                  View
+                  <h4 id="download">
+                    <PDFDownloadLink document={<PDFDocument grantInfo={grant}/>} fileName="Replace.pdf">
+                            {({ blob, url, loading, error }) =>
+                            loading ? 'Loading document...' : 'Download Grant PDF'
+                            }
+                    </PDFDownloadLink>
+                  </h4>                
                 </Button>
               </TableCell>
             </TableRow>
