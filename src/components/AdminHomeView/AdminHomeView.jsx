@@ -84,7 +84,6 @@ const AdminHomeView = () => {
             <TableCell>Reviewer 1</TableCell>
             <TableCell>Reviewer 2</TableCell>
             <TableCell>Reviewer 3</TableCell>
-            <TableCell>Status</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -113,18 +112,6 @@ const AdminHomeView = () => {
                 </Select>
               </TableCell>
               ))}
-              <TableCell>
-                <Select
-                  value={grant.status}
-                  onChange={(event) => {/* handle status change */}}
-                >
-                  {statusOptions.map((option, index) => (
-                    <MenuItem key={index} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </TableCell>
               <TableCell>
                 <Button variant="contained" style={viewButtonStyle} onClick={() => {/* handle view click */}}>
                   View
