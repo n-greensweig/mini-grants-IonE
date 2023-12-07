@@ -49,33 +49,41 @@ function Departments() {
 
   return (
     <>
-      <div>
-        <div>
-            <h3>Add A Department</h3>
+      <div id='department-view'>
+        <div id='department-view-header'>
+          <h3 id='department-title'>Department Manager</h3>
+          <p>Here you can modify the departments available to reviewers.</p>
         </div>
-        <form onSubmit={handleSubmit}>
-            <input 
-            type="text" 
-            value={newDepartment}
-            onChange={(event) => setNewDepartment(event.target.value)}
-            placeholder='Department Name'
-            />
-            <button type='submit'>Add Department</button>
-        </form>
-    </div>
-      <div>
-        <h2>Department List</h2>
-        <ul>
-            {departments.map(department => (
-                <li key={department.id}>
-                    {department.name}
-                    <button onClick={() => handleDelete(department.id)}>Delete</button>
+  
+        <div id='department-content'>
+          <div id='department-form-card'>
+            <form id='department-form' onSubmit={handleSubmit}>
+              <label htmlFor="add A Department">Add new Department</label>
+              <input 
+                id='department-input'
+                type="text" 
+                value={newDepartment}
+                onChange={(event) => setNewDepartment(event.target.value)}
+                placeholder='Department Name'
+              />
+              <button type='submit'>Add Department</button>
+            </form>
+          </div>
+  
+          <div id='department-list'>
+            <ul>
+              {departments.map(department => (
+                <li id='department-list-item' key={department.id}>
+                  <span>{department.name}</span>
+                  <button id='department-delete-button' onClick={() => handleDelete(department.id)}>Delete</button>
                 </li>
-            ))}
-        </ul>
-    </div>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </>
-)
+  );
 }
 
 
