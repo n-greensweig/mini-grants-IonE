@@ -28,6 +28,9 @@ function GrantReviewForm() {
     const user = useSelector(store => store.user.userReducer);
     const grantInfo = useSelector((store) => store.reviewer.reviewGrantReducer);
 
+    const date = new Date();
+    const submittedDate = (date.toLocaleDateString("en-US"));
+
     const history = useHistory();
 
     const [interdisciplinary, setInterdisciplinary] = useState(null);
@@ -66,10 +69,9 @@ function GrantReviewForm() {
 
     // Will need data from other components for created_at, grant_id, reviewer_id, and assigned_by
     let submittedScores = {
-        created_at: "11-27-2023 1:03pm", // Test data
-        grant_id: 1, // Test data
-        reviewer_id: 1, // Test data
-        assigned_by: 1, // Test data
+        created_at: submittedDate, // Test data
+        grant_id: grantInfo.id,
+        reviewer_id: user.id,
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
@@ -77,14 +79,12 @@ function GrantReviewForm() {
         impact: impactSum,
         comments: comments,
         review_complete: true,
-        // date/time_scored?
     };
 
     let savedScores = {
-        created_at: "11-27-2023 1:03pm", // Test data
-        grant_id: 1, // Test data
-        reviewer_id: 1, // Test data
-        assigned_by: 1, // Test data
+        created_at: submittedDate, // Test data
+        grant_id: grantInfo.id,
+        reviewer_id: user.id,
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
@@ -92,7 +92,6 @@ function GrantReviewForm() {
         impact: impactSum,
         comments: comments,
         review_complete: false, 
-        // date/time_scored?
     };
 
     // Material UI Dialog Box variables
@@ -115,6 +114,8 @@ function GrantReviewForm() {
     const handleCloseSubmitDialog = () => {
         setOpenSubmitDialog(false);
     };
+
+    console.log(submittedDate);
 
     // End MUI 
 
@@ -145,34 +146,35 @@ function GrantReviewForm() {
     };
     console.log(user);
 
+    console.log({grantInfo});
+
     return (
         <div id="review-form">
             <br />
             <div className="heading">
                 {/* Reviewer will be variable brought in from other components */}
-                <h3>Hello, {user.fullName}</h3>
-                <h3><span>Welcome </span><span><i>Reviewer</i></span></h3>
+                <h3><span>Welcome </span><span><i>{user.fullName}</i></span></h3>
                 <p>This form is unique to each reviewer. Please use the review guidance criteria for each category below to review the proposal.</p>
                 
                 <div id="title">
-
                     <div>
-                        <h4><u>Project PI:</u></h4>
-                        {/* PI Name will be variable sourced from other components */}
-                        <p>{grantInfo.principal_investigator}</p> 
-                    </div>
-                    <div>
-                        <h4><u>Project Title</u></h4>
-                        {/* Project Title will be variable sourced from other components */}
-                        <p>{grantInfo.project_title}</p>
-                    </div>
-                    <div>
-                        <h4 id="download"><PDFDownloadLink document={<PDFDocument />} fileName="Replace.pdf">
+                        <h4 id="download"><PDFDownloadLink document={<PDFDocument grantInfo={grantInfo}/>} fileName="Replace.pdf">
                             {({ blob, url, loading, error }) =>
                             loading ? 'Loading document...' : 'Download Grant PDF'
                             }
                         </PDFDownloadLink></h4>
                     </div>
+
+                    <div id="project-info">
+                        <h4><u>Principal Investigator</u></h4>
+                        {/* PI Name will be variable sourced from other components */}
+                        <p>{grantInfo.principal_investigator}</p> 
+                        <h4><u>Project Title</u></h4>
+                        {/* Project Title will be variable sourced from other components */}
+                        <p><i>{grantInfo.project_title}</i></p>
+                    </div>
+ 
+
                 </div>
 
             </div>
