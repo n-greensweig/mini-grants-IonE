@@ -241,7 +241,6 @@ router.post('/setScores', (req, res) => {
                                 "created_at", 
                                 "grant_id", 
                                 "reviewer_id", 
-                                "assigned_by", 
                                 "interdisciplinary", 
                                 "goals",
                                 "method_and_design",
@@ -249,9 +248,9 @@ router.post('/setScores', (req, res) => {
                                 "impact",
                                 "comments",
                                 "review_complete")
-                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
 
-                    pool.query(queryText, [created_at, grant_id, reviewer_id, assigned_by, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete]) //JEFF added comments, review_complete
+                    pool.query(queryText, [created_at, grant_id, reviewer_id, interdisciplinary, goals, method_and_design, budget, impact, comments, review_complete]) //JEFF added comments, review_complete
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {

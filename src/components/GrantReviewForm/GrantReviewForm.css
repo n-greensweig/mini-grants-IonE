@@ -11,19 +11,25 @@
 
 #title {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
+    align-items: center;
+}
+
+#project-info {
+    text-align: left;
+    margin-right: 80px;
 }
 
 #download {
-    border: 2px solid #5a5a5a;
+    border: 1.5px solid #5a5a5a;
     border-radius: 5px;
-    padding: 3px;
-    padding-bottom: 10px;
+    padding: 10px;
+    background-color:#ffde71
 }
 
 #download:hover {
-    background-color: #bebebe;
+    background-color:#ffb71e
 }
 
 h4 {

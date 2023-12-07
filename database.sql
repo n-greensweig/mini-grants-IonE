@@ -55,7 +55,6 @@ CREATE TABLE "scores" (
 	"created_at" DATE,
 	"grant_id" INT REFERENCES "grant_data",
 	"reviewer_id" INT REFERENCES "user",
-	"assigned_by" INT REFERENCES "user",
 	"interdisciplinary" INT,
 	"goals" INT,
 	"method_and_design" INT,
