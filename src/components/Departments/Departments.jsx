@@ -5,7 +5,6 @@ import './Departments.css';
 function Departments() {
   const [departments, setDepartments] = useState([]);
   const [newDepartment, setNewDepartment] = useState('');
-  const [editingDepartment, setEditingDepartment] = useState({ id: null, name: "" });
 
   const fetchDepartments = () => {
     axios.get('/departments')

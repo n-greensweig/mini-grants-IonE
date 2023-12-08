@@ -1,5 +1,5 @@
 //Imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ReviewerForm.css';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 function ReviewerForm(){
 
     const history = useHistory();
-
+    const [departments, setDepartments] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         grantsToReview: '',
@@ -26,6 +26,21 @@ function ReviewerForm(){
           }));
       };
 
+          //multi select drop down
+            const fetchDepartments = () => {
+                axios.get('/departments')
+                .then(response => {
+                    console.log("DB response", response.data);
+                    setDepartments(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching departments', error);
+                });
+            };
+            useEffect(() => {
+                fetchDepartments();
+            }, []);
+
     // Handle submit of form page
     function handleSubmit (event) {
         event.preventDefault();
@@ -40,15 +55,9 @@ function ReviewerForm(){
         }).catch(error => {
             console.log('Error submitting reviewer form data', error);
         });
-        // history.push('/reviewerhomepage')
+        alert('Form has been submitted successfully');
+        history.push('/reviewerhomepage');
     }
-
-    //multi select drop down
-    const options = ["Accounting", "Finance", "Information & Decision Sciences", "Marketing", "Strategic Management & Entrepreneurship", 
-    "Supply Chain & Operations", "Work & Organizations", "Analytics for Good Institute", "Business Advancement Center for Health", 
-    "Carlson Global Institute", "Center for Human Resources & Labor Studies", "Center for Integrative Leadership", "Gary S. Holmes Center for Entrepreneurship"];
-    
-    
     
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -56,11 +65,12 @@ function ReviewerForm(){
         const selectedValue = target.value;
       
         if (!selectedItems.includes(selectedValue)) {
-          setSelectedItems([...selectedItems, selectedValue]);
+            setSelectedItems([...selectedItems, selectedValue]);
         } else {
-          setSelectedItems(selectedItems.filter((item) => item !== selectedValue));
+            setSelectedItems(selectedItems.filter((item) => item !== selectedValue));
         }
-      };
+    };
+    
 
 
     return (
@@ -93,15 +103,18 @@ function ReviewerForm(){
                     onChange={handleSelectionChange}
                     value={selectedItems}
                 >
-                    {options.map(option => (
-                    <option key={option} value={option} className='largerOptions'>
-                        {option}
+                    {departments.map(option => (
+                    <option key={option.id} value={option.id} className='largerOptions'>
+                        {option.name}
                     </option>
                     ))}
                 </select>
-            <div>
-                <p>Selected Departments: {selectedItems.join(', ')}</p>
-            </div>
+                <div>
+                <p>Selected Departments: {selectedItems.map(itemId => {
+                    const selectedDepartment = departments.find(department => department.id === parseInt(itemId, 10));
+                    return selectedDepartment ? selectedDepartment.name : null;
+                }).filter(Boolean).join(', ')}</p>
+        </div>
         </div>
             <div>
                 <label>Review Quantity for this Cycle: {}</label>
