@@ -48,36 +48,8 @@ router.post('/logout', (req, res) => {
 });
 
 
-//GET current cycle ID --HALEIGH
-router.get('/currentCycle', (req, res) => {
-  console.log(`Fetching current grant cycle ID`)
-  // if(req.isAuthenticated()) {
-      //find current cycle_id
-      let queryText1 = `SELECT * FROM grant_cycle c
-                      WHERE "cycle_complete" = FALSE
-                      ORDER by c.start_date;`;
-      pool.query(queryText1)
-      .then(result => {
-        if (result.rows.length > 1) {
-          res.send(result.rows[0]);
-          console.log(result.rows[0], "result")
-        } else {
-          res.sendStatus(200)
-          console.log("No cycles in DB. Run dataGen route")
-        }
-      })
-      .catch(error => {
-        console.log(`Error fetching current grant cycle ID`, error);
-        res.sendStatus(500);
-      });
-  // } else {
-  //     res.sendStatus(401);
-  // }
-}); //end GET
-
-
 //Searches the database for the correct cycle ID 
-router.get ('/getCycle', async (req, res) => {
+router.get ('/currentCycle', async (req, res) => {
   console.log(`Fetching current grant cycle info`)
   // if(req.isAuthenticated()) {
       const connection = await pool.connect();
