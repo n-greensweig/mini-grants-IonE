@@ -122,6 +122,8 @@ BEGIN
 END;
 $$
 LANGUAGE 'plpgsql';
+--End of function
+
 
 --If the function needs to be updated this query will list the current functions and provide a 
 --psql line to drop them as needed
