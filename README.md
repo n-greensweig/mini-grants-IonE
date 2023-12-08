@@ -1,5 +1,5 @@
 # University of Minnesota 
-## Institute on the Enviormment
+## Institute on the Enviromment
 ## Mini-Grants Web Application
 
   This application streamlines the Insitute on the Enviornment's grant submission, academic review and grant award processes. It will serve as the
