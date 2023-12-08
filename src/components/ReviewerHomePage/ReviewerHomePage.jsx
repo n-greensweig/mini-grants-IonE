@@ -59,11 +59,20 @@ function ReviewerHomePage(){
                         <td>{item.project_title}</td>
                         <td>{item.principal_investigator}</td>
                         <td>{item.PI_primary_college}</td>
-                        <td>Status Placeholder</td>
+                        {/* Conditional rendering for the Status column */}
+                        <td>{item.review_complete ? 'Completed' : "Needs Review"}</td>
                         <td>
-                            <button onClick={() => handleReviewClick(item)}>
-                                Review
-                            </button>
+                            {/* Conditional rendering for the Review Button */}
+                            {item.review_complete ? (
+                              // Render nothing if review is completed
+                              null  
+                            ) : (
+                                // Render the Review Button if review is not completed
+                                <button onClick={() => handleReviewClick(item)}>
+                                    Review
+                                </button>
+                            )}
+                            
                         </td>
                     </tr>
                 ))}
