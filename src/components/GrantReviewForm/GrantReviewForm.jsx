@@ -669,6 +669,7 @@ function GrantReviewForm() {
                     </DialogActions>
                 </Dialog>
                 <p>{JSON.stringify(grantInfo)}</p>
+
         </div>
     )
 }
