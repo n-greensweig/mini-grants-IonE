@@ -36,7 +36,7 @@ router.get('/allGrantInfo/:id', async (req, res) => {
         const connection = await pool.connect();
         let cycle_id = req.params.id;
         let queryText = `CREATE TEMPORARY TABLE temp_results AS
-                        SELECT gd.* , array[ga.assigned_by::VARCHAR, ga.reviewer_id::VARCHAR, u.full_name, s.total_score::VARCHAR, s.review_complete::VARCHAR ] AS "reviewer_info"
+                        SELECT gd.* , array[ga.assigned_by::VARCHAR, ga.reviewer_id::VARCHAR, u.full_name, s.interdisciplinary::VARCHAR, s.goals::VARCHAR, s.method_and_design::VARCHAR, s.budget::VARCHAR, s.impact::VARCHAR, s.final_recommendation::VARCHAR, s.total_score::VARCHAR, s.comments, s.review_complete::VARCHAR ] AS "reviewer_info"
                         FROM grant_data gd
                         LEFT JOIN grant_assignments ga
                         ON gd.id = ga.grant_id
@@ -129,29 +129,6 @@ router.get('/reviewer-grants/:id', (req, res) => {
     //     res.sendStatus(401);
     // }
 }); //end GET
-
-//GET grants for a given reviewer on reviewerhomepage --JENNY
-router.get('/reviewerhomepage', (req, res) => {
-    // Fetch relevant data from grant_assignments, grant_data, and departments table
-    const userID = req.user.id;
-    let queryText = `
-                    SELECT TO_CHAR(gd.time_stamp, 'YYYY-MM-DD') as formatted_date,
-                    gd.project_title, gd.principal_investigator, gd."PI_primary_college", ga.assigned_at, ga.assigned_by, ga.grant_id, ga.reviewer_id, ga. cycle_id
-                    FROM grant_assignments ga
-                    JOIN grant_data gd ON ga.grant_id = gd.id
-                    WHERE ga.reviewer_id::VARCHAR = $1::VARCHAR;
-                    `;       
-    pool.query(queryText, [userID])
-    .then(result => {
-        console.log('result', result);
-        res.send(result.rows);
-
-    })
-    .catch(error => {
-        console.log(`Error fetching grants for user id: ${req.user.id}`, error);
-        res.sendStatus(500);
-    })
-});
 
 
 //POST to set user as reviewer for grant cycle --HALEIGH
