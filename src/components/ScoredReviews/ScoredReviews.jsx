@@ -2,7 +2,7 @@
 
 // React
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // Axios
 import axios from 'axios';
@@ -10,16 +10,9 @@ import axios from 'axios';
 // Styles
 import './ScoredReviews.css'
 
-// Material UI
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
 function ScoredReviews() {
 
     const history = useHistory();
-    const id = useParams();
 
     const [scoredReviews, setScoredReviews] = useState([]);
     
@@ -74,7 +67,7 @@ function ScoredReviews() {
 
                         </td>
                         <td>
-                            <button onClick={() => viewReviewDetails(item.grant_id)}>
+                            <button onClick={() => viewReviewDetails(item.id)}>
                                 View Details
                             </button>
                         </td>
