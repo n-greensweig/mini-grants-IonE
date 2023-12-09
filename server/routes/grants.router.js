@@ -42,8 +42,8 @@ router.get('/allGrantInfo/:id', async (req, res) => {
                         ON gd.id = ga.grant_id
                         LEFT JOIN "reviewers" r
                         ON ga.reviewer_id = r.reviewer_id
-						LEFT JOIN "scores" s
-                        ON ga.reviewer_id = s.reviewer_id
+                        LEFT JOIN "scores" s
+                        ON r.reviewer_id = s.reviewer_id
                         WHERE gd.cycle_id = $1;`;
         let queryText2 = `SELECT array_agg(reviewer_info) as reviewer_scores, "id", "project_title", "applicant_name", "applicant_email", "abstract", "principal_investigator"
                         FROM temp_results

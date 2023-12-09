@@ -166,7 +166,7 @@ function GrantReviewForm() {
                 
                 <div id="title">
                     <div>
-                        <h4 id="download"><PDFDownloadLink document={<PDFDocument grantInfo={grantInfo}/>} fileName="Replace.pdf">
+                        <h4 id="download"><PDFDownloadLink document={<PDFDocument grantInfo={grantInfo}/>} fileName={`IonE_Mini_Grant_PI_${grantInfo.principal_investigator}.pdf`}>
                             {({ blob, url, loading, error }) =>
                             loading ? 'Loading document...' : 'Download Grant PDF'
                             }
