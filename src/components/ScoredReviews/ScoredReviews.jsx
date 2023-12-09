@@ -2,7 +2,7 @@
 
 // React
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 // Axios
 import axios from 'axios';
@@ -19,11 +19,12 @@ import Select from '@mui/material/Select';
 function ScoredReviews() {
 
     const history = useHistory();
+    const id = useParams();
 
     const [scoredReviews, setScoredReviews] = useState([]);
-
+    
     const fetchScoredReviews = () => {
-        axios.get('/grants/scored-reviews')
+        axios.get(`/grants/allGrantInfo/18`)
         .then(response => {
             setScoredReviews(response.data);
         })
@@ -32,26 +33,11 @@ function ScoredReviews() {
         });
     }
 
-    const averageScore = () => {
-        //let result = (+data[0].score1 + +data[0].score2 + +data[0].score3) / 3
-        //return result;
-    };
-
-    console.log(averageScore());
-
     useEffect(() => {
         fetchScoredReviews();
     }, []);
 
     console.log(scoredReviews);
-
-    // MUI 
-
-    const [funding, setFunding] = React.useState('');
-    const selectFunding = (event) => {
-        setFunding(event.target.value);
-    }
-    console.log(funding);
 
     const viewReviewDetails = (id) => {
         console.log(`Clicked view scored review details button`);
@@ -63,41 +49,29 @@ function ScoredReviews() {
         <table className="scoresTable">
             <thead>
                 <tr>
-                    <th>Date Submitted</th>
-                    <th>Project PI</th>
+                    <th>Principal Investigator</th>
                     <th>Project Title</th>
                     <th>Score 1</th>
                     <th>Score 2</th>
                     <th>Score 3</th>
                     <th>Average Score</th>
-                    <th></th>
+                    
                 </tr>
             </thead>
             <tbody>
                 {scoredReviews.map((item, index) => (
+                    (item.reviewer_scores && item.reviewer_scores[0] && item.reviewer_scores[0][9] && item.reviewer_scores[1] && item.reviewer_scores[1][9] 
+                    && item.reviewer_scores[2] && item.reviewer_scores[2][9]) !== null && (
                     <tr key={index}>
-                        <td>{item.created_at}</td>
                         <td>{item.principal_investigator}</td>
                         <td>{item.project_title}</td>
-                        <td>{item.total_score}</td>
-                        <td>{item.score2}</td>
-                        <td>{item.score3}</td>
-                        <td> {averageScore()}
+                        <td>{item.reviewer_scores && item.reviewer_scores[0] && item.reviewer_scores[0][9] ? +item.reviewer_scores[0][9] : 'N/A'}</td>
+                        <td>{item.reviewer_scores && item.reviewer_scores[1] && item.reviewer_scores[1][9] ? +item.reviewer_scores[1][9] : 'N/A'}</td>
+                        <td>{item.reviewer_scores && item.reviewer_scores[2] && item.reviewer_scores[2][9] ? +item.reviewer_scores[2][9] : 'N/A'}</td>
+                        <td>{item.reviewer_scores && item.reviewer_scores[2] && item.reviewer_scores[2][9] && item.reviewer_scores[1] 
+                                && item.reviewer_scores[1][9] && item.reviewer_scores[0] && item.reviewer_scores[0][9] ? 
+                                ((+item.reviewer_scores[0][9]) + (+item.reviewer_scores[1][9]) + (+item.reviewer_scores[2][9])) / 3  : "N/A"}
 
-                            {/* <FormControl fullWidth>
-                                <InputLabel id="select-label">Select</InputLabel>
-                                <Select
-                                    labelId="select-label"
-                                    id="funding-selection"
-                                    value={funding}
-                                    label="Select"
-                                    onChange={selectFunding}
-                                >
-                                    <MenuItem id="funding-selection" value={'Full'}>Full</MenuItem>
-                                    <MenuItem id="funding-selection" value={'Per Availability'}>Per Availability</MenuItem>
-                                    <MenuItem id="funding-selection" value={'Not Recommended'}>Not Recommended</MenuItem>
-                                </Select>
-                            </FormControl> */}
                         </td>
                         <td>
                             <button onClick={() => viewReviewDetails(item.grant_id)}>
@@ -105,6 +79,7 @@ function ScoredReviews() {
                             </button>
                         </td>
                     </tr>
+                   )
                 ))}
             </tbody>
         </table>

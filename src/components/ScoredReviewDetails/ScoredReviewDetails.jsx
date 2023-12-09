@@ -13,6 +13,7 @@ function ScoredReviewDetails() {
 
     const history = useHistory();
     const id = useParams();
+    console.log(id);
 
     const [scoredGrantsDetails, setScoredGrantsDetails] = useState([]);
 
@@ -24,7 +25,7 @@ function ScoredReviewDetails() {
             })
             .catch((error) => {
                 console.log(error);
-                res.sendStatus(500);
+                //res.sendStatus(500);
             })
     };
 
