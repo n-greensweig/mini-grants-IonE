@@ -25,11 +25,8 @@ function ScoredReviewDetails() {
             })
             .catch((error) => {
                 console.log(error);
-                //res.sendStatus(500);
             })
     };
-
-    // const details = scoredGrantsDetails[0];
 
     console.log(scoredGrantsDetails);
 
@@ -47,9 +44,14 @@ function ScoredReviewDetails() {
         <div id="grant-details">
             {scoredGrantsDetails.length > 0 ? (
                 <>
-                    <h3>{scoredGrantsDetails[0].project_title}</h3>
-                    <h4>{scoredGrantsDetails[0].principal_investigator}</h4>
-
+                    <div>
+                        <h3 className='details-titles'><u>Project Title</u></h3>
+                        <h3>{scoredGrantsDetails[0].project_title}</h3>
+                    </div>
+                    <div>
+                        <h4 className='details-titles'><u>Principal Investigator</u></h4>
+                        <h4>{scoredGrantsDetails[0].principal_investigator}</h4>
+                    </div>
                     <table className="scoreDetailsTable">
                         <thead>
                             <tr>
@@ -66,7 +68,7 @@ function ScoredReviewDetails() {
                         </thead>
                         <tbody>
                             {scoredGrantsDetails.map((item, index) => ( 
-                                <tr>
+                                <tr key={index}>
                                     <td>{item.name}</td>
                                     <td>{item.interdisciplinary}</td>
                                     <td>{item.goals}</td>
