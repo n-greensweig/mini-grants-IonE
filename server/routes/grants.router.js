@@ -102,12 +102,12 @@ router.get('/reviewer-grants/:id', (req, res) => {
     // if(req.isAuthenticated()) {
         const userID = req.user.id;
         const cycle_id = req.params.id
-        let queryText = `SELECT d.*, s.review_complete, TO_CHAR(d.time_stamp, 'YYYY-MM-DD') as formatted_date 
+        let queryText = `SELECT d.*, s.review_complete, a.reviewer_id, TO_CHAR(d.time_stamp, 'YYYY-MM-DD') as formatted_date 
                         FROM grant_assignments a
-                        JOIN grant_data d
+                        LEFT JOIN grant_data d
                         ON a.grant_id = d.id
-                        LEFT JOIN scores s
-                        ON a.grant_id = s.grant_id
+                        JOIN scores s
+                        ON a.reviewer_id = s.reviewer_id
                         WHERE a.reviewer_id = $1
                         AND a.cycle_id = $2`;
         pool.query(queryText, [userID, cycle_id])
