@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
             res.status(201);
         })
         .catch(error => {
-            console.log(`Error fetching all grant data`, error);
+            console.log(`Error running query ${insertQuery}`, error);
             res.sendStatus(500);
         });
    
@@ -45,10 +45,6 @@ router.post('/assignReviewer', (req, res) => {
     });
 });
 
-
-
-
-
 // GET data 
 router.get('/', (req, res) => {
     if(req.isAuthenticated()) {
@@ -64,5 +60,21 @@ router.get('/', (req, res) => {
         });
     }
 }); //end GET
+
+router.get('/reviewerData', (req, res) => {
+    if (req.isAuthenticated()) {
+        let userId = req.params.id;
+        let cycleId = req.params.cycleId;
+        let queryString = `SELECT * FROM "reviewers" WHERE "reviewer_id" = $1 AND "cycle_id" = $2;`;
+        pool.query(queryString, [userId, cycleId])
+        .then((response) => {
+            res.send(response.rows);
+        }).catch((error) => {
+            console.error(`Error making query ${queryString}`, error);
+        })
+    } else {
+        res.sendStatus(401);
+    }
+})
 
 module.exports = router;
