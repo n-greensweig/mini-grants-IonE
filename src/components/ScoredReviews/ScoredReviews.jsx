@@ -34,7 +34,6 @@ function ScoredReviews() {
 
     const viewReviewDetails = (id) => {
         console.log(`Clicked view scored review details button`);
-        // Use history.push to navigate to the "/grantreviewform" route
         history.push(`/scoredreviewdetails/${id}`)
     };
 
