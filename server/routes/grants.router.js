@@ -75,11 +75,15 @@ router.get('/allGrantInfo/:id', async (req, res) => {
 
 
 // GET all reviewers --HALEIGH
-router.get('/reviewers', (req, res) => {
-    if(req.isAuthenticated()) {
-        let queryText = 'SELECT * from "reviewers";';
+router.get('/reviewers/:id', (req, res) => {
+    // if(req.isAuthenticated()) {
+        let cycle_id = req.params.id;
+        let queryText = `SELECT r.*, u.full_name from "reviewers" r
+                        LEFT JOIN "user" u
+                        ON r.reviewer_id=u.id
+                        WHERE r.cycle_id = $1;`;
         console.log('Fetching all reviewers')
-        pool.query(queryText)
+        pool.query(queryText, [cycle_id])
         .then(result => {
             if (result.rows.length > 0) {
                 res.send(result.rows);
@@ -92,9 +96,9 @@ router.get('/reviewers', (req, res) => {
             console.log(`Error fetching all reviewers`, error);
             res.sendStatus(500);
         });
-    } else {
-        res.sendStatus(401)
-    }
+    // } else {
+    //     res.sendStatus(401)
+    // }
 }); //end GET
 
 
