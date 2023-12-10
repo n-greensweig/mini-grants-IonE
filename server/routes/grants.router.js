@@ -36,7 +36,7 @@ router.get('/allGrantInfo/:id', async (req, res) => {
         const connection = await pool.connect();
         let cycle_id = req.params.id;
         let queryText = `CREATE TEMPORARY TABLE temp_results AS
-                        SELECT gd.* , array[ga.assigned_by::VARCHAR, ga.reviewer_id::VARCHAR, r.name, s.interdisciplinary::VARCHAR, s.goals::VARCHAR, s.method_and_design::VARCHAR, s.budget::VARCHAR, s.impact::VARCHAR, s.final_recommendation::VARCHAR, s.total_score::VARCHAR, s.comments, s.review_complete::VARCHAR ] AS "reviewer_info"
+                        SELECT gd.* , array[ga.assigned_by::VARCHAR, ga.reviewer_id::VARCHAR, u.full_name, s.interdisciplinary::VARCHAR, s.goals::VARCHAR, s.method_and_design::VARCHAR, s.budget::VARCHAR, s.impact::VARCHAR, s.final_recommendation::VARCHAR, s.total_score::VARCHAR, s.comments, s.review_complete::VARCHAR ] AS "reviewer_info"
                         FROM grant_data gd
                         LEFT JOIN grant_assignments ga
                         ON gd.id = ga.grant_id
