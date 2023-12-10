@@ -40,8 +40,10 @@ router.get('/allGrantInfo/:id', async (req, res) => {
                         FROM grant_data gd
                         LEFT JOIN grant_assignments ga
                         ON gd.id = ga.grant_id
+                        LEFT JOIN "user" u
+                        ON ga.reviewer_id = u.id
                         LEFT JOIN "reviewers" r
-                        ON ga.reviewer_id = r.reviewer_id
+                        ON u.id = r.reviewer_id
                         LEFT JOIN "scores" s
                         ON r.reviewer_id = s.reviewer_id
                         WHERE gd.cycle_id = $1;`;
