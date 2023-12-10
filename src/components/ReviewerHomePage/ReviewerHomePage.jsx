@@ -20,7 +20,7 @@ function ReviewerHomePage(){
 
 
     const fetchData = () => {
-        axios.get('/grants/reviewer-grants/18') //update with cycle ID reducer after old cycles marked complete*****
+        axios.get(`/grants/reviewer-grants/${currentCycle.id}`) //update with cycle ID reducer after old cycles marked complete*****
         .then(response => {
             setData(response.data);
         })

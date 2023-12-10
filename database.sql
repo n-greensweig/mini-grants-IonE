@@ -91,7 +91,6 @@ CREATE TABLE "reviewers" (
 	"reviewer_id" INT REFERENCES "user",
 	"cycle_id" INT REFERENCES "grant_cycle",
 	"available_reviews" INT,
-	"name" VARCHAR (250),
 	"dept_id" VARCHAR[]
 );
 
@@ -122,6 +121,8 @@ BEGIN
 END;
 $$
 LANGUAGE 'plpgsql';
+--End of function
+
 
 --If the function needs to be updated this query will list the current functions and provide a 
 --psql line to drop them as needed
