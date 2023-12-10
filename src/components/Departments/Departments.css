@@ -19,15 +19,16 @@
     display: flex;
     width: 100%;
     box-sizing: border-box;
+    padding: 20px 0; /* Adjust the top and bottom padding as needed */
   }
   
   #department-form-card {
-    flex: 1; /* Takes up half of the available space */
+    flex: 1;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the form */
-
+    align-items: center;
+    margin-right: 1px; /* Adjust the right margin as needed */
   }
   
   #department-form {
@@ -45,8 +46,9 @@
   }
   
   #department-list {
-    flex: 1; /* Takes up half of the available space */
+    flex: 1;
     padding: 20px;
+    margin-left: 1px; /* Adjust the left margin as needed */
   }
   
   #department-list-item {
@@ -61,8 +63,8 @@
   }
   
   #department-delete-button {
-    background-color: #dc3545;
-    color: #fff;
+    background-color: #7a0019;
+    color: #d5d6d2;
     padding: 5px 10px;
     border: none;
     cursor: pointer;
@@ -70,6 +72,7 @@
   }
   
   #department-delete-button:hover {
-    background-color: #c82333;
+    background-color: #ffcc33;
+    color: #333333;
   }
   
