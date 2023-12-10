@@ -36,7 +36,7 @@ function App() {
   const dispatch = useDispatch();
 
   const user = useSelector(store => store.user.userReducer);
-
+  
   useEffect(() => {
     axios.get('/userInfoRoute')
     .then((response) => {

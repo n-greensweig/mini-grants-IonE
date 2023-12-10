@@ -4,57 +4,29 @@ import './Nav.css';
 
 import UserMenu from './UserMenu';
 import NavMenu from './navMenu';
+import { useSelector } from 'react-redux';
 
 
 function Nav() {
   
-
+const user = useSelector(store => store.user.userReducer);
 
   return (
     <div className="nav">
       <Link to="/home">
         <h2 className="nav-title">Mini Grants</h2>
       </Link>
+      
       <div className="menuContainer">
       <div className='navMenu'>
+        {user.id &&
       <NavMenu />
+        }
       </div>
     <div className="userMenu">
     <UserMenu />
     </div>
     </div>
-    
-    
-    {/* <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Mini Grants</h2>
-      </Link>
-    
-        <Link className="navLink" to="/adminhomeview">
-          Admin-Home
-        </Link>
-
-        <Link className="navLink" to="/adminallgrantsdata">
-          Admin-AllGrantsData
-        </Link>
-
-        <Link className="navLink" to="/grantreviewform">
-          Grant-ReviewForm
-        </Link>
-
-        <Link className="navLink" to="/reviewerform">
-          Reviewer-Form
-        </Link>
-
-        <Link className="navLink" to="/reviewerhomepage">
-          Reviewer/Home
-        </Link>
-
-        <Link className="navLink" to="/scoredreviews">
-          Scored Reviews
-        </Link>
-
-      </div> */}
 </div>
   );
 }
