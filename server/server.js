@@ -36,7 +36,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-console.log(GoogleStrategy);
 passport.serializeUser(function(user, done) {
     done(null, user);
 });
@@ -58,7 +57,6 @@ passport.use(new GoogleStrategy({
     },
     async function(request, accessToken, refreshToken, profile, done) {
       //Check or save the user to database here
-      console.log(profile);
       try {
        
         if (profile.emails.length > 0) {
@@ -133,10 +131,9 @@ app.get('/logout', (req, res) => {
 });
 
 
-app.get('/userInfoRoute', (req,res) => {
+app.get('/userInfoRoute', async (req,res) => {
   if (req.isAuthenticated()) {
   const initials = getInitials(fullName);
-  console.log('Avatar Pic', avatarPic)
   res.send({ id: id, email: email, fullName:fullName, initials: initials, gogoleId: googleId, avatarPic: avatarPic, admin: admin });
   } else {
     res.sendStatus(401);

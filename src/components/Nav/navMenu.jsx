@@ -21,7 +21,6 @@ export default function NavMenu() {
 
   const handleSelect = (event) => {
     setAnchorEl(null);
-    console.log(event.target.textContent);
     switch(event.target.textContent) {
         case 'Admin': history.push('/adminhomeview'); break;
         case 'All Grants': history.push('/adminallgrantsdata'); break;
@@ -33,7 +32,6 @@ export default function NavMenu() {
     }
   }
 
-console.log(user);
   return (
     <div>
       <Button
