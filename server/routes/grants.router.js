@@ -322,10 +322,45 @@ router.get('/unassigned/:id', (req, res) => {
 
 // GET ROUTE FOR SCORED REVIEWS --JEFF
 
+// router.get('/scored-reviews', (req, res) => {
+//     console.log('Fetching scored reviews')
+//     if(req.isAuthenticated()) {
+//         let queryText = `SELECT * FROM "scores";`;
+//         console.log('Fetching all scores');
+//         pool.query(queryText)
+//         .then(result => {
+//             if (result.rows.length > 0) {
+//                 res.send(result.rows);
+//             } else {
+//                 console.log('No scores');
+//                 res.sendStatus(200)
+//             }
+//         })
+//         .catch(error => {
+//             console.log(`Error fetching all reviewers`, error);
+//             res.sendStatus(500);
+//         });
+//     } else {
+//         res.sendStatus(401)
+//     }
+// });
+
+// GET ROUTE FOR SCORED GRANTS --JEFF
+
 router.get('/scored-reviews', (req, res) => {
     console.log('Fetching scored reviews')
     if(req.isAuthenticated()) {
-        let queryText = `SELECT * FROM "scores";`;
+        let queryText = `SELECT
+                            s.grant_id,
+                            gd.principal_investigator,
+                            gd.project_title,
+                        ARRAY_AGG(s.total_score) AS total_scores_array
+                        FROM
+                            scores s
+                        JOIN
+                            grant_data gd ON s.grant_id = gd.id
+                        GROUP BY
+                            s.grant_id, gd.principal_investigator, gd.project_title;`;
         console.log('Fetching all scores');
         pool.query(queryText)
         .then(result => {
@@ -345,7 +380,9 @@ router.get('/scored-reviews', (req, res) => {
     }
 });
 
-// GET ROUTE FOR SCORED REVIEWS --JEFF
+module.exports = router;
+
+// GET ROUTE FOR SCORED GRANTS DETAILS --JEFF
 
 router.get('/scoredreviewsdetails/:id', (req, res) => {
     console.log(req.body);
@@ -375,5 +412,3 @@ router.get('/scoredreviewsdetails/:id', (req, res) => {
         res.sendStatus(401)
     }
 });
-
-module.exports = router;

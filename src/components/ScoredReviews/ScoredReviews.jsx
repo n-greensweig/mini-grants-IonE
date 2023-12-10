@@ -17,7 +17,7 @@ function ScoredReviews() {
     const [scoredReviews, setScoredReviews] = useState([]);
     
     const fetchScoredReviews = () => {
-        axios.get(`/grants/allGrantInfo/18`)
+        axios.get(`/grants/scored-reviews`)
         .then(response => {
             setScoredReviews(response.data);
         })
@@ -25,6 +25,16 @@ function ScoredReviews() {
             console.log('Error fetching scored reviews:', error);
         });
     }
+
+    // const fetchScoredReviews = () => {
+    //     axios.get(`/grants/allGrantInfo/18`)
+    //     .then(response => {
+    //         setScoredReviews(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.log('Error fetching scored reviews:', error);
+    //     });
+    // }
 
     useEffect(() => {
         fetchScoredReviews();
@@ -50,7 +60,7 @@ function ScoredReviews() {
                     
                 </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
                 {scoredReviews.map((item, index) => (
                     (item.reviewer_scores && item.reviewer_scores[0] && item.reviewer_scores[0][9] && item.reviewer_scores[1] && item.reviewer_scores[1][9] 
                     && item.reviewer_scores[2] && item.reviewer_scores[2][9]) !== null && (
@@ -72,6 +82,28 @@ function ScoredReviews() {
                         </td>
                     </tr>
                    )
+                ))}
+            </tbody> */}
+
+            <tbody>
+                {scoredReviews.map((item, index) => (
+                    (item.reviewer_scores && item.reviewer_scores[0] && item.reviewer_scores[1] && item.reviewer_scores[2]) !== null && (
+                    <tr key={index}>
+                        <td>{item.principal_investigator}</td>
+                        <td>{item.project_title}</td>
+                        <td>{item.total_scores_array && item.total_scores_array[0] && item.total_scores_array[0] ? +item.total_scores_array[0] : <i>No score</i>}</td>
+                        <td>{item.total_scores_array && item.total_scores_array[1] && item.total_scores_array[1] ? +item.total_scores_array[1] : <i>No score</i>}</td>
+                        <td>{item.total_scores_array && item.total_scores_array[2] && item.total_scores_array[2] ? +item.total_scores_array[2] : <i>No score</i>}</td>
+                        <td>{item.total_scores_array && item.total_scores_array[0] && item.total_scores_array[1] && item.total_scores_array[2] ? 
+                            ((+item.total_scores_array[0]) + (+item.total_scores_array[1]) + (+item.total_scores_array[2])) / 3  : <i>Not enough data</i>}
+                        </td>
+                        <td>
+                            <button onClick={() => viewReviewDetails(item.grant_id)}>
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                    )
                 ))}
             </tbody>
         </table>
