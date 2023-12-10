@@ -54,3 +54,16 @@ INSERT INTO "user" ("email", "full_name", "google_id", "admin", "avatarPic") VAL
     ('teresa@example.com', 'Teresa Delgado', '567jkl890mno', false, 'https://example.com/avatar/teresa_delgado.jpg'),
     ('rishi@example.com', 'Rishi Richards', '890uvw123xyz', false, 'https://example.com/avatar/rishi_richards.jpg');
 
+INSERT INTO "reviewers" ("reviewer_id", "cycle_id", "available_reviews") VALUES
+ ('2', '17', '5'),
+ ('3', '17', '5'),
+ ('4', '17', '5'),
+ ('5', '17', '5'),
+ ('6', '17', '5'),
+ ('7', '17', '5'),
+ ('7', '17', '5'),
+ ('8', '17', '5'),
+ ('10', '17', '5'),
+ ('11', '17', '5'),
+ ('12', '17', '5'),
+ ('13', '17', '5');

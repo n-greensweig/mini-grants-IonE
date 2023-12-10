@@ -19,7 +19,7 @@ const AdminHomeView = () => {
         console.error('Error fetching grants', error);
       });
 
-    axios.get('/grants/reviewers')
+    axios.get(`/grants/reviewers${cycleId}`)
       .then(response => {
         setReviewers(response.data);
       })
@@ -106,7 +106,7 @@ const AdminHomeView = () => {
                   </MenuItem>
                   {reviewers.map((reviewer) => (
                     <MenuItem key={reviewer.id} value={reviewer.id}>
-                      {reviewer.name}
+                      {reviewer.full_name}
                     </MenuItem>
                   ))}
                 </Select>
