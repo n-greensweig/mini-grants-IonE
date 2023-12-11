@@ -8,12 +8,12 @@ import { css } from '@emotion/react';
 import { CircleLoader } from 'react-spinners';
 
 function ImportGoogleSheet() {
-    const [sheetURL, setSheetURL] = useState('');
-    const [tabName, setTabName] = useState('');
+    const [sheetURL, setSheetURL] = useState('https://docs.google.com/spreadsheets/d/1QiPxCZr7QombeEMQA4JhXyHLuOt6C3IrCct1-knVQnI/edit?usp=sharing');
+    const [tabName, setTabName] = useState('Application Sheet Example');
     const [start_col, setStart_col] = useState('A');
     const [start_row, setStart_row] = useState('2');
     const [end_col, setEnd_col] = useState('CA');
-    const [end_row, setEnd_row] = useState('');
+    const [end_row, setEnd_row] = useState('50');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [importData, setImportData] = useState({});
