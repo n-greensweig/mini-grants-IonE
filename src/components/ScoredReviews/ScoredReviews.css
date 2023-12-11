@@ -48,3 +48,9 @@
 .scoresTable button:hover {
     background-color: #ffb71e;
 }
+
+#no-scores {
+    margin-top: 50px;
+    text-align: center;
+    font-style: italic;
+}
