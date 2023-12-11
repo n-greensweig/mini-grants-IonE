@@ -7,14 +7,14 @@ router.post('/', (req, res) => {
     console.log('reviewer router post has been hit');
     console.log('req.body', req.body);
 
-       const {name, grantsToReview, department} = req.body;
+       const { grantsToReview, department} = req.body;
 
        const insertQuery = `
-            INSERT INTO "reviewers" ("name", "available_reviews", "dept_id")
-            VALUES ($1, $2, $3);
+            INSERT INTO "reviewers" ("available_reviews", "dept_id")
+            VALUES ($1, $2);
         `;
 
-        const values = [name, grantsToReview, department];
+        const values = [ grantsToReview, department];
 
         pool.query(insertQuery, values)
         .then(result => {
