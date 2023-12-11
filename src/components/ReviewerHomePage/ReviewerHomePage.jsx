@@ -18,11 +18,12 @@ function ReviewerHomePage(){
     const [data, setData] = useState([]);
     const currentCycle = useSelector((store) => store.user.currentCycle);
 
-
+console.log(currentCycle.id-1);
     const fetchData = () => {
-        axios.get(`/grants/reviewer-grants/${currentCycle.id}`) //update with cycle ID reducer after old cycles marked complete*****
+        axios.get(`/grants/reviewer-grants/${currentCycle.id-1}`) //update with cycle ID reducer after old cycles marked complete*****
         .then(response => {
             setData(response.data);
+            console.log(response.data);
         })
         .catch(error => {
             console.log('Error fetching reviewer grants:', error);

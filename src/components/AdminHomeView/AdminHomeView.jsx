@@ -41,13 +41,14 @@ const AdminHomeView = () => {
       return grant;
     });
     setGrants(updatedGrants);
+    console.log(newReviewerId);
 
     const dataObj = {
       assigned_at: new Date(), 
       assigned_by: user.id, 
       grant_id: grantId,
       reviewer_id: newReviewerId,
-      cycle_id: 18
+      cycle_id: cycleId.id-1
   };
 
   axios.post('/reviewer/assignReviewer', dataObj)
@@ -112,7 +113,7 @@ const AdminHomeView = () => {
                   {reviewers.length > 0 &&
                   
                   reviewers?.map((reviewer) => (
-                    <MenuItem key={reviewer.id} value={reviewer.id}>
+                    <MenuItem key={reviewer.id} value={reviewer.reviewer_id}>
                       {reviewer.full_name}
                     </MenuItem>
                   ))}
