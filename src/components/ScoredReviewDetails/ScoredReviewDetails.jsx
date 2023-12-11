@@ -69,7 +69,7 @@ function ScoredReviewDetails() {
                         <tbody>
                             {scoredGrantsDetails.map((item, index) => ( 
                                 <tr key={index}>
-                                    <td>{item.name}</td>
+                                    <td>{item.reviewer_name}</td>
                                     <td>{item.interdisciplinary}</td>
                                     <td>{item.goals}</td>
                                     <td>{item.method_and_design}</td>
