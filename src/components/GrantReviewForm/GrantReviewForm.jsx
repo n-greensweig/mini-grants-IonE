@@ -59,6 +59,8 @@ function GrantReviewForm() {
         setBudget(+event.target.id);
     };
 
+    console.log(budget);
+
     const impactSum = ((+impact1) + (+impact2) + (+impact3))
 
     const recommendationRadioChange = (event) => {
@@ -66,6 +68,7 @@ function GrantReviewForm() {
     };
 
     let totalScore = (interdisciplinary + goals + method_and_design + budget + impactSum + final_recommendation);
+    console.log(totalScore);
 
     console.log("grantID:", grantInfo.grant_id, "and grantInfo:", grantInfo);
     console.log(+impact3);
@@ -135,7 +138,7 @@ function GrantReviewForm() {
         setInterdisciplinary(grantInfo.interdisciplinary ?? null);
             setGoals(grantInfo.goals ?? null);
             setMethod_and_design(grantInfo.method_and_design ?? null);
-            setBudget(grantInfo.budget ?? null);
+            setBudget(+grantInfo.budget ?? null);
             setImpact1(grantInfo.impact1 ?? null);
             setImpact2(grantInfo.impact2 ?? null);
             setImpact3(grantInfo.impact3 ?? null);
@@ -505,7 +508,7 @@ function GrantReviewForm() {
                                 id="0.5" 
                                 name="budget" 
                                 value={budget} 
-                                // checked={budget === 0.5} 
+                                checked={budget === 0.5} 
                                 onChange={budgetRadioChange}
                             />
                         </td>
@@ -604,7 +607,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="3" 
                                 name="recommendation" 
-                                value={final_recommendation} 
+                                value={final_recommendation}
+                                checked={final_recommendation === 3} 
                                 onChange={recommendationRadioChange}
                             />
                         </td>
@@ -616,7 +620,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="2" 
                                 name="recommendation" 
-                                value={final_recommendation} 
+                                value={final_recommendation}
+                                checked={final_recommendation === 2}
                                 onChange={recommendationRadioChange}
                             />
                         </td>
@@ -628,7 +633,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="0" 
                                 name="recommendation" 
-                                value={final_recommendation} 
+                                value={final_recommendation}
+                                checked={final_recommendation === 0} 
                                 onChange={recommendationRadioChange}
                             />
                         </td>

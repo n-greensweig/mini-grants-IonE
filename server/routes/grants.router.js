@@ -137,13 +137,13 @@ router.get('/reviewers/:id', (req, res) => {
 //     // }
 // }); //end GET
 
-//GET grants for a given reviewer --HALEIGH
+//GET grants for a given reviewer --JEFF EDITED
 router.get('/reviewer-grants/:id', (req, res) => {
     console.log(`Fetching grants for user id: ${req.user.id}`)
     // if(req.isAuthenticated()) {
         const userID = req.user.id;
         const cycle_id = req.params.id
-        let queryText = `SELECT d.*, s.*, a.reviewer_id, TO_CHAR(d.time_stamp, 'MM-DD-YYYY') as formatted_date
+        let queryText = `SELECT d.*, s.*, a.reviewer_id, a.grant_id, TO_CHAR(d.time_stamp, 'MM-DD-YYYY') as formatted_date
                         FROM grant_assignments a
                         LEFT JOIN grant_data d ON a.grant_id = d.id
                         LEFT JOIN scores s ON a.reviewer_id = s.reviewer_id AND a.grant_id = s.grant_id
@@ -396,6 +396,8 @@ router.get('/scored-reviews', (req, res) => {
                             scores s
                         JOIN
                             grant_data gd ON s.grant_id = gd.id
+                        WHERE
+    						s.review_complete = TRUE
                         GROUP BY
                             s.grant_id, gd.principal_investigator, gd.project_title;`;
         console.log('Fetching all scores');
