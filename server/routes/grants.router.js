@@ -137,13 +137,13 @@ router.get('/reviewers/:id', (req, res) => {
 //     // }
 // }); //end GET
 
-//GET grants for a given reviewer --HALEIGH
+//GET grants for a given reviewer --JEFF EDITED
 router.get('/reviewer-grants/:id', (req, res) => {
     console.log(`Fetching grants for user id: ${req.user.id}`)
     // if(req.isAuthenticated()) {
         const userID = req.user.id;
         const cycle_id = req.params.id
-        let queryText = `SELECT d.*, s.*, a.reviewer_id, TO_CHAR(d.time_stamp, 'MM-DD-YYYY') as formatted_date
+        let queryText = `SELECT d.*, s.*, a.reviewer_id, a.grant_id, TO_CHAR(d.time_stamp, 'MM-DD-YYYY') as formatted_date
                         FROM grant_assignments a
                         LEFT JOIN grant_data d ON a.grant_id = d.id
                         LEFT JOIN scores s ON a.reviewer_id = s.reviewer_id AND a.grant_id = s.grant_id
@@ -152,7 +152,7 @@ router.get('/reviewer-grants/:id', (req, res) => {
         .then(result => {
             if (result.rows.length > 0) {
                 res.send(result.rows);
-                console.log(result.rows, "results")
+                // console.log(result.rows, "results")
             } else {
                 console.log('No grants for user');
                 console.log('cycleID', cycle_id)
@@ -229,7 +229,10 @@ router.post('/setScores', (req, res) => {
         const goals = req.body.goals;
         const method_and_design = req.body.method_and_design;
         const budget = req.body.budget;
-        const impact = req.body.impact;
+        const impact1 = req.body.impact1;
+        const impact2 = req.body.impact2;
+        const impact3 = req.body.impact3;
+        const impact_sum = req.body.impactSum;
         const final_recommendation = req.body.final_recommendation;
         const comments = req.body.comments; //JEFF added this line
         const review_complete = req.body.review_complete;
@@ -253,13 +256,16 @@ router.post('/setScores', (req, res) => {
                     "goals" = $3,
                     "method_and_design" = $4,
                     "budget" = $5,
-                    "impact" = $6,
-                    "final_recommendation" = $7,
-                    "comments" = $8,
-                    "review_complete" = $9
-                WHERE "id" = $10;`;
+                    "impact1"= $6,
+                    "impact2"= $7,
+                    "impact3"= $8,
+                    "impact_sum" = $9,
+                    "final_recommendation" = $10,
+                    "comments" = $11,
+                    "review_complete" = $12
+                WHERE "id" = $13;`;
 
-                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact, final_recommendation, comments, review_complete, score_id])
+                    pool.query(queryText, [created_at, interdisciplinary, goals, method_and_design, budget, impact1, impact2, impact3, impact_sum, final_recommendation, comments, review_complete, score_id])
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
@@ -276,16 +282,19 @@ router.post('/setScores', (req, res) => {
                                 "goals",
                                 "method_and_design",
                                 "budget",
-                                "impact",
+                                "impact1",
+                                "impact2",
+                                "impact3",
+                                "impact_sum",
                                 "final_recommendation",
                                 "comments",
                                 "review_complete",
                                 "total_score",
                                 "principal_investigator",
                                 "project_title")
-                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);`;
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17);`;
 
-                    pool.query(queryText, [created_at, grant_id, reviewer_id, interdisciplinary, goals, method_and_design, budget, impact, final_recommendation, comments, review_complete, total_score, principal_investigator, project_title]) //JEFF added comments, review_complete
+                    pool.query(queryText, [created_at, grant_id, reviewer_id, interdisciplinary, goals, method_and_design, budget, impact1, impact2, impact3, impact_sum, final_recommendation, comments, review_complete, total_score, principal_investigator, project_title]) //JEFF added comments, review_complete
                         .then((response) => {
                             res.sendStatus(201);
                         }).catch((error) => {
@@ -357,31 +366,6 @@ router.get('/unassigned/:id', (req, res) => {
 }); //end GET
 
 
-// GET ROUTE FOR SCORED REVIEWS --JEFF
-
-// router.get('/scored-reviews', (req, res) => {
-//     console.log('Fetching scored reviews')
-//     if(req.isAuthenticated()) {
-//         let queryText = `SELECT * FROM "scores";`;
-//         console.log('Fetching all scores');
-//         pool.query(queryText)
-//         .then(result => {
-//             if (result.rows.length > 0) {
-//                 res.send(result.rows);
-//             } else {
-//                 console.log('No scores');
-//                 res.sendStatus(200)
-//             }
-//         })
-//         .catch(error => {
-//             console.log(`Error fetching all reviewers`, error);
-//             res.sendStatus(500);
-//         });
-//     } else {
-//         res.sendStatus(401)
-//     }
-// });
-
 // GET ROUTE FOR SCORED GRANTS --JEFF
 
 router.get('/scored-reviews', (req, res) => {
@@ -396,6 +380,8 @@ router.get('/scored-reviews', (req, res) => {
                             scores s
                         JOIN
                             grant_data gd ON s.grant_id = gd.id
+                        WHERE
+    						s.review_complete = TRUE
                         GROUP BY
                             s.grant_id, gd.principal_investigator, gd.project_title;`;
         console.log('Fetching all scores');
@@ -428,15 +414,11 @@ router.get('/scoredreviewsdetails/:id', (req, res) => {
         const id = req.params.id;
         console.log(id);
         let queryText = 
-            // `SELECT "scores".*, "reviewers"."name"
-            // FROM "scores"
-            // JOIN "reviewers" ON "reviewers".reviewer_id = "scores".reviewer_id
-            // WHERE "scores".grant_id = $1;`;
-            
-            `SELECT "scores".*, "user"."full_name" AS "reviewer_name"
-            FROM "scores"
-            JOIN "user" ON "user".id = "scores".reviewer_id
-            WHERE "scores".grant_id = $1;`;
+                        `SELECT 
+                            "scores".*, "user"."full_name" AS "reviewer_name"
+                        FROM "scores"
+                        JOIN "user" ON "user".id = "scores".reviewer_id
+                        WHERE "scores".grant_id = $1;`;
         console.log('Fetching all scores');
         pool.query(queryText, [id])
         .then(result => {

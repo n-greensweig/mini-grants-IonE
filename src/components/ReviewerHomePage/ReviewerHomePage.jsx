@@ -61,7 +61,22 @@ console.log(currentCycle.id-1);
                         <td>{item.principal_investigator}</td>
                         <td>{item.PI_primary_college}</td>
                         {/* Conditional rendering for the Status column */}
-                        <td>{item.review_complete ? 'Completed' : "Needs Review"}</td>
+                        <td>{item.review_complete ? 'Completed' 
+                                : (
+                                    (item.interdisciplinary !== null ||
+                                        item.impact1 !== null ||
+                                        item.impact2 !== null ||
+                                        item.impact3 !== null ||
+                                        item.budget !== null ||
+                                        item.comments !== null ||
+                                        item.goals !== null ||
+                                        item.method_and_design !== null ||
+                                        item.final_recommendation !== null)
+                                           ? <i>In Progress</i>
+                                           : 'Needs Review'
+                                   )
+                               }
+                        </td>
                         <td>
                             {/* Conditional rendering for the Review Button */}
                             {item.review_complete ? (

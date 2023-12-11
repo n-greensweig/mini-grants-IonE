@@ -50,7 +50,7 @@ CREATE TABLE "grant_cycle" (
 );
 
 
-CREATE TABLE "scores" (
+ CREATE TABLE "scores" (
     "id" SERIAL PRIMARY KEY,
 	"created_at" DATE,
 	"grant_id" INT REFERENCES "grant_data",
@@ -59,7 +59,10 @@ CREATE TABLE "scores" (
 	"goals" INT,
 	"method_and_design" INT,
 	"budget" NUMERIC(12, 1),
-	"impact" INT,
+	"impact1" INT,
+	"impact2" INT,
+	"impact3" INT,
+	"impact_sum" INT,
 	"comments" VARCHAR (2000),
 	"final_recommendation" INT, 
 	"review_complete" BOOLEAN DEFAULT FALSE,

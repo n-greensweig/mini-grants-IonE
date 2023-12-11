@@ -1,7 +1,7 @@
 // View 3.3 Reviewer View
 
 // React
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -59,24 +59,29 @@ function GrantReviewForm() {
         setBudget(+event.target.id);
     };
 
+    console.log(budget);
+
     const impactSum = ((+impact1) + (+impact2) + (+impact3))
 
     const recommendationRadioChange = (event) => {
         setFinal_Recommendation(+event.target.id);
     };
 
-    let totalScore = (interdisciplinary + method_and_design + budget + impactSum + final_recommendation);
+    let totalScore = (interdisciplinary + goals + method_and_design + (+budget) + impactSum + final_recommendation);
 
     // Will need data from other components for created_at, grant_id, reviewer_id, and assigned_by
     let submittedScores = {
         created_at: submittedDate,
-        grant_id: grantInfo.id,
+        grant_id: grantInfo.grant_id,
         reviewer_id: user.id,
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
-        budget: budget,
-        impact: impactSum,
+        budget: +budget,
+        impact1: +impact1,
+        impact2: +impact2,
+        impact3: +impact3,
+        impactSum: impactSum,
         final_recommendation: final_recommendation,
         comments: comments,
         review_complete: true,
@@ -87,13 +92,16 @@ function GrantReviewForm() {
 
     let savedScores = {
         created_at: submittedDate,
-        grant_id: grantInfo.id,
+        grant_id: grantInfo.grant_id,
         reviewer_id: user.id,
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
-        budget: budget,
-        impact: impactSum,
+        budget: +budget,
+        impact1: +impact1,
+        impact2: +impact2,
+        impact3: +impact3,
+        impactSum: impactSum,
         final_recommendation: final_recommendation,
         comments: comments,
         review_complete: false,
@@ -123,9 +131,25 @@ function GrantReviewForm() {
         setOpenSubmitDialog(false);
     };
 
-    console.log(submittedDate);
+    console.log(grantInfo.interdisciplinary);
+    
+    // End MUI
 
-    // End MUI 
+
+    useEffect(() => { 
+        setInterdisciplinary(grantInfo.interdisciplinary ?? null);
+            setGoals(grantInfo.goals ?? null);
+            setMethod_and_design(grantInfo.method_and_design ?? null);
+            setBudget(+grantInfo.budget ?? null);
+            setImpact1(grantInfo.impact1 ?? null);
+            setImpact2(grantInfo.impact2 ?? null);
+            setImpact3(grantInfo.impact3 ?? null);
+            setFinal_Recommendation(grantInfo.final_recommendation ?? null);
+            setComments(grantInfo.comments ?? null);
+        },
+     [grantInfo]);
+
+     console.log(typeof grantInfo.budget);
 
     const saveScores = () => {
         console.log(savedScores);
@@ -153,8 +177,6 @@ function GrantReviewForm() {
         history.push(`/reviewerhomepage`);
     };
     console.log(user);
-
-    console.log({grantInfo});
 
     return (
         <div id="review-form">
@@ -200,7 +222,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="5" 
                                 name="interdisciplinary" 
-                                value={interdisciplinary} 
+                                value={(interdisciplinary)}
+                                checked={interdisciplinary === 5} 
                                 onChange={interdisciplinaryRadioChange}
                             />
                         </td>
@@ -217,7 +240,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="3" 
                                 name="interdisciplinary" 
-                                value={interdisciplinary} 
+                                value={interdisciplinary}
+                                checked={interdisciplinary === 3}  
                                 onChange={interdisciplinaryRadioChange}
                             />
                         </td>
@@ -234,7 +258,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="2" 
                                 name="interdisciplinary" 
-                                value={interdisciplinary} 
+                                value={interdisciplinary}
+                                checked={interdisciplinary === 2} 
                                 onChange={interdisciplinaryRadioChange}
                             />
                         </td>
@@ -250,7 +275,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="1" 
                                 name="interdisciplinary" 
-                                value={interdisciplinary} 
+                                value={interdisciplinary}
+                                checked={interdisciplinary === 1} 
                                 onChange={interdisciplinaryRadioChange}
                             />
                         </td>
@@ -265,7 +291,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="0" 
                                 name="interdisciplinary" 
-                                value={interdisciplinary} 
+                                value={interdisciplinary}
+                                checked={interdisciplinary === 0} 
                                 onChange={interdisciplinaryRadioChange}
                             />
                         </td>
@@ -287,7 +314,8 @@ function GrantReviewForm() {
                             ><input 
                                 type="radio" 
                                 id="5" name="goals" 
-                                value={goals} 
+                                value={goals}
+                                checked={goals === 5}  
                                 onChange={goalsRadioChange}
                             />
                         </td>
@@ -303,7 +331,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="3" 
                                 name="goals" 
-                                value={goals} 
+                                value={goals}
+                                checked={goals === 3} 
                                 onChange={goalsRadioChange}
                             />
                         </td>
@@ -318,7 +347,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="2" 
                                 name="goals" 
-                                value={goals} 
+                                value={goals}
+                                checked={goals === 2}
                                 onChange={goalsRadioChange}
                             />
                         </td>
@@ -333,7 +363,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="1" 
                                 name="goals" 
-                                value={goals} 
+                                value={goals}
+                                checked={goals === 1}
                                 onChange={goalsRadioChange}
                             />
                         </td>
@@ -348,7 +379,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="0" 
                                 name="goals" 
-                                value={goals} 
+                                value={goals}
+                                checked={goals === 0}
                                 onChange={goalsRadioChange}
                             />
                         </td>
@@ -372,7 +404,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="5" 
                                 name="method_and_design" 
-                                value="method_and_design" 
+                                value={method_and_design}
+                                checked={method_and_design === 5}
                                 onChange={method_and_designRadioChange}
                             />
                         </td>
@@ -387,7 +420,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="3" 
                                 name="method_and_design" 
-                                value="method_and_design" 
+                                value={method_and_design}
+                                checked={method_and_design === 3}
                                 onChange={method_and_designRadioChange}
                             />
                         </td>
@@ -402,7 +436,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="2" 
                                 name="method_and_design" 
-                                value="method_and_design" 
+                                value={method_and_design}
+                                checked={method_and_design === 2}
                                 onChange={method_and_designRadioChange}
                             />
                         </td>
@@ -418,7 +453,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="0" 
                                 name="method_and_design" 
-                                value="method_and_design" 
+                                value={method_and_design}
+                                checked={method_and_design === 0}
                                 onChange={method_and_designRadioChange}
                             />
                         </td>
@@ -441,7 +477,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="2" 
                                 name="budget" 
-                                value="budget" 
+                                value={budget}
+                                checked={budget === 2} 
                                 onChange={budgetRadioChange}
                             />
                         </td>
@@ -456,7 +493,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="1" 
                                 name="budget" 
-                                value="budget" 
+                                value={budget} 
+                                checked={budget === 1} 
                                 onChange={budgetRadioChange}
                             />
                         </td>
@@ -471,7 +509,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="0.5" 
                                 name="budget" 
-                                value="budget" 
+                                value={budget} 
+                                checked={budget === 0.5} 
                                 onChange={budgetRadioChange}
                             />
                         </td>
@@ -485,7 +524,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="0" 
                                 name="budget" 
-                                value="budget" 
+                                value={budget} 
+                                checked={budget === 0} 
                                 onChange={budgetRadioChange}/>
                             </td>
                         <td>
@@ -507,7 +547,8 @@ function GrantReviewForm() {
                                 type="checkbox" 
                                 id="2" 
                                 name="impact1" 
-                                value="impact1" 
+                                value={impact1}
+                                checked={+impact1 === 2} 
                                 onChange={(e) => setImpact1(e.target.checked ? e.target.id : 0)}
                             />
                         </td>
@@ -521,7 +562,8 @@ function GrantReviewForm() {
                                 type="checkbox" 
                                 id="2" 
                                 name="impact2" 
-                                value="impact2" 
+                                value={impact2}
+                                checked={+impact2 === 2}  
                                 onChange={(e) => setImpact2(e.target.checked ? e.target.id : 0)}
                             />
                         </td>
@@ -540,7 +582,8 @@ function GrantReviewForm() {
                                 type="checkbox" 
                                 id="2" 
                                 name="impact3" 
-                                value="impact3" 
+                                value={impact3}
+                                checked={+impact3 === 2} 
                                 onChange={(e) => setImpact3(e.target.checked ? e.target.id : 0)}
                             />
                         </td>
@@ -568,7 +611,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="3" 
                                 name="recommendation" 
-                                value={final_recommendation} 
+                                value={final_recommendation}
+                                checked={final_recommendation === 3} 
                                 onChange={recommendationRadioChange}
                             />
                         </td>
@@ -580,7 +624,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="2" 
                                 name="recommendation" 
-                                value={final_recommendation} 
+                                value={final_recommendation}
+                                checked={final_recommendation === 2}
                                 onChange={recommendationRadioChange}
                             />
                         </td>
@@ -592,7 +637,8 @@ function GrantReviewForm() {
                                 type="radio" 
                                 id="0" 
                                 name="recommendation" 
-                                value={final_recommendation} 
+                                value={final_recommendation}
+                                checked={final_recommendation === 0} 
                                 onChange={recommendationRadioChange}
                             />
                         </td>
