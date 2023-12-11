@@ -188,7 +188,7 @@ function GrantReviewForm() {
                 
                 <div id="title">
                     <div>
-                        <h4 id="download"><PDFDownloadLink document={<PDFDocument grantInfo={grantInfo}/>} fileName={`IonE_Mini_Grant_PI_${grantInfo.principal_investigator}.pdf`}>
+                        <h4 className='titles' id="download"><PDFDownloadLink document={<PDFDocument grantInfo={grantInfo}/>} fileName={`IonE_Mini_Grant_PI_${grantInfo.principal_investigator}.pdf`}>
                             {({ blob, url, loading, error }) =>
                             loading ? 'Loading document...' : 'Download Grant PDF'
                             }
@@ -196,10 +196,10 @@ function GrantReviewForm() {
                     </div>
 
                     <div id="project-info">
-                        <h4><u>Principal Investigator</u></h4>
+                        <h4 className='titles'><u>Principal Investigator</u></h4>
                         {/* PI Name will be variable sourced from other components */}
                         <p>{grantInfo.principal_investigator}</p> 
-                        <h4><u>Project Title</u></h4>
+                        <h4 className='titles'><u>Project Title</u></h4>
                         {/* Project Title will be variable sourced from other components */}
                         <p><i>{grantInfo.project_title}</i></p>
                     </div>

@@ -74,7 +74,7 @@ function ScoredReviewDetails() {
                                     <td>{item.goals}</td>
                                     <td>{item.method_and_design}</td>
                                     <td>{item.budget}</td>
-                                    <td>{item.impact}</td>
+                                    <td>{item.impact_sum}</td>
                                     <td>{item.final_recommendation}</td>
                                     <td>{item.total_score}</td>
                                     <td>{item.comments}</td>

@@ -22,9 +22,8 @@
 }
 
 #download {
-    border: 1.5px solid #5a5a5a;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 6px;
+    padding: 12px;
     background-color:#ffde71
 }
 
@@ -32,7 +31,7 @@
     background-color:#ffb71e
 }
 
-h4 {
+.titles {
     margin-bottom: -13px;
 }
 

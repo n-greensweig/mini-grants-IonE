@@ -121,7 +121,7 @@ const AdminHomeView = () => {
               </TableCell>
               ))}
               <TableCell>
-                <Button variant="contained" style={viewButtonStyle} onClick={() => {/* handle view click */}}>
+                <Button  onClick={() => {/* handle view click */}}>
                   <h4 id="download">
                     <PDFDownloadLink document={<PDFDocument grantInfo={grant}/>} fileName="Replace.pdf">
                             {({ blob, url, loading, error }) =>

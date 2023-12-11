@@ -7,22 +7,25 @@
     background-color: #d5d6d2;
 }
 
-.reviewerTable th, .reviewerTable td {
-    padding: 12px;
+.reviewerTable td {
+    padding: 10px;
     text-align: center;
     border: 1px solid #ddd;
     width: 20%;
 }
 
 .reviewerTable th {
-    padding: 20px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid #ddd;
+    width: 20%;
 }
 
 .reviewerTable button {
     background-color: #ffcc33;
     border-radius: 10%;
-    color: #7a0019;
-    padding: 20px;
+    color: #5b0013;
+    padding: 12px;
     border: none;
     cursor: pointer;
     font-size: 16px;
