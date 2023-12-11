@@ -85,7 +85,7 @@ console.log(currentCycle.id-1);
                             ) : (
                                 // Render the Review Button if review is not completed
                                 <button onClick={() => handleReviewClick(item)}>
-                                    Review
+                                    REVIEW
                                 </button>
                             )}
                             
