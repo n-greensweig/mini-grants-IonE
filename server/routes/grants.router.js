@@ -78,6 +78,7 @@ router.get('/allGrantInfo/:id', async (req, res) => {
 router.get('/reviewers/:id', (req, res) => {
     // if(req.isAuthenticated()) {
         let cycle_id = req.params.id;
+        console.log(cycle_id);
         let queryText = `SELECT r.*, u.full_name from "reviewers" r
                         LEFT JOIN "user" u
                         ON r.reviewer_id=u.id
