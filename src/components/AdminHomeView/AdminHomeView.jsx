@@ -22,9 +22,10 @@ const AdminHomeView = () => {
       .catch(error => {
         console.error('Error fetching grants', error);
       });
-
-    axios.get(`/grants/reviewers${cycleId}`)
+      console.log(cycleId.id);
+    axios.get(`/grants/reviewers/${cycleId.id-1}`)
       .then(response => {
+        console.log('Reviewers response', response.data);
         setReviewers(response.data);
       })
       .catch(error => {
@@ -108,7 +109,9 @@ const AdminHomeView = () => {
                   <MenuItem value="" disabled>
                     {`Reviewer ${num}`}
                   </MenuItem>
-                  {reviewers.map((reviewer) => (
+                  {reviewers.length > 0 &&
+                  
+                  reviewers?.map((reviewer) => (
                     <MenuItem key={reviewer.id} value={reviewer.id}>
                       {reviewer.full_name}
                     </MenuItem>
