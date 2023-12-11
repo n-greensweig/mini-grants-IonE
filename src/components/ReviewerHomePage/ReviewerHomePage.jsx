@@ -64,13 +64,15 @@ console.log(currentCycle.id-1);
                         <td>{item.review_complete ? 'Completed' 
                                 : (
                                     (item.interdisciplinary !== null ||
-                                        item.impact !== null ||
+                                        item.impact1 !== null ||
+                                        item.impact2 !== null ||
+                                        item.impact3 !== null ||
                                         item.budget !== null ||
                                         item.comments !== null ||
                                         item.goals !== null ||
                                         item.method_and_design !== null ||
                                         item.final_recommendation !== null)
-                                           ? 'In Progress'
+                                           ? <i>In Progress</i>
                                            : 'Needs Review'
                                    )
                                }

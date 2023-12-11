@@ -67,11 +67,7 @@ function GrantReviewForm() {
         setFinal_Recommendation(+event.target.id);
     };
 
-    let totalScore = (interdisciplinary + goals + method_and_design + budget + impactSum + final_recommendation);
-    console.log(totalScore);
-
-    console.log("grantID:", grantInfo.grant_id, "and grantInfo:", grantInfo);
-    console.log(+impact3);
+    let totalScore = (interdisciplinary + goals + method_and_design + (+budget) + impactSum + final_recommendation);
 
     // Will need data from other components for created_at, grant_id, reviewer_id, and assigned_by
     let submittedScores = {
@@ -81,8 +77,11 @@ function GrantReviewForm() {
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
-        budget: budget,
-        impact: impactSum,
+        budget: +budget,
+        impact1: +impact1,
+        impact2: +impact2,
+        impact3: +impact3,
+        impactSum: impactSum,
         final_recommendation: final_recommendation,
         comments: comments,
         review_complete: true,
@@ -98,8 +97,11 @@ function GrantReviewForm() {
         interdisciplinary: interdisciplinary,
         goals: goals,
         method_and_design: method_and_design,
-        budget: budget,
-        impact: impactSum,
+        budget: +budget,
+        impact1: +impact1,
+        impact2: +impact2,
+        impact3: +impact3,
+        impactSum: impactSum,
         final_recommendation: final_recommendation,
         comments: comments,
         review_complete: false,
@@ -147,7 +149,7 @@ function GrantReviewForm() {
         },
      [grantInfo]);
 
-     console.log(grantInfo);
+     console.log(typeof grantInfo.budget);
 
     const saveScores = () => {
         console.log(savedScores);
@@ -545,7 +547,8 @@ function GrantReviewForm() {
                                 type="checkbox" 
                                 id="2" 
                                 name="impact1" 
-                                value={impact1} 
+                                value={impact1}
+                                checked={+impact1 === 2} 
                                 onChange={(e) => setImpact1(e.target.checked ? e.target.id : 0)}
                             />
                         </td>
@@ -559,7 +562,8 @@ function GrantReviewForm() {
                                 type="checkbox" 
                                 id="2" 
                                 name="impact2" 
-                                value={impact2} 
+                                value={impact2}
+                                checked={+impact2 === 2}  
                                 onChange={(e) => setImpact2(e.target.checked ? e.target.id : 0)}
                             />
                         </td>
@@ -579,7 +583,7 @@ function GrantReviewForm() {
                                 id="2" 
                                 name="impact3" 
                                 value={impact3}
-                                // checked={+impact3 === 2} 
+                                checked={+impact3 === 2} 
                                 onChange={(e) => setImpact3(e.target.checked ? e.target.id : 0)}
                             />
                         </td>
