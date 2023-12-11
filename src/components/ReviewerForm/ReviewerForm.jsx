@@ -9,7 +9,6 @@ function ReviewerForm(){
     const history = useHistory();
     const [departments, setDepartments] = useState([]);
     const [formData, setFormData] = useState({
-        name: '',
         grantsToReview: '',
       });
 
@@ -78,58 +77,44 @@ function ReviewerForm(){
         <div id='reviewer-view'>
         <div id='Reviewer-Card'>  
             <h2 id='reviewer-form-title'>Tell us about You and Your Academic Affiliations!</h2>
-
             <form onSubmit={handleSubmit}>
-            <div>
-                <label>Name:</label>
-                <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder='Prince Nelson'
-                value={formData.name}
-                onChange={handleChange}
-                required
-                />
-            </div>
-        {/* Department Affiliations */}
-        <div id='department-affiliations'>
-                <label id='department-affiliation-label' htmlFor="multiSelect">Select Your Academic Affiliations:</label>
-                <br /> <br />
-                <select
-                    id="multiSelect"
-                    multiple
-                    size={9}
-                    onChange={handleSelectionChange}
-                    value={selectedItems}
-                >
-                    {departments.map(option => (
-                    <option key={option.id} value={option.id} className='largerOptions'>
-                        {option.name}
-                    </option>
-                    ))}
-                </select>
-                <div>
-                <p>Selected Departments: {selectedItems.map(itemId => {
-                    const selectedDepartment = departments.find(department => department.id === parseInt(itemId, 10));
-                    return selectedDepartment ? selectedDepartment.name : null;
-                }).filter(Boolean).join(', ')}</p>
-        </div>
-        </div>
-            <div>
-                <label>Review Quantity for this Cycle: {}</label>
-                <input
-                type="number"
-                id="grantsToReview"
-                name="grantsToReview"
-                placeholder='1 - 5'
-                value={formData.grantsToReview}
-                onChange={handleChange}
-                required
-                />
-            </div>
-             <br />
-            <button id='reviewer-form-save-button' type="submit">Submit</button>
+                {/* Department Affiliations */}
+                <div id='department-affiliations'>
+                    <label id='department-affiliation-label' htmlFor="multiSelect">Select Your Academic Affiliations:</label>
+                    <br /> <br />
+                    <select
+                        id="multiSelect"
+                        multiple
+                        size={9}
+                        onChange={handleSelectionChange}
+                        value={selectedItems}
+                    >
+                        {departments.map(option => (
+                        <option key={option.id} value={option.id} className='largerOptions'>
+                            {option.name}
+                        </option>
+                        ))}
+                    </select>
+                    <div>
+                    <p>Selected Departments: {selectedItems.map(itemId => {
+                        const selectedDepartment = departments.find(department => department.id === parseInt(itemId, 10));
+                        return selectedDepartment ? selectedDepartment.name : null;
+                    }).filter(Boolean).join(', ')}</p>
+                </div>
+                </div>
+                    <div>
+                        <label>Quantity of Reviews this Cycle:</label>
+                        <input
+                        type="number"
+                        id="grantsToReview"
+                        name="grantsToReview"
+                        value={formData.grantsToReview}
+                        onChange={handleChange}
+                        required
+                        />
+                    </div>
+                    <br />
+                <button id='reviewer-form-save-button' type="submit">Submit</button>
             </form>
         </div>
         </div>
