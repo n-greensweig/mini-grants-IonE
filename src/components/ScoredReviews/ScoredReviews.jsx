@@ -100,7 +100,7 @@ function ScoredReviews() {
                                     <td>{item.total_scores_array && item.total_scores_array[1] && item.total_scores_array[1] ? +item.total_scores_array[1] : <i>No score</i>}</td>
                                     <td>{item.total_scores_array && item.total_scores_array[2] && item.total_scores_array[2] ? +item.total_scores_array[2] : <i>No score</i>}</td>
                                     <td>{item.total_scores_array && item.total_scores_array[0] && item.total_scores_array[1] && item.total_scores_array[2] ? 
-                                        ((+item.total_scores_array[0]) + (+item.total_scores_array[1]) + (+item.total_scores_array[2])) / 3  : <i>Not enough data</i>}
+                                        (((+item.total_scores_array[0]) + (+item.total_scores_array[1]) + (+item.total_scores_array[2])) / 3).toFixed(2)  : <i>Not enough data</i>}
                                     </td>
                                     <td>
                                         <button onClick={() => viewReviewDetails(item.grant_id)}>

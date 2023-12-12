@@ -50,7 +50,7 @@ const GrantsTable = () => {
                             <Button onClick={() => requestSort('cycle_id')}>Cycle ID</Button>
                         </TableCell>
                         <TableCell>
-                            <Button onClick={() => requestSort('cycle_name')}>Cycle ID</Button>
+                            <Button onClick={() => requestSort('cycle_name')}>Cycle Name</Button>
                         </TableCell>
                         <TableCell>
                             <Button onClick={() => requestSort('grant_type')}>Grant Type</Button>

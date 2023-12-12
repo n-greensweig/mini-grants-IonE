@@ -29,7 +29,7 @@ function LandingPage() {
           <Paper sx={{ padding: '15px', margin: '5px'}}>
             <center>
       <Typography variant='h4'>University of Minnesota</Typography>
-      <Typography variant='h5'>Institute on the Enviornment</Typography>
+      <Typography variant='h5'>Institute on the Environment</Typography>
       <Typography variant='h6'>Mini Grant Program</Typography>
       <br />
       </center>
